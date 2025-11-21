@@ -36,6 +36,10 @@ const customizations = {
     a.link[href*="/projects/"][href$="/sharing-settings"] {
       display: none !important;
     }
+
+    a.link.cursor-pointer[class~="ml-0.5"][href*="/projects"] {
+      margin: 0 !important;
+    }
   `,
 
   // JavaScript customizations
@@ -54,14 +58,30 @@ const customizations = {
       // Hide logo link in header/navbar but keep space (JavaScript fallback)
       const hideLogoLink = () => {
         const logoLinks = document.querySelectorAll('a.link[href*="/projects"]');
-        logoLinks.forEach(link => {
-          if (processedElements.has(link)) return;
-          const logoImg = link.querySelector('img[src*="logo.svg"]');
-          console.log("logoImg elements------------------------------", logoImg);
-          if (logoImg) {
-            logoImg.src = './assets/images/EasyBotLogo-Icon.svg';
-          }
-        });
+        const smallLogoLinks = document.querySelectorAll('a.link.cursor-pointer[class~="ml-0.5"][href*="/projects"]');
+
+        if(!smallLogoLinks?.length) {
+          logoLinks.forEach(link => {
+            if (processedElements.has(link)) return;
+            const logoImg = link.querySelector('img[src*="logo.svg"]');
+            console.log("logoImg elements------------------------------", logoImg);
+            if (logoImg) {
+              logoImg.src = 'https://static1.squarespace.com/static/68ed533032e6052ae3be7730/t/691f3e0f69b0132ab8d79550/1763655183680/EasyBotChat.svg';
+            }
+          });
+        } else {
+          smallLogoLinks.forEach(link => {
+            if (processedElements.has(link)) return;
+            const logoImg = link.querySelector('img[src*="logo.svg"]');
+            console.log("logoImg elements------------------------------", logoImg);
+            if (logoImg) {
+              logoImg.src = 'https://static1.squarespace.com/static/68ed533032e6052ae3be7730/t/691f3e0f69b0132ab8d79550/1763655183680/EasyBotChat.svg';
+            }
+          });
+        }
+
+
+        
       };
       
       // Apply SVG color changes immediately
