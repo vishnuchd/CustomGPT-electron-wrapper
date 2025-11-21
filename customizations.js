@@ -212,6 +212,75 @@ const customizations = {
           processedElements.add(section);
         });
       };
+
+      // On /projects/{id}/ask/{conversation_id}, hide specific controls
+      const hideAskRouteElements = () => {
+        const { pathname } = window.location;
+        if (!pathname.includes('/projects/') || !pathname.includes('/ask')) return;
+
+        // Hide buttons inside the container
+        const askContainerButtons = document.querySelectorAll('.items-center.gap-4.space-y-2.py-3.px-4 > button');
+        askContainerButtons.forEach(btn => {
+          if (processedElements.has(btn)) return;
+          btn.style.setProperty('display', 'none', 'important');
+          processedElements.add(btn);
+        });
+
+        // Hide the second <hr> inside the same container
+        const secondHr = document.querySelector('.flex.h-full.max-h-full.overflow-y-auto.gap-4.flex-col > hr:nth-of-type(2)');
+        if (secondHr && !processedElements.has(secondHr)) {
+          secondHr.style.setProperty('display', 'none', 'important');
+          processedElements.add(secondHr);
+        }
+      };
+
+      // On /projects/{id}/analyze, hide export buttons and specific tabs
+      const hideAnalyzeRouteElements = () => {
+        const { pathname } = window.location;
+        if (!pathname.includes('/projects/') || !pathname.endsWith('/analyze')) return;
+
+        // Hide 4th and 5th tabs
+        const fourthTab = document.querySelector('.tabs-parent.mt-6.flex.flex-nowrap.overflow-x-hidden.underlined > div:nth-child(4)');
+        const fifthTab = document.querySelector('.tabs-parent.mt-6.flex.flex-nowrap.overflow-x-hidden.underlined > div:nth-child(5)');
+
+        if (fourthTab && !processedElements.has(fourthTab)) {
+          fourthTab.style.setProperty('display', 'none', 'important');
+          processedElements.add(fourthTab);
+        }
+
+        if (fifthTab && !processedElements.has(fifthTab)) {
+          fifthTab.style.setProperty('display', 'none', 'important');
+          processedElements.add(fifthTab);
+        }
+
+        // Hide all buttons that contain "export" text (case insensitive)
+        const allButtons = document.querySelectorAll('button');
+        allButtons.forEach(btn => {
+          if (processedElements.has(btn)) return;
+          const innerText = btn.innerText || btn.textContent || '';
+          if (innerText.toLowerCase().includes('export')) {
+            btn.style.setProperty('display', 'none', 'important');
+            processedElements.add(btn);
+          }
+        });
+      };
+
+      // On /projects/{id}/explore, hide export buttons and specific tabs
+      const hideCustomerIntelligenceRouteElements = () => {
+        const { pathname } = window.location;
+        if (!pathname.includes('/projects/') || !pathname.endsWith('/explore')) return;
+
+        // Hide all buttons that contain "export" text (case insensitive)
+        const allButtons = document.querySelectorAll('button');
+        allButtons.forEach(btn => {
+          if (processedElements.has(btn)) return;
+          const innerText = btn.innerText || btn.textContent || '';
+          if (innerText.toLowerCase().includes('export')) {
+            btn.style.setProperty('display', 'none', 'important');
+            processedElements.add(btn);
+          }
+        });
+      };
       
       // Customize sidebar menu
       const customizeSidebar = () => {
@@ -402,6 +471,9 @@ const customizations = {
           hideCopilot();
           hideProfileTabsOnProfileRoute();
           hidePersonalizeRouteElements();
+          hideAskRouteElements();
+          hideAnalyzeRouteElements();
+          hideCustomerIntelligenceRouteElements();
           throttleTimer = null;
         }, 100);
       };
@@ -418,6 +490,9 @@ const customizations = {
       hideSourcesTabOnDocumentsPage();
       hideProfileTabsOnProfileRoute();
       hidePersonalizeRouteElements();
+      hideAskRouteElements();
+      hideAnalyzeRouteElements();
+      hideCustomerIntelligenceRouteElements();
       
       // Wait for body to be ready before observing
       if (document.body) {
