@@ -55,8 +55,47 @@ const customizations = {
       // Track processed elements to avoid duplicates
       const processedElements = new WeakSet();
       
-      // Hide logo link in header/navbar but keep space (JavaScript fallback)
+      // Replace logo images with EasyBot logo
       const hideLogoLink = () => {
+        const newLogoUrl = 'https://www.easybot.chat/s/EasyBotChat-long.png';
+        const oldLogoUrl = 'https://assets.customgpt.ai/assets/imgs/logos/logo.svg';
+        
+        // Function to replace logo on an image element
+        const replaceLogo = (img) => {
+          if (processedElements.has(img)) return;
+          if (img.src && (img.src.includes('logo.svg') || img.src.includes('assets.customgpt.ai/assets/imgs/logos/logo.svg'))) {
+            // Clear cache by adding timestamp
+            img.src = newLogoUrl + '?t=' + Date.now();
+            img.setAttribute('src', newLogoUrl + '?t=' + Date.now());
+            // Force reload
+            img.onerror = function() {
+              this.onerror = null;
+              this.src = newLogoUrl;
+            };
+            processedElements.add(img);
+            console.log('[EasyBot] Logo replaced:', img);
+          }
+        };
+
+        // Target the specific v-img logo image with multiple selectors
+        const selectors = [
+          'img.v-img__img.v-img__img--contain[src*="logo.svg"]',
+          'img.v-img__img.v-img__img--contain',
+          'img[src*="assets.customgpt.ai/assets/imgs/logos/logo.svg"]',
+          'img[src="https://assets.customgpt.ai/assets/imgs/logos/logo.svg"]',
+          'img[src*="logo.svg"]'
+        ];
+
+        selectors.forEach(selector => {
+          const images = document.querySelectorAll(selector);
+          images.forEach(img => {
+            if (img.src && (img.src.includes('logo.svg') || img.src.includes('assets.customgpt.ai/assets/imgs/logos/logo.svg'))) {
+              replaceLogo(img);
+            }
+          });
+        });
+
+        // Also handle logo images inside links (existing logic)
         const logoLinks = document.querySelectorAll('a.link[href*="/projects"]');
         const smallLogoLinks = document.querySelectorAll('a.link.cursor-pointer[class~="ml-0.5"][href*="/projects"]');
 
@@ -64,24 +103,27 @@ const customizations = {
           logoLinks.forEach(link => {
             if (processedElements.has(link)) return;
             const logoImg = link.querySelector('img[src*="logo.svg"]');
-            console.log("logoImg elements------------------------------", logoImg);
             if (logoImg) {
-              logoImg.src = 'https://static1.squarespace.com/static/68ed533032e6052ae3be7730/t/691f3e0f69b0132ab8d79550/1763655183680/EasyBotChat.svg';
+              replaceLogo(logoImg);
             }
           });
         } else {
           smallLogoLinks.forEach(link => {
             if (processedElements.has(link)) return;
             const logoImg = link.querySelector('img[src*="logo.svg"]');
-            console.log("logoImg elements------------------------------", logoImg);
             if (logoImg) {
-              logoImg.src = 'https://static1.squarespace.com/static/68ed533032e6052ae3be7730/t/691f3e0f69b0132ab8d79550/1763655183680/EasyBotChat.svg';
+              replaceLogo(logoImg);
             }
           });
         }
 
-
-        
+        // Watch for new images being added
+        const allImages = document.querySelectorAll('img');
+        allImages.forEach(img => {
+          if (img.src && (img.src.includes('logo.svg') || img.src.includes('assets.customgpt.ai/assets/imgs/logos/logo.svg'))) {
+            replaceLogo(img);
+          }
+        });
       };
       
       // Apply SVG color changes immediately
@@ -487,6 +529,7 @@ const customizations = {
           redirectBuildSourcesToDocuments();
           hideSourcesTabOnDocumentsPage();
           applySVGStyles();
+          hideLogoLink();
           customizeSidebar();
           hideCopilot();
           hideProfileTabsOnProfileRoute();
@@ -503,9 +546,28 @@ const customizations = {
         throttledApply();
       });
       
+      // Intercept image loads to catch logo images as they load
+      const originalImageSrcSetter = Object.getOwnPropertyDescriptor(HTMLImageElement.prototype, 'src').set;
+      Object.defineProperty(HTMLImageElement.prototype, 'src', {
+        set: function(value) {
+          if (value && (value.includes('logo.svg') || value.includes('assets.customgpt.ai/assets/imgs/logos/logo.svg'))) {
+            const newLogoUrl = 'https://www.easybot.chat/s/EasyBotChat-long.png';
+            originalImageSrcSetter.call(this, newLogoUrl + '?t=' + Date.now());
+            console.log('[EasyBot] Intercepted logo image load, replaced with:', newLogoUrl);
+            return;
+          }
+          originalImageSrcSetter.call(this, value);
+        },
+        get: function() {
+          return this.getAttribute('src') || '';
+        },
+        configurable: true
+      });
+
       // Apply all customizations immediately
       redirectBuildSourcesToDocuments();
       hideCopilot();
+      hideLogoLink();
       customizeSidebar();
       hideSourcesTabOnDocumentsPage();
       hideProfileTabsOnProfileRoute();
@@ -514,12 +576,17 @@ const customizations = {
       hideAnalyzeRouteElements();
       hideCustomerIntelligenceRouteElements();
       
+      // Also run logo replacement after a delay to catch late-loading images
+      setTimeout(() => hideLogoLink(), 1000);
+      setTimeout(() => hideLogoLink(), 2000);
+      setTimeout(() => hideLogoLink(), 3000);
+      
       // Wait for body to be ready before observing
       if (document.body) {
-        observer.observe(document.body, { childList: true, subtree: true });
+        observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['src'] });
       } else {
         document.addEventListener('DOMContentLoaded', () => {
-          observer.observe(document.body, { childList: true, subtree: true });
+          observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['src'] });
         });
       }
       
