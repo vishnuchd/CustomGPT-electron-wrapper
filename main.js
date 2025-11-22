@@ -4,6 +4,15 @@ const customizations = require('./customizations');
 const { getLoginScript, isLoginPage, isLoggedIn } = require('./login-automation');
 
 let mainWindow;
+const iconPath = path.join(__dirname, 'EasyBotLogo.png');
+const packageJson = require('./package.json');
+const appId = packageJson.appId || 'com.easybot.chat';
+
+// Set app icon early for better cross-platform support
+if (process.platform === 'win32') {
+  // Windows: Set app user model ID for proper taskbar icon
+  app.setAppUserModelId(appId);
+}
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -15,7 +24,7 @@ function createWindow() {
       contextIsolation: true,
       webSecurity: true
     },
-    icon: path.join(__dirname, 'icon.png') // Optional: add icon later
+    icon: iconPath
   });
 
   // Load CustomGPT
@@ -91,6 +100,16 @@ function injectCustomUI() {
 }
 
 app.whenReady().then(() => {
+  // Set app icon for all platforms
+  if (process.platform === 'darwin' && app.dock) {
+    // macOS dock icon
+    app.dock.setIcon(iconPath);
+  } else if (process.platform === 'win32') {
+    // Windows taskbar icon (BrowserWindow icon handles this, but we can also set app icon)
+    app.setAppUserModelId('com.easybot.chat');
+  }
+  // Linux: BrowserWindow icon option handles it automatically
+
   // Redirect /projects/{id}/build/sources to /projects/{id}/build/documents
   const filter = { urls: ['https://app.customgpt.ai/*'] };
   session.defaultSession.webRequest.onBeforeRequest(filter, (details, callback) => {

@@ -519,6 +519,19 @@ const customizations = {
             }
           }
         });
+        
+        // 8. Rename "Build" to "Knowledge base"
+        const buildParagraphs = document.querySelectorAll('p.sideitem-paragraph');
+        buildParagraphs.forEach(p => {
+          if (processedElements.has(p)) return;
+          if (p.textContent.trim() === 'Build') {
+            p.textContent = 'Knowledge base';
+            if (p.innerHTML) {
+              p.innerHTML = p.innerHTML.replace(/Build/g, 'Knowledge base');
+            }
+            processedElements.add(p);
+          }
+        });
       };
       
       // Throttle function to prevent excessive calls
