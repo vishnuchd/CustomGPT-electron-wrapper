@@ -125,7 +125,7 @@ function getLoginScript() {
  */
 function isLoginPage(url) {
   return url.includes('app.customgpt.ai') &&
-    (url.includes('/login') || url === 'https://app.customgpt.ai/' || url.endsWith('app.customgpt.ai'));
+    url.includes('/login');
 }
 
 /**
