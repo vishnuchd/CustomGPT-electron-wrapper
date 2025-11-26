@@ -5,7 +5,8 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "dev": "electron . --dev"
+    "dev": "electron . --dev",
+    "build": "electron-builder"
   },
   "keywords": [
     "electron",
@@ -14,8 +15,53 @@
   "author": "",
   "license": "MIT",
   "appId": "com.easybot.chat",
+  "build": {
+    "appId": "com.easybot.chat",
+    "productName": "CustomGPT Wrapper",
+    "files": [
+      "main.js",
+      "preload.js",
+      "customizations.js",
+      "login-automation.js",
+      "EasyBotLogo.png"
+    ],
+    "directories": {
+      "buildResources": "."
+    },
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "icon": "EasyBotLogo.png",
+      "artifactName": "${productName}-${version}.${ext}",
+      "sign": null,
+      "identity": null
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ],
+      "icon": "EasyBotLogo.png",
+      "artifactName": "${productName}-${version}.${ext}"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "icon": "EasyBotLogo.png",
+      "artifactName": "${productName}-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  },
   "devDependencies": {
     "electron": "^28.0.0",
-    "electron-reload": "^2.0.0-alpha.1"
+    "electron-reload": "^2.0.0-alpha.1",
+    "electron-builder": "^24.6.4"
   }
 }
