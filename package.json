@@ -1,5 +1,5 @@
 {
-  "name": "customgpt-wrapper",
+  "name": "easy-bot-chat",
   "version": "1.0.0",
   "description": "Electron wrapper for CustomGPT with UI customization",
   "main": "main.js",
@@ -17,7 +17,7 @@
   "appId": "com.easybot.chat",
   "build": {
     "appId": "com.easybot.chat",
-    "productName": "CustomGPT Wrapper",
+    "productName": "EasyBotChat",
     "files": [
       "main.js",
       "preload.js",
@@ -42,11 +42,15 @@
       "target": [
         {
           "target": "nsis",
-          "arch": ["x64"]
+          "arch": [
+            "x64"
+          ]
         },
         {
           "target": "portable",
-          "arch": ["x64"]
+          "arch": [
+            "x64"
+          ]
         }
       ],
       "icon": "EasyBotLogo.png",
@@ -70,7 +74,7 @@
   },
   "devDependencies": {
     "electron": "^28.0.0",
-    "electron-reload": "^2.0.0-alpha.1",
-    "electron-builder": "^24.6.4"
+    "electron-builder": "^24.6.4",
+    "electron-reload": "^2.0.0-alpha.1"
   }
 }
