@@ -654,8 +654,6 @@ const customizations = {
       const throttledApply = () => {
         if (throttleTimer) return;
         throttleTimer = setTimeout(() => {
-          redirectBuildSourcesToDocuments();
-          hideSourcesTabOnDocumentsPage();
           applySVGStyles();
           hideLogoLink();
           customizeSidebar();
@@ -695,11 +693,9 @@ const customizations = {
       });
 
       // Apply all customizations immediately
-      redirectBuildSourcesToDocuments();
       hideCopilot();
       hideLogoLink();
       customizeSidebar();
-      hideSourcesTabOnDocumentsPage();
       hideProfileTabsOnProfileRoute();
       hidePersonalizeRouteElements();
       hideAskRouteElements();
