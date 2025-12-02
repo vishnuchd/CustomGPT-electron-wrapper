@@ -50,7 +50,6 @@ const customizations = {
       window.customGPTWrapperApplied = true;
       
       // Add your JavaScript customizations here
-      console.log('Applying custom UI modifications...');
       
       // Track processed elements to avoid duplicates
       const processedElements = new WeakSet();
@@ -73,7 +72,6 @@ const customizations = {
               this.src = newLogoUrl;
             };
             processedElements.add(img);
-            console.log('[EasyBot] Logo replaced:', img);
           }
         };
 
@@ -157,7 +155,6 @@ const customizations = {
 
       const getCurrentRoute = () => {
         const url = window.location.href;        // or window.location.pathname if you only want the path
-        console.log('[EasyBot] Current route:', url);
         return url;
       };
 
@@ -170,7 +167,6 @@ const customizations = {
         const targetUrl = origin + targetPath + search + hash;
 
         if (href !== targetUrl) {
-          console.log('[EasyBot] Redirecting from sources to documents:', targetUrl);
           window.location.replace(targetUrl);
         }
       };
@@ -183,7 +179,6 @@ const customizations = {
         const firstTab = document.querySelector('.flex.relative.w-100.mt-auto > .tabs-parent.mt-6.flex.flex-nowrap.overflow-x-hidden.underlined > div:first-child');
         if (!firstTab || processedElements.has(firstTab)) return;
 
-        console.log('[EasyBot] Hiding first build tab on documents page:', firstTab);
         firstTab.style.setProperty('display', 'none', 'important');
         processedElements.add(firstTab);
       };
@@ -196,9 +191,7 @@ const customizations = {
 
         // Hide profile page extra tabs
         const tabs = document.querySelectorAll('.tabs-parent.flex-wrap.gap-2.mt-6.flex > div:not(:first-child)');
-        console.log("tabs------------------------------", tabs);
         tabs.forEach(tab => {
-          console.log("tab------------------------------", tab);
           if (processedElements.has(tab)) return;
           tab.style.setProperty('display', 'none', 'important');
           processedElements.add(tab);
@@ -206,9 +199,7 @@ const customizations = {
 
         // Hide email from profile form
         const fieldContainers = document.querySelectorAll('.v-form.mt-2 > .v-row > div:not(:first-child)');
-        console.log("fieldContainers------------------------------", fieldContainers);
         fieldContainers.forEach(fieldContainer => {
-          console.log("fieldContainer------------------------------", fieldContainer);
           if (processedElements.has(fieldContainer)) return;
           fieldContainer.style.setProperty('display', 'none', 'important');
           processedElements.add(fieldContainer);
@@ -216,9 +207,7 @@ const customizations = {
 
         // Hide profile page extra sections
         const sections = document.querySelectorAll('.v-window__container > .v-row > div:not(:first-child)');
-        console.log("sections------------------------------", sections);
         sections.forEach(section => {
-          console.log("section------------------------------", section);
           if (processedElements.has(section)) return;
           section.style.setProperty('display', 'none', 'important');
           processedElements.add(section);
@@ -373,7 +362,6 @@ const customizations = {
         // Add Auth0 click handler
         customButton.addEventListener('click', async (e) => {
           e.preventDefault();
-          console.log('[EasyBot] Auth0 login button clicked');
           
           // Disable button and show loading state
           customButton.disabled = true;
@@ -388,7 +376,6 @@ const customizations = {
             
             // Trigger Auth0 login flow - this will open popup and redirect back here
             const result = await window.electronAPI.auth0Login();
-            console.log('[EasyBot] Auth0 flow initiated:', result.message);
             
             // The page will be redirected with the auth code
             // The main process will handle token exchange and trigger login automation
@@ -412,7 +399,6 @@ const customizations = {
         // Insert the button after the last mb-2.5 div
         lastMbDiv.insertAdjacentElement('afterend', customButton);
         
-        console.log('[EasyBot] Custom button added to login page');
         processedElements.add(container);
       };
       
@@ -639,7 +625,6 @@ const customizations = {
           if (value && (value.includes('logo.svg') || value.includes('assets.customgpt.ai/assets/imgs/logos/logo.svg'))) {
             const newLogoUrl = 'https://www.easybot.chat/s/EasyBotChat-long.png';
             originalImageSrcSetter.call(this, newLogoUrl + '?t=' + Date.now());
-            console.log('[EasyBot] Intercepted logo image load, replaced with:', newLogoUrl);
             return;
           }
           originalImageSrcSetter.call(this, value);
