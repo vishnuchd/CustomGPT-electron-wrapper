@@ -308,6 +308,87 @@ const customizations = {
           }
         });
       };
+      // On /projects/{projectID}/pages/{pageID}/metadata, hide specific metadata property card
+      const hideMetadataPropertyCard = () => {
+        try {
+          const { pathname } = window.location;
+          // Check if we're on a metadata page: /projects/{projectID}/pages/{pageID}/metadata
+          if (!pathname.includes('/pages/') || !pathname.includes('/metadata')) return;
+          
+          // Find the parent container first
+          const parentCard = document.querySelectorAll('.v-card.v-theme--CustomGPT.v-card--density-default.v-card--variant-elevated.mb-3');
+          if (!parentCard) return;
+          
+          const cardText = Array.from(parentCard)[1].querySelector('.v-card-text');
+          if (!cardText) return;
+          
+          // Find the second child that matches the metadata property class
+          const metadataProperties = cardText.querySelectorAll('.metadata-property.mb-3.bg-light');
+          if (metadataProperties.length >= 2) {
+            const targetElement = metadataProperties[1]; // Second element (index 1)
+            if (targetElement && !processedElements.has(targetElement)) {
+              targetElement.style.setProperty('display', 'none', 'important');
+              processedElements.add(targetElement);
+            }
+          }
+        } catch (error) {
+          console.error('[EasyBot] Error in hideMetadataPropertyCard:', error);
+        }
+      };
+
+      // Hide widget that keeps reappearing (cookie consent or similar)
+      const hideReappearingWidget = () => {
+        try {
+          // Hide spans with cc-1qbp0 and cc-1o31k classes
+          const widgetSpans = document.querySelectorAll('span.cc-1qbp0.cc-1o31k');
+          const widgetSpans2 = document.querySelectorAll('.cgptcb-chat-bubble.visible');
+          
+          widgetSpans.forEach(span => {
+            if (!processedElements.has(span)) {
+              span.style.setProperty('display', 'none', 'important');
+              span.style.setProperty('visibility', 'hidden', 'important');
+              span.style.setProperty('opacity', '0', 'important');
+              span.style.setProperty('pointer-events', 'none', 'important');
+              processedElements.add(span);
+            }
+          });
+          widgetSpans2.forEach(span => {
+            if (!processedElements.has(span)) {
+              span.style.setProperty('display', 'none', 'important');
+              span.style.setProperty('visibility', 'hidden', 'important');
+              span.style.setProperty('opacity', '0', 'important');
+              span.style.setProperty('pointer-events', 'none', 'important');
+              processedElements.add(span);
+            }
+          });
+
+          // Hide elements matching the deeper selector
+          const widgetContainers = document.querySelectorAll('.cc-yv368 .cc-1kr6o .cc-18ov6 .cc-1qbp0');
+          widgetContainers.forEach(container => {
+            if (!processedElements.has(container)) {
+              container.style.setProperty('display', 'none', 'important');
+              container.style.setProperty('visibility', 'hidden', 'important');
+              container.style.setProperty('opacity', '0', 'important');
+              container.style.setProperty('pointer-events', 'none', 'important');
+              processedElements.add(container);
+            }
+          });
+
+          // Also hide any parent containers with these classes
+          const parentContainers = document.querySelectorAll('.cc-yv368, .cc-1kr6o, .cc-18ov6');
+          parentContainers.forEach(parent => {
+            if (!processedElements.has(parent)) {
+              parent.style.setProperty('display', 'none', 'important');
+              parent.style.setProperty('visibility', 'hidden', 'important');
+              parent.style.setProperty('opacity', '0', 'important');
+              parent.style.setProperty('pointer-events', 'none', 'important');
+              processedElements.add(parent);
+            }
+          });
+        } catch (error) {
+          console.error('[EasyBot] Error in hideReappearingWidget:', error);
+        }
+      };
 
       // On /login page, add custom button to login container
       const addCustomButtonToLogin = () => {
@@ -584,6 +665,8 @@ const customizations = {
           hideAskRouteElements();
           hideAnalyzeRouteElements();
           hideCustomerIntelligenceRouteElements();
+          hideMetadataPropertyCard();
+          hideReappearingWidget();
           addCustomButtonToLogin();
           throttleTimer = null;
         }, 100);
@@ -622,12 +705,19 @@ const customizations = {
       hideAskRouteElements();
       hideAnalyzeRouteElements();
       hideCustomerIntelligenceRouteElements();
+      hideMetadataPropertyCard();
+      hideReappearingWidget();
       addCustomButtonToLogin();
       
       // Also run logo replacement after a delay to catch late-loading images
       setTimeout(() => hideLogoLink(), 1000);
       setTimeout(() => hideLogoLink(), 2000);
       setTimeout(() => hideLogoLink(), 3000);
+      
+      // Aggressively hide reappearing widget every 2 seconds
+      setInterval(() => {
+        hideReappearingWidget();
+      }, 2000);
       
       // Wait for body to be ready before observing
       if (document.body) {
