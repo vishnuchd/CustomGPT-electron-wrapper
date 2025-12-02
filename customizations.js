@@ -158,31 +158,6 @@ const customizations = {
         return url;
       };
 
-      // Redirect /projects/{id}/build/sources -> /projects/{id}/build/documents
-      const redirectBuildSourcesToDocuments = () => {
-        const { href, pathname, search, hash, origin } = window.location;
-        if (!pathname.includes('/projects/') || !pathname.endsWith('/build/sources')) return;
-
-        const targetPath = pathname.replace('/build/sources', '/build/documents');
-        const targetUrl = origin + targetPath + search + hash;
-
-        if (href !== targetUrl) {
-          window.location.replace(targetUrl);
-        }
-      };
-
-      // On /projects/{id}/build/documents, hide the first tab in the bottom tabs bar
-      const hideSourcesTabOnDocumentsPage = () => {
-        const { pathname } = window.location;
-        if (!pathname.includes('/projects/') || !pathname.endsWith('/build/documents')) return;
-
-        const firstTab = document.querySelector('.flex.relative.w-100.mt-auto > .tabs-parent.mt-6.flex.flex-nowrap.overflow-x-hidden.underlined > div:first-child');
-        if (!firstTab || processedElements.has(firstTab)) return;
-
-        firstTab.style.setProperty('display', 'none', 'important');
-        processedElements.add(firstTab);
-      };
-
       // Hide profile page extra tabs on /profile route
       const hideProfileTabsOnProfileRoute = () => {
         const currentRoute = getCurrentRoute();

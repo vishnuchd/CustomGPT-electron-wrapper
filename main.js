@@ -319,25 +319,6 @@ app.whenReady().then(() => {
     // Windows taskbar icon (BrowserWindow icon handles this, but we can also set app icon)
     app.setAppUserModelId('com.easybot.chat');
   }
-  // Linux: BrowserWindow icon option handles it automatically
-
-  // Redirect /projects/{id}/build/sources to /projects/{id}/build/documents
-  const filter = { urls: ['https://app.customgpt.ai/*'] };
-  session.defaultSession.webRequest.onBeforeRequest(filter, (details, callback) => {
-    const url = details.url;
-    try {
-      const parsed = new URL(url);
-      if (parsed.pathname.includes('/projects/') && parsed.pathname.endsWith('/build/sources')) {
-        const redirectPath = parsed.pathname.replace('/build/sources', '/build/documents');
-        const redirectURL = `${parsed.origin}${redirectPath}${parsed.search}${parsed.hash}`;
-        console.log('Redirecting build/sources -> build/documents:', redirectURL);
-        return callback({ redirectURL });
-      }
-    } catch (e) {
-      // If URL parsing fails, just continue normally
-    }
-    callback({});
-  });
 
   createWindow();
 
