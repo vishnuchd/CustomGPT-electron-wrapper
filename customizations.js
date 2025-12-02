@@ -224,7 +224,8 @@ const customizations = {
           'Conversation Exporting',
           'Branding',
           'Data Protection',
-          'Recaptcha'
+          'Recaptcha',
+          'Affiliate ID'
         ]);
 
         sections.forEach(section => {
