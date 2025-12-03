@@ -40,6 +40,210 @@ const customizations = {
     a.link.cursor-pointer[class~="ml-0.5"][href*="/projects"] {
       margin: 0 !important;
     }
+
+    .v-overlay__scrim  {
+      display: none !important;
+    }
+
+    span.cc-1qbp0.cc-1o31k{
+      display: none !important;
+    }
+    .cc-yv368 .cc-1kr6o .cc-18ov6 .cc-1qbp0{
+      display: none !important;
+    }
+
+    /* Custom Website Modal Styles */
+    .easybot-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+    .easybot-modal {
+      background: #fff;
+      border-radius: 12px;
+      width: 500px;
+      max-width: 90vw;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+    .easybot-modal-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid #e0e0e0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .easybot-modal-header h2 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 600;
+      color: #1a1a1a;
+    }
+    .easybot-modal-close {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: #666;
+      padding: 0;
+      line-height: 1;
+    }
+    .easybot-modal-close:hover {
+      color: #000;
+    }
+    .easybot-modal-body {
+      padding: 24px;
+    }
+    .easybot-form-group {
+      margin-bottom: 20px;
+    }
+    .easybot-input-wrapper {
+      display: flex;
+      border: 1px solid #d0d0d0;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .easybot-input-wrapper:focus-within {
+      border-color: #000;
+    }
+    .easybot-input-prefix {
+      background: #f5f5f5;
+      padding: 10px 12px;
+      color: #666;
+      font-size: 14px;
+      border-right: 1px solid #d0d0d0;
+    }
+    .easybot-input {
+      flex: 1;
+      border: none;
+      padding: 10px 12px;
+      font-size: 14px;
+      outline: none;
+    }
+    .easybot-input-wrapper.error {
+      border-color: #f44336;
+    }
+    .easybot-error-message {
+      display: none;
+      color: #f44336;
+      font-size: 12px;
+      margin-top: 6px;
+    }
+    .easybot-error-message.visible {
+      display: block;
+    }
+    .easybot-checkbox-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .easybot-select {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #d0d0d0;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+      cursor: pointer;
+      background: #fff;
+    }
+    .easybot-select:focus {
+      border-color: #000;
+    }
+    .easybot-custom-schedule {
+      margin-top: 16px;
+      padding: 16px;
+      background: #f9f9f9;
+      border-radius: 8px;
+      display: none;
+    }
+    .easybot-custom-schedule.visible {
+      display: block;
+    }
+    .easybot-weekdays {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .easybot-weekday-chip {
+      padding: 6px 14px;
+      border: 1px solid #d0d0d0;
+      border-radius: 20px;
+      font-size: 13px;
+      cursor: pointer;
+      background: #fff;
+      transition: all 0.2s;
+    }
+    .easybot-weekday-chip.selected {
+      background: #000;
+      color: #fff;
+      border-color: #000;
+    }
+    .easybot-time-inputs {
+      display: flex;
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .easybot-time-input {
+      flex: 1;
+    }
+    .easybot-time-input input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #d0d0d0;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+    }
+    .easybot-time-input input:focus {
+      border-color: #000;
+    }
+    .easybot-time-input span {
+      display: block;
+      font-size: 12px;
+      color: #666;
+      margin-top: 4px;
+    }
+    .easybot-modal-footer {
+      padding: 16px 24px 24px;
+    }
+    .easybot-note {
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+    .easybot-submit-btn {
+      width: 100%;
+      padding: 12px;
+      background: #000;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .easybot-submit-btn:hover {
+      background: #333;
+    }
+    .easybot-sharepoint-message {
+      font-size: 15px;
+      line-height: 1.6;
+      color: #333;
+      margin: 0;
+    }
   `,
 
   // JavaScript customizations
@@ -259,12 +463,20 @@ const customizations = {
           secondHr.style.setProperty('display', 'none', 'important');
           processedElements.add(secondHr);
         }
+        
+        // Hide share agent icon
+        const shareAgent = document.querySelector('.flex.min-w-0.items-center.gap-4 + div');
+        if (shareAgent && !processedElements.has(shareAgent)) {
+          shareAgent.style.setProperty('display', 'none', 'important');
+          processedElements.add(shareAgent);
+        }
       };
 
       // On /projects/{id}/analyze, hide export buttons and specific tabs
       const hideAnalyzeRouteElements = () => {
         const { pathname } = window.location;
-        if (!pathname.includes('/projects/') || !pathname.endsWith('/analyze')) return;
+        const pathEnds = ['/analyze', '/explore', '/outgoing-traffic'];
+        if (!pathname.includes('/projects/') || !pathEnds.some(end => pathname.endsWith(end))) return;
 
         // Hide 4th and 5th tabs
         const fourthTab = document.querySelector('.tabs-parent.mt-6.flex.flex-nowrap.overflow-x-hidden.underlined > div:nth-child(4)');
@@ -308,6 +520,526 @@ const customizations = {
           }
         });
       };
+
+      // On any /projects/ route, hide specific button elements
+      const hideShareAgentButton = () => {
+        try {
+          const { pathname } = window.location;
+          if (!pathname.includes('/projects/')) return;
+
+          // Hide buttons with specific classes
+          const targetButtons = document.querySelectorAll('.v-btn.v-theme--CustomGPT.text-primary.v-btn--density-default.v-btn--size-default.v-btn--variant-outlined.h-10.w-10.min-w-10.border-2');
+          targetButtons.forEach(btn => {
+            if (!processedElements.has(btn)) {
+              btn.style.setProperty('display', 'none', 'important');
+              processedElements.add(btn);
+            }
+          });
+        } catch (error) {
+          console.error('[EasyBot] Error in hideShareAgentButton:', error);
+        }
+      };
+
+      // Customize build/sources page elements
+      // Only on /projects/{ID}/build/sources page
+      const customizeBuildSourcesPage = () => {
+        const { pathname } = window.location;
+        if (!pathname.includes('/projects/') || !pathname.endsWith('/build/sources')) return;
+        
+        // 1. Hide integration cards that are not "File Upload", "Website", or "SharePoint Docs"
+        const allowedTexts = new Set(['File Upload', 'Website', 'SharePoint Docs']);
+        const integrationCards = document.querySelectorAll('.integration-card.text-center');
+        
+        integrationCards.forEach(card => {
+          if (processedElements.has(card)) return;
+          
+          const textElement = card.querySelector('.flex.w-100.items-center.justify-start.gap-2.px-2 > p.font-normal.text-body.break-normal');
+          
+          if (textElement) {
+            const text = textElement.innerText.trim();
+            
+            if (!allowedTexts.has(text)) {
+              card.style.setProperty('display', 'none', 'important');
+              processedElements.add(card);
+            }
+          }
+        });
+        
+        // 2. Change "Build By Uploading Your Files" to "Upload Files"
+        const cardTitles = document.querySelectorAll('.v-card.v-theme--CustomGPT.v-card--density-comfortable.rounded-card.v-card--variant-elevated.shadow-card.h-full > .v-card-item > .v-card-item__content > .v-card-title > h3.text-heading');
+        cardTitles.forEach(title => {
+          if (processedElements.has(title)) return;
+          if (title.innerText.trim() === 'Build By Uploading Your Files') {
+            title.innerText = 'Upload Files';
+            processedElements.add(title);
+          }
+        });
+        
+        // 3. Change privacy text
+        const paragraphs = document.querySelectorAll('.paragraph-small.font-medium.text-body.my-4');
+        paragraphs.forEach(p => {
+          if (processedElements.has(p)) return;
+          // Change the text content
+          p.innerText = 'Your privacy and security are important to us. All documents you upload are securely encrypted, processed and deleted from our systems.';
+          
+          // Hide any links inside this paragraph
+          const links = p.querySelectorAll('a');
+          links.forEach(link => {
+            link.style.setProperty('display', 'none', 'important');
+          });
+          
+          processedElements.add(p);
+        });
+        
+        // 4. Change AI Vision text
+        const aiVisionElements = document.querySelectorAll('.font-normal.text-body.cursor-pointer');
+        aiVisionElements.forEach(element => {
+          if (processedElements.has(element)) return;
+          element.innerHTML = '<b>New</b>: Intelligently process your uploaded images with AI Vision';
+          processedElements.add(element);
+        });
+        
+        // 5. Shorten AI Vision credits text
+        const creditElements = document.querySelectorAll('.me-1.text-body');
+        creditElements.forEach(element => {
+          if (processedElements.has(element)) return;
+          if (element.innerText.includes('AI Vision Image Processing') && element.innerText.includes('Vision Credits used in this billing cycle')) {
+            element.innerText = 'AI Vision Image Processing';
+            processedElements.add(element);
+          }
+        });
+        
+        // 6. Hide documentation link
+        const docLinks = document.querySelectorAll('.mt-4.flex.gap-4 > a[href="https://docs.customgpt.ai/docs/how-to-add-pdfs-and-documents"]');
+        docLinks.forEach(link => {
+          if (processedElements.has(link)) return;
+          link.style.setProperty('display', 'none', 'important');
+          processedElements.add(link);
+        });
+
+        // 7. Intercept Website card click to show custom modal
+        integrationCards.forEach(card => {
+          const textElement = card.querySelector('.flex.w-100.items-center.justify-start.gap-2.px-2 > p.font-normal.text-body.break-normal');
+          if (textElement && textElement.innerText.trim() === 'Website') {
+            if (card.dataset.easybotIntercepted) return;
+            card.dataset.easybotIntercepted = 'true';
+            
+            card.addEventListener('click', (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              e.stopImmediatePropagation();
+              showWebsiteModal();
+            }, true);
+          }
+          
+          // 8. Intercept SharePoint Docs card click to show custom modal
+          if (textElement && textElement.innerText.trim() === 'SharePoint Docs') {
+            if (card.dataset.easybotSharepointIntercepted) return;
+            card.dataset.easybotSharepointIntercepted = 'true';
+            
+            card.addEventListener('click', (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              e.stopImmediatePropagation();
+              showSharepointModal();
+            }, true);
+          }
+        });
+      };
+
+      // Show custom Website modal
+      const showWebsiteModal = () => {
+        // Remove existing modal if any
+        const existingModal = document.querySelector('.easybot-modal-overlay');
+        if (existingModal) existingModal.remove();
+
+        const modalHTML = \`
+          <div class="easybot-modal-overlay">
+            <div class="easybot-modal">
+              <div class="easybot-modal-header">
+                <h2>Add Website</h2>
+                <button class="easybot-modal-close" type="button">&times;</button>
+              </div>
+              <div class="easybot-modal-body">
+                <div class="easybot-form-group">
+                  <label>Website URL</label>
+                  <div class="easybot-input-wrapper" id="easybot-url-wrapper">
+                    <span class="easybot-input-prefix">https://</span>
+                    <input type="text" class="easybot-input" id="easybot-website-url" placeholder="example.com">
+                  </div>
+                  <span class="easybot-error-message" id="easybot-url-error"></span>
+                </div>
+
+                <div class="easybot-form-group">
+                  <div class="easybot-checkbox-group">
+                    <div
+                      class="v-input v-input--horizontal v-input--center-affix v-input--density-compact v-theme--CustomGPT v-locale--is-ltr v-switch v-switch--inset"
+                      data-checked="false"
+                    >
+                      <div class="v-input__control">
+                        <div class="v-selection-control v-selection-control--density-compact flex items-center">
+                          <div class="v-selection-control__wrapper">
+                            <div class="v-switch__track"></div>
+                            <div class="v-selection-control__input">
+                              <input
+                                id="easybot-crawl-entire"
+                                aria-disabled="false"
+                                type="checkbox"
+                                value="true"
+                              />
+                              <div class="v-switch__thumb"></div>
+                            </div>
+                          </div>
+                          <label
+                            class="v-label v-label--clickable"
+                            for="easybot-crawl-entire"
+                            style="opacity: 1"
+                          >
+                            <p class="font-normal text-body me-2">Crawl Entire Site</p>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div
+                      class="v-input v-input--horizontal v-input--center-affix v-input--density-compact v-theme--CustomGPT v-locale--is-ltr v-switch v-switch--inset"
+                      data-checked="false"
+                    >
+                      <div class="v-input__control">
+                        <div class="v-selection-control v-selection-control--density-compact">
+                          <div class="v-selection-control__wrapper">
+                            <div class="v-switch__track"></div>
+                            <div class="v-selection-control__input">
+                              <input
+                                id="easybot-login-required"
+                                aria-disabled="false"
+                                type="checkbox"
+                                value="true"
+                              />
+                              <div class="v-switch__thumb"></div>
+                            </div>
+                          </div>
+                          <label
+                            class="v-label v-label--clickable"
+                            for="easybot-login-required"
+                            style="opacity: 1"
+                          >
+                            <p class="font-normal text-body me-2">Login Required</p>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="easybot-form-group">
+                  <label>Refresh Schedule</label>
+                  <select class="easybot-select" id="easybot-schedule">
+                    <option value="never">Never</option>
+                    <option value="daily">Daily</option>
+                    <option value="weekly">Weekly</option>
+                    <option value="monthly">Monthly</option>
+                    <option value="custom">Custom</option>
+                  </select>
+                </div>
+
+                <div class="easybot-custom-schedule" id="easybot-custom-schedule">
+                  <div class="easybot-form-group">
+                    <label>Repeat on (days)</label>
+                    <div class="easybot-weekdays">
+                      <span class="easybot-weekday-chip" data-day="mon">Mon</span>
+                      <span class="easybot-weekday-chip" data-day="tue">Tue</span>
+                      <span class="easybot-weekday-chip" data-day="wed">Wed</span>
+                      <span class="easybot-weekday-chip" data-day="thu">Thu</span>
+                      <span class="easybot-weekday-chip" data-day="fri">Fri</span>
+                      <span class="easybot-weekday-chip" data-day="sat">Sat</span>
+                      <span class="easybot-weekday-chip" data-day="sun">Sun</span>
+                    </div>
+                  </div>
+                  <div class="easybot-form-group">
+                    <label>Repeat at (time)</label>
+                    <div class="easybot-time-inputs">
+                      <div class="easybot-time-input">
+                        <input type="number" id="easybot-hour" min="0" max="23" placeholder="12">
+                        <span>Hour (0-23)</span>
+                      </div>
+                      <div class="easybot-time-input">
+                        <input type="number" id="easybot-minute" min="0" max="59" placeholder="00">
+                        <span>Minute (0-59)</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="easybot-modal-footer">
+                <p class="easybot-note">Allow 1-2 business days for site to be indexed and added</p>
+                <button class="easybot-submit-btn" id="easybot-submit">Add Website</button>
+              </div>
+            </div>
+          </div>
+        \`;
+
+        document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+        const modal = document.querySelector('.easybot-modal-overlay');
+        const closeBtn = modal.querySelector('.easybot-modal-close');
+        const scheduleSelect = modal.querySelector('#easybot-schedule');
+        const customScheduleDiv = modal.querySelector('#easybot-custom-schedule');
+        const weekdayChips = modal.querySelectorAll('.easybot-weekday-chip');
+        const submitBtn = modal.querySelector('#easybot-submit');
+
+        // Close modal on overlay click
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) modal.remove();
+        });
+
+        // Close button
+        closeBtn.addEventListener('click', () => modal.remove());
+
+        // Escape key to close
+        const escHandler = (e) => {
+          if (e.key === 'Escape') {
+            modal.remove();
+            document.removeEventListener('keydown', escHandler);
+          }
+        };
+        document.addEventListener('keydown', escHandler);
+
+        // Handle switch toggle for checkboxes
+        const switches = modal.querySelectorAll('.v-switch');
+        switches.forEach(switchEl => {
+          const checkbox = switchEl.querySelector('input[type="checkbox"]');
+          if (checkbox) {
+            const selectionControl = switchEl.querySelector('.v-selection-control');
+            const wrapper = switchEl.querySelector('.v-selection-control__wrapper');
+            const track = switchEl.querySelector('.v-switch__track');
+            
+            // Update visual state when checkbox changes
+            const updateState = () => {
+              const isChecked = checkbox.checked;
+              
+              // Update data-checked attribute
+              switchEl.setAttribute('data-checked', isChecked ? 'true' : 'false');
+              
+              // Toggle classes on selection control
+              if (selectionControl) {
+                selectionControl.classList.toggle('v-selection-control--dirty', isChecked);
+              }
+              
+              // Toggle classes on wrapper
+              if (wrapper) {
+                wrapper.classList.toggle('text-primary', isChecked);
+              }
+              
+              // Toggle classes on track
+              if (track) {
+                track.classList.toggle('bg-primary', isChecked);
+              }
+            };
+            
+            checkbox.addEventListener('change', updateState);
+            
+            // Also handle clicks on the wrapper/track/thumb
+            if (wrapper) {
+              wrapper.addEventListener('click', (e) => {
+                if (e.target !== checkbox) {
+                  checkbox.checked = !checkbox.checked;
+                  updateState();
+                }
+              });
+            }
+            
+            // Handle clicks on the label
+            const label = switchEl.querySelector('.v-label');
+            if (label) {
+              label.addEventListener('click', (e) => {
+                e.preventDefault();
+                checkbox.checked = !checkbox.checked;
+                updateState();
+              });
+            }
+          }
+        });
+
+        // Schedule select change
+        scheduleSelect.addEventListener('change', (e) => {
+          if (e.target.value === 'custom') {
+            customScheduleDiv.classList.add('visible');
+          } else {
+            customScheduleDiv.classList.remove('visible');
+          }
+        });
+
+        // Weekday chip selection
+        weekdayChips.forEach(chip => {
+          chip.addEventListener('click', () => {
+            chip.classList.toggle('selected');
+          });
+        });
+
+        // Validation helper
+        const urlInput = modal.querySelector('#easybot-website-url');
+        const urlWrapper = modal.querySelector('#easybot-url-wrapper');
+        const urlError = modal.querySelector('#easybot-url-error');
+        
+        const validateUrl = (url) => {
+          // Remove any leading/trailing whitespace
+          url = url.trim();
+          
+          // Check if empty
+          if (!url) {
+            return { valid: false, message: 'Please enter a website URL' };
+          }
+          
+          // Must contain at least one dot
+          if (url.indexOf('.') === -1) {
+            return { valid: false, message: 'Please enter a valid URL (e.g., example.com)' };
+          }
+          
+          // Split by dot to check TLD
+          const parts = url.split('/')[0].split('.'); // Get domain part before any path
+          const tld = parts[parts.length - 1];
+          
+          // TLD must be at least 2 characters and only letters
+          if (tld.length < 2 || !/^[a-zA-Z]+$/.test(tld)) {
+            return { valid: false, message: 'Please enter a valid URL (e.g., example.com)' };
+          }
+          
+          // Domain part (before TLD) must exist and be valid
+          const domain = parts.slice(0, -1).join('.');
+          if (!domain || domain.length === 0) {
+            return { valid: false, message: 'Please enter a valid URL (e.g., example.com)' };
+          }
+          
+          // Check for invalid characters in domain
+          if (!/^[a-zA-Z0-9][a-zA-Z0-9.-]*[a-zA-Z0-9]$/.test(url.split('/')[0]) && url.split('/')[0].length > 1) {
+            return { valid: false, message: 'Please enter a valid URL (e.g., example.com)' };
+          }
+          
+          return { valid: true, message: '' };
+        };
+        
+        const showError = (message) => {
+          urlWrapper.classList.add('error');
+          urlError.textContent = message;
+          urlError.classList.add('visible');
+        };
+        
+        const clearError = () => {
+          urlWrapper.classList.remove('error');
+          urlError.textContent = '';
+          urlError.classList.remove('visible');
+        };
+        
+        // Clear error on input
+        urlInput.addEventListener('input', clearError);
+
+        // Submit button
+        submitBtn.addEventListener('click', () => {
+          const websiteUrl = urlInput.value.trim();
+          
+          // Validate URL
+          const validation = validateUrl(websiteUrl);
+          if (!validation.valid) {
+            showError(validation.message);
+            urlInput.focus();
+            return;
+          }
+          
+          clearError();
+          
+          const crawlEntire = modal.querySelector('#easybot-crawl-entire').checked;
+          const loginRequired = modal.querySelector('#easybot-login-required').checked;
+          const schedule = scheduleSelect.value;
+          
+          const formData = {
+            websiteUrl: 'https://' + websiteUrl,
+            crawlEntireSite: crawlEntire,
+            loginRequired: loginRequired,
+            schedule: schedule
+          };
+
+          if (schedule === 'custom') {
+            const selectedDays = Array.from(modal.querySelectorAll('.easybot-weekday-chip.selected'))
+              .map(chip => chip.dataset.day);
+            const hour = modal.querySelector('#easybot-hour').value || '12';
+            const minute = modal.querySelector('#easybot-minute').value || '00';
+            
+            formData.customSchedule = {
+              days: selectedDays,
+              time: {
+                hour: parseInt(hour, 10),
+                minute: parseInt(minute, 10)
+              }
+            };
+          }
+
+          console.log('[EasyBot] Website Form Submitted:', formData);
+          modal.remove();
+        });
+      };
+
+      // Show custom SharePoint modal
+      const showSharepointModal = () => {
+        // Remove existing modal if any
+        const existingModal = document.querySelector('.easybot-modal-overlay');
+        if (existingModal) existingModal.remove();
+
+        // Extract projectId from URL
+        const pathname = window.location.pathname;
+        const projectIdMatch = pathname.match(/\\/projects\\/(\\d+)/);
+        const projectId = projectIdMatch ? projectIdMatch[1] : 'UNKNOWN';
+        
+        const guestEmail = 'system+' + projectId + '@easybot.chat';
+        const message = 'Please create a Guest Account for "' + guestEmail + '" with access to the folders/files you would like to add.';
+
+        const modalHTML = \`
+          <div class="easybot-modal-overlay">
+            <div class="easybot-modal">
+              <div class="easybot-modal-header">
+                <h2>Add Sharepoint</h2>
+                <button class="easybot-modal-close" type="button">&times;</button>
+              </div>
+              <div class="easybot-modal-body">
+                <p class="easybot-sharepoint-message">\${message}</p>
+              </div>
+              <div class="easybot-modal-footer">
+                <button class="easybot-submit-btn" id="easybot-sharepoint-submit">Submit</button>
+              </div>
+            </div>
+          </div>
+        \`;
+
+        document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+        const modal = document.querySelector('.easybot-modal-overlay');
+        const closeBtn = modal.querySelector('.easybot-modal-close');
+        const submitBtn = modal.querySelector('#easybot-sharepoint-submit');
+
+        // Close modal on overlay click
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) modal.remove();
+        });
+
+        // Close button
+        closeBtn.addEventListener('click', () => modal.remove());
+
+        // Escape key to close
+        const escHandler = (e) => {
+          if (e.key === 'Escape') {
+            modal.remove();
+            document.removeEventListener('keydown', escHandler);
+          }
+        };
+        document.addEventListener('keydown', escHandler);
+
+        // Submit button
+        submitBtn.addEventListener('click', () => {
+          console.log('[EasyBot] SharePoint:', message);
+          modal.remove();
+        });
+      };
+
       // On /projects/{projectID}/pages/{pageID}/metadata, hide specific metadata property card
       const hideMetadataPropertyCard = () => {
         try {
@@ -333,6 +1065,24 @@ const customizations = {
           }
         } catch (error) {
           console.error('[EasyBot] Error in hideMetadataPropertyCard:', error);
+        }
+      };
+
+      // Hide overflow hidden rounded element
+      const hideOverflowRoundedElement = () => {
+        try {
+          const elements = document.querySelectorAll('.overflow-hidden.rounded-3xl.bg-white.text-center');
+          elements.forEach(element => {
+            if (!processedElements.has(element)) {
+              element.style.setProperty('display', 'none', 'important');
+              element.style.setProperty('visibility', 'hidden', 'important');
+              element.style.setProperty('opacity', '0', 'important');
+              element.style.setProperty('pointer-events', 'none', 'important');
+              processedElements.add(element);
+            }
+          });
+        } catch (error) {
+          console.error('[EasyBot] Error in hideOverflowRoundedElement:', error);
         }
       };
 
@@ -663,9 +1413,12 @@ const customizations = {
           hideAskRouteElements();
           hideAnalyzeRouteElements();
           hideCustomerIntelligenceRouteElements();
+          hideShareAgentButton();
           hideMetadataPropertyCard();
           hideReappearingWidget();
+          hideOverflowRoundedElement();
           addCustomButtonToLogin();
+          customizeBuildSourcesPage();
           throttleTimer = null;
         }, 100);
       };
@@ -701,18 +1454,22 @@ const customizations = {
       hideAskRouteElements();
       hideAnalyzeRouteElements();
       hideCustomerIntelligenceRouteElements();
+      hideShareAgentButton();
       hideMetadataPropertyCard();
       hideReappearingWidget();
+      hideOverflowRoundedElement();
       addCustomButtonToLogin();
+      customizeBuildSourcesPage();
       
       // Also run logo replacement after a delay to catch late-loading images
       setTimeout(() => hideLogoLink(), 1000);
       setTimeout(() => hideLogoLink(), 2000);
       setTimeout(() => hideLogoLink(), 3000);
       
-      // Aggressively hide reappearing widget every 2 seconds
+      // Aggressively hide reappearing elements every 2 seconds
       setInterval(() => {
         hideReappearingWidget();
+        hideOverflowRoundedElement();
       }, 2000);
       
       // Wait for body to be ready before observing
