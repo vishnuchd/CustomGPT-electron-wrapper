@@ -244,6 +244,10 @@ const customizations = {
       color: #333;
       margin: 0;
     }
+
+    div#activatorElement > .flex.flex-col.gap-1.rounded.bg-white.px-2.py-1.shadow-card > a[href="https://app.customgpt.ai/teams"] {
+      display: none !important;
+    }
   `,
 
   // JavaScript customizations
