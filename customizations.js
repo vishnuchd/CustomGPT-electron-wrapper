@@ -433,7 +433,8 @@ const customizations = {
           'Branding',
           'Data Protection',
           'Recaptcha',
-          'Affiliate ID'
+          'Affiliate ID',
+          'Agent Role'
         ]);
 
         sections.forEach(section => {
