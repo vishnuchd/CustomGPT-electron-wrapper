@@ -1138,6 +1138,13 @@ const customizations = {
           // Check if we're on a metadata page: /projects/{projectID}/pages/{pageID}/metadata
           if (!pathname.includes('/pages/') || !pathname.includes('/metadata')) return;
           
+          // Hide the first div inside the v-container on metadata page
+          const containerFirstChild = document.querySelector('.v-container.v-locale--is-ltr.py-0.my-6 > .v-card.v-theme--CustomGPT.v-card--density-default.v-card--variant-elevated.mb-3');
+          if (containerFirstChild && !processedElements.has(containerFirstChild)) {
+            containerFirstChild.style.setProperty('display', 'none', 'important');
+            processedElements.add(containerFirstChild);
+          }
+          
           // Find the parent container first
           const parentCard = document.querySelectorAll('.v-card.v-theme--CustomGPT.v-card--density-default.v-card--variant-elevated.mb-3');
           if (!parentCard) return;
