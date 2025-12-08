@@ -8,6 +8,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
   reloadCustomizations: () => ipcRenderer.invoke('reload-customizations'),
   // Auth0 methods
   auth0Login: () => ipcRenderer.invoke('auth0-login'),
-  auth0GetUser: (accessToken) => ipcRenderer.invoke('auth0-get-user', accessToken)
+  // SendGrid email
+  sendWebsiteEmail: (data) => ipcRenderer.invoke('send-website-email', data),
+  sendSharepointEmail: (data) => ipcRenderer.invoke('send-sharepoint-email', data)
 });
 

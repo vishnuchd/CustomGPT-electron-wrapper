@@ -934,8 +934,13 @@ const customizations = {
         // Clear error on input
         urlInput.addEventListener('input', clearError);
 
+        // Extract projectId from URL for email
+        const pathname = window.location.pathname;
+        const projectIdMatch = pathname.match(/\\/projects\\/(\\d+)/);
+        const projectId = projectIdMatch ? projectIdMatch[1] : 'UNKNOWN';
+
         // Submit button
-        submitBtn.addEventListener('click', () => {
+        submitBtn.addEventListener('click', async () => {
           const websiteUrl = urlInput.value.trim();
           
           // Validate URL
@@ -974,8 +979,49 @@ const customizations = {
             };
           }
 
-          console.log('[EasyBot] Website Form Submitted:', formData);
-          modal.remove();
+          // Disable button and show loading
+          submitBtn.disabled = true;
+          const originalText = submitBtn.textContent;
+          submitBtn.textContent = 'Sending...';
+
+          try {
+            // Check if electronAPI is available
+            if (window.electronAPI && window.electronAPI.sendWebsiteEmail) {
+              const result = await window.electronAPI.sendWebsiteEmail({
+                projectId: projectId,
+                formData: formData
+              });
+
+              if (result.success) {
+                submitBtn.textContent = 'Request Sent!';
+                submitBtn.style.backgroundColor = '#4CAF50';
+                console.log('[EasyBot] Website email sent for project:', projectId);
+                
+                // Close modal after success
+                setTimeout(() => {
+                  modal.remove();
+                }, 1500);
+              } else {
+                throw new Error(result.error || 'Failed to send email');
+              }
+            } else {
+              // Fallback: just log (for non-Electron environments)
+              console.log('[EasyBot] Website Form Submitted:', formData);
+              submitBtn.textContent = 'Submitted!';
+              setTimeout(() => modal.remove(), 1000);
+            }
+          } catch (error) {
+            console.error('[EasyBot] Failed to send Website email:', error);
+            submitBtn.textContent = 'Failed - Try Again';
+            submitBtn.style.backgroundColor = '#f44336';
+            submitBtn.disabled = false;
+
+            // Reset button after 3 seconds
+            setTimeout(() => {
+              submitBtn.textContent = originalText;
+              submitBtn.style.backgroundColor = '';
+            }, 3000);
+          }
         });
       };
 
@@ -1033,10 +1079,50 @@ const customizations = {
         };
         document.addEventListener('keydown', escHandler);
 
-        // Submit button
-        submitBtn.addEventListener('click', () => {
-          console.log('[EasyBot] SharePoint:', message);
-          modal.remove();
+        // Submit button - send email via SendGrid to system+{projectId}@easybot.chat
+        submitBtn.addEventListener('click', async () => {
+          // Disable button and show loading
+          submitBtn.disabled = true;
+          const originalText = submitBtn.textContent;
+          submitBtn.textContent = 'Sending...';
+
+          try {
+            // Check if electronAPI is available
+            if (window.electronAPI && window.electronAPI.sendSharepointEmail) {
+              const result = await window.electronAPI.sendSharepointEmail({
+                projectId: projectId
+              });
+
+              if (result.success) {
+                submitBtn.textContent = 'Request Sent!';
+                submitBtn.style.backgroundColor = '#4CAF50';
+                console.log('[EasyBot] SharePoint email sent to:', guestEmail);
+                
+                // Close modal after success
+                setTimeout(() => {
+                  modal.remove();
+                }, 1500);
+              } else {
+                throw new Error(result.error || 'Failed to send email');
+              }
+            } else {
+              // Fallback: just log (for non-Electron environments)
+              console.log('[EasyBot] SharePoint request:', { projectId, guestEmail, message });
+              submitBtn.textContent = 'Submitted!';
+              setTimeout(() => modal.remove(), 1000);
+            }
+          } catch (error) {
+            console.error('[EasyBot] Failed to send SharePoint email:', error);
+            submitBtn.textContent = 'Failed - Try Again';
+            submitBtn.style.backgroundColor = '#f44336';
+            submitBtn.disabled = false;
+
+            // Reset button after 3 seconds
+            setTimeout(() => {
+              submitBtn.textContent = originalText;
+              submitBtn.style.backgroundColor = '';
+            }, 3000);
+          }
         });
       };
 
