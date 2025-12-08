@@ -1502,6 +1502,7 @@ const customizations = {
       const throttledApply = () => {
         if (throttleTimer) return;
         throttleTimer = setTimeout(() => {
+          setPageTitle();
           applySVGStyles();
           hideLogoLink();
           customizeSidebar();
@@ -1543,7 +1544,15 @@ const customizations = {
         configurable: true
       });
 
+      // Set page title to EasyChatBot on all pages
+      const setPageTitle = () => {
+        if (document.title !== 'EasyChatBot') {
+          document.title = 'EasyChatBot';
+        }
+      };
+
       // Apply all customizations immediately
+      setPageTitle();
       hideCopilot();
       hideLogoLink();
       customizeSidebar();
@@ -1564,8 +1573,9 @@ const customizations = {
       setTimeout(() => hideLogoLink(), 2000);
       setTimeout(() => hideLogoLink(), 3000);
       
-      // Aggressively hide reappearing elements every 2 seconds
+      // Aggressively hide reappearing elements and maintain title every 2 seconds
       setInterval(() => {
+        setPageTitle();
         hideReappearingWidget();
         hideOverflowRoundedElement();
       }, 2000);
