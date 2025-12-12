@@ -1238,75 +1238,6 @@ const customizations = {
         }
       };
 
-      // On /login page, add custom button to login container
-      const addCustomButtonToLogin = () => {
-        const { pathname } = window.location;
-        if (!pathname.includes('/login')) return;
-
-        // Find the container
-        const container = document.querySelector('.flex.flex-1.flex-col.justify-center.gap-4');
-        if (!container || processedElements.has(container)) return;
-
-        // Find all divs with class "mb-2.5" inside the container
-        const mbDivs = Array.from(container.querySelectorAll('[class~="mb-2.5"]'));
-        if (mbDivs.length === 0) return;
-
-        // Get the last div with class "mb-2.5"
-        const lastMbDiv = mbDivs[mbDivs.length - 1];
-
-        // Check if button already exists (by checking for our custom data attribute)
-        if (container.querySelector('[data-custom-login-button]')) return;
-
-        // Create the button
-        const customButton = document.createElement('button');
-        customButton.setAttribute('data-custom-login-button', 'true');
-        customButton.className = 'v-btn v-btn--block v-theme--CustomGPT text-primary v-btn--density-default v-btn--size-default v-btn--variant-outlined';
-        customButton.style.cssText = 'margin-bottom: 10px; text-transform: none;';
-        customButton.innerHTML = '<span class="v-btn__content">Auth0 Login</span>';
-        
-        // Add Auth0 click handler
-        customButton.addEventListener('click', async (e) => {
-          e.preventDefault();
-          
-          // Disable button and show loading state
-          customButton.disabled = true;
-          const originalContent = customButton.innerHTML;
-          customButton.innerHTML = '<span class="v-btn__content">Opening Auth0...</span>';
-          
-          try {
-            // Check if electronAPI is available
-            if (!window.electronAPI || !window.electronAPI.auth0Login) {
-              throw new Error('Auth0 is not available. Make sure you are running in Electron.');
-            }
-            
-            // Trigger Auth0 login flow - this will open popup and redirect back here
-            const result = await window.electronAPI.auth0Login();
-            
-            // The page will be redirected with the auth code
-            // The main process will handle token exchange and trigger login automation
-            
-          } catch (error) {
-            console.error('[EasyBot] Auth0 login failed:', error);
-            customButton.innerHTML = '<span class="v-btn__content">Login Failed - Try Again</span>';
-            customButton.style.backgroundColor = '#f44336';
-            customButton.style.color = 'white';
-            
-            // Reset button after 3 seconds
-            setTimeout(() => {
-              customButton.innerHTML = originalContent;
-              customButton.style.backgroundColor = '';
-              customButton.style.color = '';
-              customButton.disabled = false;
-            }, 3000);
-          }
-        });
-
-        // Insert the button after the last mb-2.5 div
-        lastMbDiv.insertAdjacentElement('afterend', customButton);
-        
-        processedElements.add(container);
-      };
-      
       // Customize sidebar menu
       const customizeSidebar = () => {
         // 1. Hide Dashboard button
@@ -1516,7 +1447,6 @@ const customizations = {
           hideMetadataPropertyCard();
           hideReappearingWidget();
           hideOverflowRoundedElement();
-          addCustomButtonToLogin();
           customizeBuildSourcesPage();
           throttleTimer = null;
         }, 100);
@@ -1565,7 +1495,6 @@ const customizations = {
       hideMetadataPropertyCard();
       hideReappearingWidget();
       hideOverflowRoundedElement();
-      addCustomButtonToLogin();
       customizeBuildSourcesPage();
       
       // Also run logo replacement after a delay to catch late-loading images

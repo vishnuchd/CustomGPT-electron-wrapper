@@ -22,7 +22,6 @@
       "main.js",
       "preload.js",
       "customizations.js",
-      "login-automation.js",
       "EasyBotLogo.png"
     ],
     "directories": {
