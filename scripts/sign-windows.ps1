@@ -10,10 +10,10 @@ param(
 )
 
 # Colors for output
-function Write-Success { param($msg) Write-Host "✓ $msg" -ForegroundColor Green }
-function Write-Error { param($msg) Write-Host "✗ $msg" -ForegroundColor Red }
-function Write-Info { param($msg) Write-Host "→ $msg" -ForegroundColor Cyan }
-function Write-Warning { param($msg) Write-Host "⚠ $msg" -ForegroundColor Yellow }
+function Write-Success { param($msg) Write-Host "[OK] $msg" -ForegroundColor Green }
+function Write-Err { param($msg) Write-Host "[ERROR] $msg" -ForegroundColor Red }
+function Write-Info { param($msg) Write-Host "[INFO] $msg" -ForegroundColor Cyan }
+function Write-Warn { param($msg) Write-Host "[WARN] $msg" -ForegroundColor Yellow }
 
 # ============================================================
 # Configuration
@@ -61,7 +61,7 @@ if (-not $Password) { $missingCreds += "SSL_COM_PASSWORD" }
 if (-not $TotpSecret) { $missingCreds += "SSL_COM_TOTP_SECRET" }
 
 if ($missingCreds.Count -gt 0) {
-    Write-Error "Missing required credentials:"
+    Write-Err "Missing required credentials:"
     foreach ($cred in $missingCreds) {
         Write-Host "   - $cred" -ForegroundColor Red
     }
@@ -85,7 +85,7 @@ Write-Info "Checking CodeSignTool..."
 
 $CodeSignToolBat = Join-Path $CodeSignToolPath "CodeSignTool.bat"
 if (-not (Test-Path $CodeSignToolBat)) {
-    Write-Error "CodeSignTool not found at: $CodeSignToolPath"
+    Write-Err "CodeSignTool not found at: $CodeSignToolPath"
     Write-Host ""
     Write-Host "Please download CodeSignTool from SSL.com:" -ForegroundColor Yellow
     Write-Host "   https://www.ssl.com/download/codesigntool-for-windows/" -ForegroundColor Cyan
@@ -109,7 +109,7 @@ if (-not $SkipBuild) {
     try {
         npm run build
         if ($LASTEXITCODE -ne 0) {
-            Write-Error "Build failed!"
+            Write-Err "Build failed!"
             exit 1
         }
         Write-Success "Build completed"
@@ -118,7 +118,7 @@ if (-not $SkipBuild) {
         Pop-Location
     }
 } else {
-    Write-Warning "Skipping build (using existing dist folder)"
+    Write-Warn "Skipping build (using existing dist folder)"
 }
 
 # ============================================================
@@ -129,14 +129,14 @@ Write-Host ""
 Write-Info "Finding executables to sign..."
 
 if (-not (Test-Path $DistFolder)) {
-    Write-Error "Dist folder not found: $DistFolder"
+    Write-Err "Dist folder not found: $DistFolder"
     Write-Host "Please run 'npm run build' first." -ForegroundColor Yellow
     exit 1
 }
 
 $ExeFiles = Get-ChildItem -Path $DistFolder -Filter "*.exe" -File
 if ($ExeFiles.Count -eq 0) {
-    Write-Error "No .exe files found in dist folder"
+    Write-Err "No .exe files found in dist folder"
     exit 1
 }
 
@@ -187,12 +187,12 @@ foreach ($exe in $ExeFiles) {
             Write-Success "Signed: $($exe.Name)"
             $signedCount++
         } else {
-            Write-Error "Failed to sign: $($exe.Name)"
+            Write-Err "Failed to sign: $($exe.Name)"
             $failedCount++
         }
     }
     catch {
-        Write-Error "Error signing $($exe.Name): $_"
+        Write-Err "Error signing $($exe.Name): $_"
         $failedCount++
     }
     finally {
@@ -214,7 +214,7 @@ if ($signedCount -gt 0) {
     Write-Success "$signedCount file(s) signed successfully"
 }
 if ($failedCount -gt 0) {
-    Write-Error "$failedCount file(s) failed to sign"
+    Write-Err "$failedCount file(s) failed to sign"
 }
 
 Write-Host ""
@@ -226,9 +226,10 @@ Write-Info "Verifying signatures..."
 foreach ($exe in $ExeFiles) {
     $sig = Get-AuthenticodeSignature -FilePath $exe.FullName
     if ($sig.Status -eq "Valid") {
-        Write-Success "$($exe.Name): Signed by '$($sig.SignerCertificate.Subject)'"
+        $signer = $sig.SignerCertificate.Subject
+        Write-Success "$($exe.Name): Signed by $signer"
     } else {
-        Write-Warning "$($exe.Name): $($sig.Status)"
+        Write-Warn "$($exe.Name): $($sig.Status)"
     }
 }
 
@@ -237,4 +238,3 @@ Write-Host ""
 if ($failedCount -gt 0) {
     exit 1
 }
-
