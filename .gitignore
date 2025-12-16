@@ -13,4 +13,10 @@ build/
 .env
 .env.local
 .env.*.local
+.env.signing
 
+# Code signing credentials (NEVER commit these!)
+*.pfx
+*.p12
+signing-credentials.json
+certificates

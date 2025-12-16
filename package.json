@@ -6,7 +6,11 @@
   "scripts": {
     "start": "electron .",
     "dev": "electron . --dev",
-    "build": "electron-builder"
+    "build": "electron-builder",
+    "build:unsigned": "electron-builder",
+    "build:signed": "electron-builder && powershell -ExecutionPolicy Bypass -File scripts/sign-windows.ps1 -SkipBuild",
+    "sign": "powershell -ExecutionPolicy Bypass -File scripts/sign-windows.ps1 -SkipBuild",
+    "sign:verbose": "powershell -ExecutionPolicy Bypass -File scripts/sign-windows.ps1 -SkipBuild -Verbose"
   },
   "keywords": [
     "electron",
