@@ -1,7 +1,7 @@
 {
   "name": "easy-bot-chat",
   "version": "1.0.0",
-  "description": "Electron wrapper for CustomGPT with UI customization",
+  "description": "Secure application for accessing EasyBotChat",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
