@@ -1,7 +1,7 @@
 // Load environment variables from .env file
 require('dotenv').config();
 
-const { app, BrowserWindow, ipcMain, session } = require('electron');
+const { app, BrowserWindow, ipcMain, session, Menu } = require("electron");
 const path = require('path');
 const customizations = require('./customizations');
 
@@ -24,7 +24,8 @@ function createWindow() {
       preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: false,
       contextIsolation: true,
-      webSecurity: true
+      webSecurity: true,
+      devTools: isDev,
     },
     icon: iconPath
   });
@@ -52,7 +53,18 @@ function createWindow() {
     handlePageLoad();
   });
 
-  mainWindow.webContents.on('did-navigate', () => {
+  mainWindow.webContents.on('before-input-event', (event, input) => {
+    const blocked =
+      input.control && input.key.toLowerCase() === 'r' ||
+      input.control && input.shift && input.key.toLowerCase() === 'r' ||
+      input.control && input.shift && input.key.toLowerCase() === 'i';
+  
+    if (blocked) {
+      event.preventDefault();
+    }
+  });
+
+  mainWindow.webContents.on("did-navigate", () => {
     handlePageLoad();
   });
 
@@ -76,8 +88,69 @@ function injectCustomUI() {
 
   // Inject custom JavaScript from customizations.js
   if (customizations.js.trim()) {
-    mainWindow.webContents.executeJavaScript(customizations.js).catch(err => console.error('UI injection error:', err));
+    mainWindow.webContents
+      .executeJavaScript(customizations.js)
+      .catch((err) => console.error("UI injection error:", err));
   }
+}
+
+const isDev = !app.isPackaged; // true only in dev mode
+
+function createMenu() {
+  const template = [
+    {
+      label: 'File',
+      submenu: [
+        { role: 'quit' }
+      ]
+    },
+    {
+      label: 'Edit',
+      submenu: [
+        { role: 'undo' },
+        { role: 'redo' },
+        { type: 'separator' },
+        { role: 'cut' },
+        { role: 'copy' },
+        { role: 'paste' },
+        { role: 'pasteAndMatchStyle' },
+        { role: 'delete' },
+        { type: 'separator' },
+        { role: 'selectAll' }
+      ]
+    },
+    {
+      label: 'View',
+      submenu: isDev
+        ? [
+            { role: 'reload' },
+            { role: 'forceReload' },
+            { role: 'toggleDevTools' },
+            { type: 'separator' },
+            { role: 'resetZoom' },
+            { role: 'zoomIn' },
+            { role: 'zoomOut' },
+            { role: 'togglefullscreen' }
+          ]
+        : [
+            { role: 'resetZoom' },
+            { role: 'zoomIn' },
+            { role: 'zoomOut' },
+            { role: 'togglefullscreen' }
+          ]
+    },
+    {
+      label: 'Window',
+      submenu: [
+        { role: 'minimize' },
+        { role: 'zoom' },
+        { role: 'close' }
+      ]
+    }
+  ];
+
+  const menu = Menu.buildFromTemplate(template);
+  Menu.setApplicationMenu(menu);
 }
 
 app.whenReady().then(() => {
@@ -87,6 +160,10 @@ app.whenReady().then(() => {
     app.dock.setIcon(iconPath);
   } else if (process.platform === 'win32') {
     // Windows taskbar icon (BrowserWindow icon handles this, but we can also set app icon)
+    app.setAppUserModelId("com.easybot.chat");
+  }
+
+  createMenu();
 
   const filter = { urls: ['https://app.customgpt.ai/*'] };
   session.defaultSession.webRequest.onBeforeRequest(
