@@ -1474,10 +1474,10 @@ const customizations = {
         configurable: true
       });
 
-      // Set page title to EasyChatBot on all pages
+      // Set page title to EasyBotChat on all pages
       const setPageTitle = () => {
-        if (document.title !== 'EasyChatBot') {
-          document.title = 'EasyChatBot';
+        if (document.title !== 'EasyBotChat') {
+          document.title = 'EasyBotChat';
         }
       };
 
