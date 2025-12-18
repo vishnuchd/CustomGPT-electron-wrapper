@@ -87,8 +87,30 @@ app.whenReady().then(() => {
     app.dock.setIcon(iconPath);
   } else if (process.platform === 'win32') {
     // Windows taskbar icon (BrowserWindow icon handles this, but we can also set app icon)
-    app.setAppUserModelId('com.easybot.chat');
-  }
+
+  const filter = { urls: ['https://app.customgpt.ai/*'] };
+  session.defaultSession.webRequest.onBeforeRequest(
+    filter,
+    (details, callback) => {
+      const url = details.url;
+      try {
+        const parsed = new URL(url);
+        if (
+          parsed.pathname.includes("/login")
+        ) {
+          const redirectURL = "https://trial-2230464.okta.com/";
+          console.log(
+            "Redirecting login -> okta login:",
+            redirectURL
+          );
+          return callback({ redirectURL });
+        }
+      } catch (e) {
+        // If URL parsing fails, just continue normally
+      }
+      callback({});
+    }
+  );
 
   createWindow();
 
