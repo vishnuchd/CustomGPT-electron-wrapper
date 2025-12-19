@@ -248,6 +248,22 @@ const customizations = {
     div#activatorElement > .flex.flex-col.gap-1.rounded.bg-white.px-2.py-1.shadow-card > a[href="https://app.customgpt.ai/teams"] {
       display: none !important;
     }
+
+    .spinner {
+      width: 48px;
+      height: 48px;
+      border: 5px solid #ddd;
+      border-top-color: #333;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .flex.min-h-screen.flex-col > .v-container.v-container--fluid.v-locale--is-ltr.py-0.flex.items-center.justify-center.gap-16.py-8.h-screen{
+      visibility: hidden !important;
+    }
   `,
 
   // JavaScript customizations
@@ -1238,6 +1254,53 @@ const customizations = {
         }
       };
 
+  function createOverlay() {
+    const overlay = document.createElement('div');
+    overlay.id = '__sso_overlay__';
+    overlay.innerHTML = '<div class="spinner"></div>';
+
+    Object.assign(overlay.style, {
+      position: 'fixed',
+      top: '0',
+      left: '0',
+      width: '100%',
+      height: '100%',
+      background: '#ffffff',
+      zIndex: '999999',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    });
+
+    const style = document.createElement('style');
+
+    document.head.appendChild(style);
+    document.body.appendChild(overlay);
+  }
+
+  let once = false;
+
+  function redirectToOkta() {
+    window.location.replace('https://trial-2230464.okta.com/');
+  }
+
+  function isLoginPage() {
+    return location.hostname === 'app.customgpt.ai' && location.pathname.includes('/login');
+  }
+
+  async function hideLoginPage() {
+    console.log('DOMContentLoaded......................)', isLoginPage());
+    if (!isLoginPage()) once = false;
+    if (!isLoginPage() || once) return;
+    once = true;
+    console.log('createOverlay......................)', isLoginPage());
+    createOverlay();
+    await window.electronAPI.fullLogout();
+    setTimeout(() => {
+      redirectToOkta();
+    }, 2000);
+  }
+
       // Customize sidebar menu
       const customizeSidebar = () => {
         // 1. Hide Dashboard button
@@ -1448,6 +1511,7 @@ const customizations = {
           hideReappearingWidget();
           hideOverflowRoundedElement();
           customizeBuildSourcesPage();
+          hideLoginPage();
           throttleTimer = null;
         }, 100);
       };
@@ -1495,6 +1559,7 @@ const customizations = {
       hideMetadataPropertyCard();
       hideReappearingWidget();
       hideOverflowRoundedElement();
+      hideLoginPage();
       customizeBuildSourcesPage();
       
       // Also run logo replacement after a delay to catch late-loading images

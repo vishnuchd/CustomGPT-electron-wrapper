@@ -9,6 +9,7 @@ let mainWindow;
 const iconPath = path.join(__dirname, 'EasyBotLogo.png');
 const packageJson = require('./package.json');
 const appId = packageJson.appId || 'com.easybot.chat';
+const CUSTOMGPT_PARTITION = 'persist:customgpt';
 
 // Set app icon early for better cross-platform support
 if (process.platform === 'win32') {
@@ -26,6 +27,7 @@ function createWindow() {
       contextIsolation: true,
       webSecurity: true,
       devTools: isDev,
+      partition: CUSTOMGPT_PARTITION,
     },
     icon: iconPath
   });
@@ -164,30 +166,6 @@ app.whenReady().then(() => {
   }
 
   createMenu();
-
-  const filter = { urls: ['https://app.customgpt.ai/*'] };
-  session.defaultSession.webRequest.onBeforeRequest(
-    filter,
-    (details, callback) => {
-      const url = details.url;
-      try {
-        const parsed = new URL(url);
-        if (
-          parsed.pathname.includes("/login")
-        ) {
-          const redirectURL = "https://trial-2230464.okta.com/";
-          console.log(
-            "Redirecting login -> okta login:",
-            redirectURL
-          );
-          return callback({ redirectURL });
-        }
-      } catch (e) {
-        // If URL parsing fails, just continue normally
-      }
-      callback({});
-    }
-  );
 
   createWindow();
 
@@ -397,4 +375,26 @@ ipcMain.handle('send-sharepoint-email', async (event, { projectId }) => {
     console.error('[SendGrid] Error sending email:', error);
     return { success: false, error: error.message };
   }
+});
+
+
+async function clearWebviewSession() {
+  const s = session.fromPartition('persist:customgpt');
+
+  await s.cookies.remove('https://trial-2230464.okta.com', 'sid');
+  await s.cookies.remove('https://trial-2230464.okta.com', 'JSESSIONID');
+
+  await s.clearStorageData({
+    origin: 'https://trial-2230464.okta.com',
+    storages: ['cookies', 'localstorage', 'sessionstorage'],
+  });
+
+  await s.clearStorageData({
+    origin: 'https://app.customgpt.ai',
+    storages: ['cookies', 'localstorage', 'sessionstorage'],
+  });
+}
+
+ipcMain.handle('full-logout', async () => {
+  await clearWebviewSession();
 });
