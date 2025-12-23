@@ -51,6 +51,22 @@ function createWindow() {
     }
   });
 
+  // Inject loading overlay as soon as DOM is ready (before full page load)
+  mainWindow.webContents.on('dom-ready', () => {
+    const url = mainWindow.webContents.getURL();
+    if (url.includes('app.customgpt.ai')) {
+      mainWindow.webContents.executeJavaScript(`
+        if (!document.getElementById('__easybot_loading__')) {
+          document.body.classList.add('easybot-loading');
+          const overlay = document.createElement('div');
+          overlay.id = '__easybot_loading__';
+          overlay.innerHTML = '<div class="spinner"></div>';
+          document.body.prepend(overlay);
+        }
+      `).catch(() => {});
+    }
+  });
+
   mainWindow.webContents.on('did-finish-load', () => {
     handlePageLoad();
   });

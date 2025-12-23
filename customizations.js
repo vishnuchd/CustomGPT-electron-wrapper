@@ -45,6 +45,36 @@ const customizations = {
       display: none !important;
     }
 
+    /* Hide body content until customizations are applied */
+    body {
+      visibility: hidden;
+    }
+
+    /* Initial Loading Overlay - injected early before first paint */
+    #__easybot_loading__ {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+      z-index: 999999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #__easybot_loading__ .spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid #e0e0e0;
+      border-top-color: #000;
+      border-radius: 50%;
+      animation: easybot-spin 0.8s linear infinite;
+    }
+    @keyframes easybot-spin {
+      to { transform: rotate(360deg); }
+    }
+
     span.cc-1qbp0.cc-1o31k{
       display: none !important;
     }
@@ -263,6 +293,18 @@ const customizations = {
 
     .flex.min-h-screen.flex-col > .v-container.v-container--fluid.v-locale--is-ltr.py-0.flex.items-center.justify-center.gap-16.py-8.h-screen{
       visibility: hidden !important;
+    }
+
+    .v-overlay__content[style="width: 600px;"] > button.v-btn.v-btn--icon.v-theme--CustomGPT.bg-white.v-btn--density-compact.v-btn--size-default.v-btn--variant-flat.absolute.z-10.shadow {
+      display: none !important;
+    }
+
+    a[href="https://app.customgpt.ai/projects/86565/personalize"] {
+      display: none !important;
+    }
+
+    div.v-overlay__content > div.text-center.flex-column.flex.gap-2.p-4 > button.v-btn.v-theme--CustomGPT.text-primary.v-btn--density-default.v-btn--size-default.v-btn--variant-tonal {
+      display: none !important;
     }
   `,
 
@@ -1381,8 +1423,8 @@ const customizations = {
           const slackText = slackLink.querySelector('p.sideitem-paragraph');
           if (slackText && slackText.textContent.trim() === 'Slack Community') {
             slackText.textContent = 'Book Consultation';
-            slackLink.href = 'https://tidycal.com/client-meeting';
-            slackLink.setAttribute('href', 'https://tidycal.com/client-meeting');
+            slackLink.href = 'https://tidycal.com/1v7dxy1/easybotchat-meeting';
+            slackLink.setAttribute('href', 'https://tidycal.com/1v7dxy1/easybotchat-meeting');
           }
         }
         
@@ -1583,7 +1625,21 @@ const customizations = {
         });
       }
       
-     
+      // Remove initial loading overlay once customizations are ready
+      function hideInitialLoader() {
+        const loader = document.getElementById('__easybot_loading__');
+        if (loader) {
+          loader.style.transition = 'opacity 0.2s ease';
+          loader.style.opacity = '0';
+          setTimeout(() => {
+            loader.remove();
+            document.body.style.visibility = 'visible';
+          }, 200);
+        }
+      }
+      
+      // Hide loader after a short delay to ensure DOM updates are applied
+      setTimeout(hideInitialLoader, 100);
     
     })();
   `
