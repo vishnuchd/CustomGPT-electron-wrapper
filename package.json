@@ -54,6 +54,10 @@
           "arch": [
             "x64"
           ]
+        },
+        {
+          "target": "appx",
+          "arch": ["x64"]
         }
       ],
       "icon": "EasyBotLogo.png",
@@ -69,6 +73,15 @@
       ],
       "icon": "EasyBotLogo.png",
       "artifactName": "${productName}-${version}.${ext}"
+    },
+    "appx": {
+      "applicationId": "EasyBotChat",
+      "identityName": "EasybotchatInc.EasyBotChat",
+      "publisher": "CN=EASYBOTCHAT INC., O=EASYBOTCHAT INC., L=Dallas, S=Texas, C=US",
+      "publisherDisplayName": "EASYBOTCHAT INC.",
+      "displayName": "EasyBotChat",
+      "languages": ["en-US"],
+      "makeappxArgs": []
     },
     "nsis": {
       "oneClick": false,
