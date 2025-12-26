@@ -135,64 +135,80 @@ if (-not (Test-Path $DistFolder)) {
 }
 
 $ExeFiles = Get-ChildItem -Path $DistFolder -Filter "*.exe" -File
-if ($ExeFiles.Count -eq 0) {
-    Write-Err "No .exe files found in dist folder"
+$MsiFiles = Get-ChildItem -Path $DistFolder -Filter "*.msi" -File
+
+# Also check for main executable in win-unpacked folder
+$WinUnpackedFolder = Join-Path $DistFolder "win-unpacked"
+$MainExe = $null
+if (Test-Path $WinUnpackedFolder) {
+    $MainExe = Get-ChildItem -Path $WinUnpackedFolder -Filter "*.exe" -File | Where-Object { $_.Name -notlike "*unins*" } | Select-Object -First 1
+}
+
+$AllFiles = @()
+$ExeFiles | ForEach-Object { $AllFiles += $_ }
+$MsiFiles | ForEach-Object { $AllFiles += $_ }
+if ($MainExe) { $AllFiles += $MainExe }
+
+if ($AllFiles.Count -eq 0) {
+    Write-Err "No executable or MSI files found to sign"
     exit 1
 }
 
-Write-Success "Found $($ExeFiles.Count) executable(s) to sign:"
-foreach ($exe in $ExeFiles) {
-    Write-Host "   - $($exe.Name)" -ForegroundColor Gray
+Write-Success "Found $($AllFiles.Count) file(s) to sign:"
+foreach ($file in $AllFiles) {
+    $relativePath = $file.FullName.Replace("$ProjectRoot\", "")
+    Write-Host "   - $relativePath" -ForegroundColor Gray
 }
 
 # ============================================================
-# Sign Each Executable
+# Sign Each File
 # ============================================================
 
 Write-Host ""
 Write-Host "============================================" -ForegroundColor Magenta
-Write-Host "  Signing Executables" -ForegroundColor Magenta
+Write-Host "  Signing Files" -ForegroundColor Magenta
 Write-Host "============================================" -ForegroundColor Magenta
 
 $signedCount = 0
 $failedCount = 0
 
-foreach ($exe in $ExeFiles) {
+foreach ($file in $AllFiles) {
     Write-Host ""
-    Write-Info "Signing: $($exe.Name)"
-    
+    $relativePath = $file.FullName.Replace("$ProjectRoot\", "")
+    Write-Info "Signing: $relativePath"
+
     $signArgs = @(
         "sign"
         "-username=`"$Username`""
         "-password=`"$Password`""
         "-totp_secret=`"$TotpSecret`""
-        "-input_file_path=`"$($exe.FullName)`""
+        "-input_file_path=`"$($file.FullName)`""
         "-override=true"
     )
-    
+
     if ($Verbose) {
         Write-Host "   Command: CodeSignTool.bat $($signArgs -join ' ')" -ForegroundColor Gray
     }
-    
+
     Push-Location $CodeSignToolPath
     try {
         $output = & .\CodeSignTool.bat $signArgs 2>&1
         $exitCode = $LASTEXITCODE
-        
+
         if ($Verbose -or $exitCode -ne 0) {
             Write-Host $output -ForegroundColor Gray
         }
-        
+
         if ($exitCode -eq 0) {
-            Write-Success "Signed: $($exe.Name)"
+            Write-Success "Signed: $relativePath"
             $signedCount++
         } else {
-            Write-Err "Failed to sign: $($exe.Name)"
+            Write-Err "Failed to sign: $relativePath"
             $failedCount++
         }
     }
     catch {
-        Write-Err "Error signing $($exe.Name): $_"
+        Write-Err "Error signing $relativePath`: $_"
         $failedCount++
     }
     finally {
@@ -223,13 +239,33 @@ Write-Host ""
 
 # Verify signatures
 Write-Info "Verifying signatures..."
-foreach ($exe in $ExeFiles) {
-    $sig = Get-AuthenticodeSignature -FilePath $exe.FullName
-    if ($sig.Status -eq "Valid") {
-        $signer = $sig.SignerCertificate.Subject
-        Write-Success "$($exe.Name): Signed by $signer"
+foreach ($file in $AllFiles) {
+    $relativePath = $file.FullName.Replace("$ProjectRoot\", "")
+
+    if ($file.Extension -eq ".msi") {
+        # MSI files need different verification
+        try {
+            $msiInfo = Get-ItemProperty -Path $file.FullName -Name VersionInfo
+            # For MSI files, we can check if the file has a digital signature
+            $sig = Get-AuthenticodeSignature -FilePath $file.FullName
+            if ($sig.Status -eq "Valid") {
+                $signer = $sig.SignerCertificate.Subject
+                Write-Success "$relativePath`: Signed by $signer"
+            } else {
+                Write-Warn "$relativePath`: $($sig.Status)"
+            }
+        } catch {
+            Write-Warn "$relativePath`: Could not verify signature"
+        }
     } else {
-        Write-Warn "$($exe.Name): $($sig.Status)"
+        # EXE files
+        $sig = Get-AuthenticodeSignature -FilePath $file.FullName
+        if ($sig.Status -eq "Valid") {
+            $signer = $sig.SignerCertificate.Subject
+            Write-Success "$relativePath`: Signed by $signer"
+        } else {
+            Write-Warn "$relativePath`: $($sig.Status)"
+        }
     }
 }
 
