@@ -16,7 +16,7 @@
     "electron",
     "customgpt"
   ],
-  "author": "",
+  "author": "EasyBotChat Inc.",
   "license": "MIT",
   "appId": "com.easybot.chat",
   "build": {
@@ -50,14 +50,16 @@
           ]
         },
         {
-          "target": "portable",
+          "target": "msi",
           "arch": [
             "x64"
           ]
         },
         {
-          "target": "appx",
-          "arch": ["x64"]
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
         }
       ],
       "icon": "EasyBotLogo.png",
