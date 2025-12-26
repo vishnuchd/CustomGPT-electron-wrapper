@@ -1401,15 +1401,15 @@ const customizations = {
           const resourcesText = resourcesLink.querySelector('p.sideitem-paragraph');
           if (resourcesText && resourcesText.textContent.trim() === 'Resources') {
             resourcesText.textContent = 'Get Help';
-            resourcesLink.href = 'https://www.easybot.chat/app-help';
-            resourcesLink.setAttribute('href', 'https://www.easybot.chat/app-help');
+            resourcesLink.href = 'mailto:support@easybot.chat';
+            resourcesLink.setAttribute('href', 'mailto:support@easybot.chat');
             
             // Override click to prevent React/Vue routing (only add once)
             if (!resourcesLink.dataset.clickHandlerAdded) {
               resourcesLink.addEventListener('click', (e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                window.location.href = 'https://www.easybot.chat/app-help';
+                window.location.href = 'mailto:support@easybot.chat';
               }, true);
               resourcesLink.dataset.clickHandlerAdded = 'true';
             }
