@@ -37,6 +37,283 @@ const customizations = {
       display: none !important;
     }
 
+    /* Prompt Modal Styles */
+    .prompt-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+    }
+
+    .prompt-modal {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      max-width: 600px;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .prompt-modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #e0e0e0;
+      padding-inline: 20px;
+    }
+
+    .prompt-modal-header h2 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .prompt-modal-close {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: #666;
+      padding: 0;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+    }
+
+    .prompt-modal-close:hover {
+      background-color: #f5f5f5;
+      color: #333;
+    }
+
+    .prompt-modal-body {
+      padding: 20px;
+    }
+
+    .prompt-form-group {
+      margin-bottom: 20px;
+    }
+
+    .prompt-form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: #333;
+    }
+
+    .prompt-input,
+    .prompt-textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+      font-family: inherit;
+    }
+
+    .prompt-input:focus,
+    .prompt-textarea:focus {
+      outline: none;
+      border-color: #007bff;
+      box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+    }
+
+    .prompt-textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .prompt-error-message {
+      display: block;
+      margin-top: 4px;
+      color: #dc3545;
+      font-size: 12px;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .prompt-error-message.visible {
+      opacity: 1;
+    }
+
+
+    .image-placeholder {
+      border-style: dashed !important;
+    }
+
+    .prompt-btn-secondary {
+      background: #f8f9fa;
+      border: 1px solid #ddd;
+      color: #333;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.2s;
+    }
+
+    .prompt-btn-secondary:hover {
+      background: #e9ecef;
+    }
+
+    .prompt-modal-footer {
+      padding: 20px;
+      border-top: 1px solid #e0e0e0;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .prompt-submit-btn {
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      transition: background-color 0.2s;
+    }
+
+    .prompt-submit-btn:hover:not(:disabled) {
+      background: #0056b3;
+    }
+
+    .prompt-submit-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .prompt-btn-danger {
+      background: #dc3545;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      margin-left: 12px;
+      transition: background-color 0.2s;
+    }
+
+    .prompt-btn-danger:hover:not(:disabled) {
+      background: #c82333;
+    }
+
+    .prompt-btn-danger:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    /* Image Modal Styles */
+    .image-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10001;
+    }
+
+    .image-modal {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      max-width: 900px;
+      width: 90%;
+      max-height: 90vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .image-modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .image-modal-header h2 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .image-modal-close {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: #666;
+      padding: 0;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+    }
+
+    .image-modal-close:hover {
+      background-color: #f5f5f5;
+      color: #333;
+    }
+
+    .image-modal-body {
+      padding: 20px;
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .image-modal-footer {
+      padding: 20px;
+      border-top: 1px solid #e0e0e0;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .image-btn-secondary {
+      background: #f8f9fa;
+      border: 1px solid #ddd;
+      color: #333;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.2s;
+    }
+
+    .image-btn-secondary:hover {
+      background: #e9ecef;
+    }
+
+    .image-item:hover {
+      border-color: #007bff !important;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
     a.link.cursor-pointer[class~="ml-0.5"][href*="/projects"] {
       margin: 0 !important;
     }
@@ -152,12 +429,18 @@ const customizations = {
       font-size: 14px;
       border-right: 1px solid #d0d0d0;
     }
-    .easybot-input {
+    .easybot-input,
+    .easybot-textarea {
       flex: 1;
       border: none;
-      padding: 10px 12px;
+      padding: 10px 12px !important;
       font-size: 14px;
       outline: none;
+      font-family: inherit;
+    }
+    .easybot-textarea {
+      resize: vertical;
+      min-height: 100px;
     }
     .easybot-input-wrapper.error {
       border-color: #f44336;
@@ -299,13 +582,160 @@ const customizations = {
       display: none !important;
     }
 
-    a[href="https://app.customgpt.ai/projects/86565/personalize"] {
+    a[href^="https://app.customgpt.ai/projects/"][href$="/personalize"] {
       display: none !important;
     }
 
     div.v-overlay__content > div.text-center.flex-column.flex.gap-2.p-4 > button.v-btn.v-theme--CustomGPT.text-primary.v-btn--density-default.v-btn--size-default.v-btn--variant-tonal {
       display: none !important;
     }
+
+    .prompt-cards-list, .prompt-cards-list > li {
+      list-style: none;
+      padding: 0;
+    }
+
+    .prompt-cards-list > li.dragging {
+      opacity: 0.5;
+    }
+
+    .prompt-cards-list > div:not(:last-child){
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .prompt-card-title {
+      font-size: 18px !important;
+    }
+
+    .prompt-card-subtitle {
+      font-size: 14px !important;
+      color: #666 !important;
+    }
+
+    .hide-loader {
+      display: none !important;
+    }
+
+    .loading-state {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 8px 0;
+    }
+
+    .loading-state-container {
+      position: absolute;
+      min-height: 100%;
+      min-width: calc(100% - 280px);
+      top: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      display: grid;
+      place-items: center;
+    }
+
+    main {
+      position: relative;
+    }
+
+    /* Pagination Styles */
+    .pagination-controls {
+      margin-top: 16px;
+      margin-bottom: 16px;
+    }
+
+    .pagination-info {
+      color: #666;
+      font-weight: 500;
+    }
+
+    .pagination-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    a[href="/profile#api"] {
+      display: none !important;
+    }
+
+    /* Custom toggle switch styles */
+    .custom-toggle-container {
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      user-select: none;
+    }
+
+    .custom-toggle-label {
+      font-weight: 500;
+      color: #333;
+      cursor: pointer;
+      margin: 0;
+      user-select: none;
+    }
+
+    .custom-toggle-label p {
+      margin: 0;
+      font-size: 14px;
+    }
+
+    .custom-toggle-switch {
+      position: relative;
+      display: inline-block;
+    }
+
+    .custom-toggle-switch input {
+      display: none;
+    }
+
+    .custom-toggle-track {
+      width: 30px;
+      height: 18px;
+      border-radius: 12px;
+      position: relative;
+      cursor: pointer;
+      transition: background-color 0.2s ease, border-color 0.2s ease;
+      user-select: none;
+    }
+
+    .custom-toggle-thumb {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      cursor: pointer;
+      transition: transform 0.2s ease, background-color 0.2s ease;
+      user-select: none;
+    }
+
+    /* Unchecked state */
+    .custom-toggle-switch[data-checked="false"] .custom-toggle-track {
+      background-color: #f5f5f5;
+      border: 1px solid #dbdade;
+    }
+
+    .custom-toggle-switch[data-checked="false"] .custom-toggle-thumb {
+      background-color: #dbdade;
+      transform: translateX(0);
+      margin-top: 1px !important;
+    }
+
+    /* Checked state */
+    .custom-toggle-switch[data-checked="true"] .custom-toggle-track {
+      background-color: black;
+      border: 1px solid black;
+    }
+
+    .custom-toggle-switch[data-checked="true"] .custom-toggle-thumb {
+      background-color: white;
+      transform: translateX(14px);
+      margin-top: 1px !important;
+    }
+
   `,
 
   // JavaScript customizations
@@ -1088,6 +1518,762 @@ const customizations = {
         });
       };
 
+      // Modal for creating new prompt card
+      const showCreatePromptModal = () => {
+        // Remove existing modal if any
+        const existingModal = document.querySelector('.prompt-modal-overlay');
+        if (existingModal) existingModal.remove();
+
+        const modalHTML = '<div class="prompt-modal-overlay">' +
+          '<div class="prompt-modal">' +
+            '<div class="prompt-modal-header">' +
+              '<h2>Create New Prompt Card</h2>' +
+              '<button class="prompt-modal-close" type="button">&times;</button>' +
+            '</div>' +
+            '<div class="prompt-modal-body">' +
+              '<div class="easybot-form-group">' +
+                '<label>Title</label>' +
+                '<div class="easybot-input-wrapper">' +
+                  '<input type="text" class="easybot-input" id="create-title" placeholder="Enter prompt title">' +
+                '</div>' +
+                '<span class="easybot-error-message" id="create-title-error"></span>' +
+              '</div>' +
+              '<div class="easybot-form-group">' +
+                '<label>Prompt Content</label>' +
+                '<div class="easybot-input-wrapper">' +
+                  '<textarea class="easybot-textarea" id="create-prompt" rows="4" placeholder="Enter your prompt content"></textarea>' +
+                '</div>' +
+                '<span class="easybot-error-message" id="create-prompt-error"></span>' +
+              '</div>' +
+              '<div class="easybot-form-group">' +
+                '<label>Profile Image (Optional)</label>' +
+                '<div class="image-upload-section d-flex flex-col gap-1">' +
+                  '<div class="d-flex gap-1" style="padding-block: 10px;">' +
+                    '<div class="current-image">' +
+                    '<img id="create-image-preview" src="" alt="No image selected" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid #e0e0e0; display: none;">' +
+                    '<div id="create-image-placeholder" class="image-placeholder" style="width: 80px; height: 80px; border-radius: 50%; border: 2px dashed #ccc; display: flex; align-items: center; justify-content: center; background: #f9f9f9;">' +
+                      '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">' +
+                        '<path d="M14.828 14.828a4 4 0 0 1-5.656 0M9 10h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2z"/>' +
+                      '</svg>' +
+                    '</div>' +
+                  '</div>' +
+                  '<div style="display: flex; align-items: center;">' +
+                      '<button class="prompt-btn-secondary d-flex items-center gap-1" id="create-choose-image" type="button">' +
+                        '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 8px;">' +
+                          '<path d="M14.828 14.828a4 4 0 0 1-5.656 0M9 10h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2z"/>' +
+                        '</svg>' +
+                        'Choose from Unsplash' +
+                      '</button>' +
+                    '</div>' +
+                  '</div>' +
+                  '<div class="image-actions d-flex gap-1" style="display: flex; flex-direction: column; gap: 8px;">' +
+                    '<div style="display: flex; align-items: center; gap: 8px;">' +
+                      '<div class="easybot-input-wrapper" style="width: 100%;">' +
+                        '<input type="url" class="easybot-input" id="create-image-url" placeholder="Enter JPG/PNG URL (95x95px - 1000px max)">' +
+                      '</div>' +
+                      '<button data-v-7dee89f7="" type="button" class="v-btn v-theme--CustomGPT text-primary v-btn--density-default v-btn--size-default v-btn--variant-outlined" style="text-transform: none;" id="create-load-url" style="width: 122px !important;"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span><span class="v-btn__content" data-no-activator=""> Load URL </span></button>' +
+                    '</div>' +
+                  '</div>' +
+                '</div>' +
+              '</div>' +
+            '</div>' +
+            '<div class="prompt-modal-footer">' +
+              '<button type="button" class="v-btn v-theme--CustomGPT bg-primary v-btn--density-default v-btn--size-default v-btn--variant-flat" style="text-transform: none" id="create-submit">' +
+                '<span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>'+
+                '<span class="v-btn__content" data-no-activator=""> Create Prompt Card </span>' +
+              '</button>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+
+        document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+        const modal = document.querySelector('.prompt-modal-overlay');
+        const closeBtn = modal.querySelector('.prompt-modal-close');
+        const submitBtn = modal.querySelector('#create-submit');
+        const titleInput = modal.querySelector('#create-title');
+        const promptTextarea = modal.querySelector('#create-prompt');
+        const chooseImageBtn = modal.querySelector('#create-choose-image');
+        const loadUrlBtn = modal.querySelector('#create-load-url');
+        const imageUrlInput = modal.querySelector('#create-image-url');
+
+        // Close modal on overlay click
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) modal.remove();
+        });
+
+        // Close button
+        closeBtn.addEventListener('click', () => modal.remove());
+
+        // Escape key to close
+        const escHandler = (e) => {
+          if (e.key === 'Escape') {
+            modal.remove();
+            document.removeEventListener('keydown', escHandler);
+          }
+        };
+        document.addEventListener('keydown', escHandler);
+
+        // Choose image button
+        chooseImageBtn.addEventListener('click', () => {
+          showImageSelectionModal((imageUrl) => {
+            const preview = modal.querySelector('#create-image-preview');
+            const placeholder = modal.querySelector('#create-image-placeholder');
+            preview.src = imageUrl;
+            preview.style.display = 'block';
+            placeholder.style.display = 'none';
+            // Clear URL input when using Unsplash
+            imageUrlInput.value = '';
+          });
+        });
+
+        // Load URL button
+        loadUrlBtn.addEventListener('click', async () => {
+          const imageUrl = imageUrlInput.value.trim();
+          if (!imageUrl) {
+            alert('Please enter an image URL');
+            return;
+          }
+
+          // Validate URL format
+          if (!isValidImageUrl(imageUrl)) {
+            alert('Please enter a valid JPG or PNG image URL');
+            return;
+          }
+
+          // Test image loading and dimensions
+          const isValid = await validateImageDimensions(imageUrl);
+          if (!isValid) {
+            alert('Image must be between 95x95px and 1000px in both dimensions');
+            return;
+          }
+
+          // Set the image
+          const preview = modal.querySelector('#create-image-preview');
+          const placeholder = modal.querySelector('#create-image-placeholder');
+          preview.src = imageUrl;
+          preview.style.display = 'block';
+          placeholder.style.display = 'none';
+        });
+
+        // Form validation
+        const validateForm = () => {
+          let isValid = true;
+
+          // Validate title
+          const title = titleInput.value.trim();
+          const titleError = modal.querySelector('#create-title-error');
+          if (!title) {
+            titleError.textContent = 'Title is required';
+            titleError.classList.add('visible');
+            isValid = false;
+          } else {
+            titleError.textContent = '';
+            titleError.classList.remove('visible');
+          }
+
+          // Validate prompt
+          const prompt = promptTextarea.value.trim();
+          const promptError = modal.querySelector('#create-prompt-error');
+          if (!prompt) {
+            promptError.textContent = 'Prompt content is required';
+            promptError.classList.add('visible');
+            isValid = false;
+          } else {
+            promptError.textContent = '';
+            promptError.classList.remove('visible');
+          }
+
+          return isValid;
+        };
+
+        // Submit button
+        submitBtn.addEventListener('click', async () => {
+          if (!validateForm()) return;
+
+          const title = titleInput.value.trim();
+          const prompt = promptTextarea.value.trim();
+          const imageUrl = modal.querySelector('#create-image-preview').src || null;
+
+          // Disable button and show loading
+          submitBtn.disabled = true;
+          const originalText = submitBtn.textContent;
+          submitBtn.textContent = 'Creating...';
+
+          try {
+            // Get project ID from URL
+            const pathname = window.location.pathname;
+            const projectIdMatch = pathname.match(/\\/projects\\/(\\d+)/);
+            const projectId = projectIdMatch ? projectIdMatch[1] : 'unknown';
+
+            const cardData = {
+              project_id: projectId,
+              title: title,
+              prompt: prompt,
+              image_url: imageUrl,
+              active: true
+              // sort_order is auto-assigned by the API
+            };
+
+            const result = await window.electronAPI.createPromptCard(cardData);
+
+            if (result.success) {
+              submitBtn.textContent = 'Created!';
+              submitBtn.style.backgroundColor = '#4CAF50';
+              // Refresh the prompt cards list
+              if (typeof loadPromptCards === 'function') {
+                loadPromptCards();
+              }
+
+              // Close modal after success
+              setTimeout(() => {
+                modal.remove();
+              }, 1500);
+            } else {
+              throw new Error(result.error || 'Failed to create prompt card');
+            }
+          } catch (error) {
+            console.error('[Prompt] Failed to create prompt card:', error);
+            submitBtn.textContent = 'Failed - Try Again';
+            submitBtn.style.backgroundColor = '#f44336';
+            submitBtn.disabled = false;
+
+            // Reset button after 3 seconds
+            setTimeout(() => {
+              submitBtn.textContent = originalText;
+              submitBtn.style.backgroundColor = '';
+            }, 3000);
+          }
+        });
+      };
+
+      // Modal for editing prompt card
+      const showEditPromptModal = (card) => {
+        console.log("EditPromptModal requested to be shown=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
+        // Remove existing modal if any
+        const existingModal = document.querySelector('.prompt-modal-overlay');
+        if (existingModal) existingModal.remove();
+
+        const modalHTML = '<div class="prompt-modal-overlay">' +
+          '<div class="prompt-modal">' +
+            '<div class="prompt-modal-header">' +
+              '<h2>Edit Prompt Card</h2>' +
+              '<button class="prompt-modal-close" type="button">&times;</button>' +
+            '</div>' +
+            '<div class="prompt-modal-body">' +
+              '<div class="easybot-form-group">' +
+                '<label>Title</label>' +
+                '<div class="easybot-input-wrapper">' +
+                  '<input type="text" class="easybot-input" id="edit-title" placeholder="Enter prompt title" value="' + (card.title || '') + '">' +
+                '</div>' +
+                '<span class="easybot-error-message" id="edit-title-error"></span>' +
+              '</div>' +
+              '<div class="easybot-form-group">' +
+                '<label>Prompt Content</label>' +
+                '<div class="easybot-input-wrapper">' +
+                  '<textarea class="easybot-textarea" id="edit-prompt" rows="4" placeholder="Enter your prompt content">' + (card.prompt || '') + '</textarea>' +
+                '</div>' +
+                '<span class="easybot-error-message" id="edit-prompt-error"></span>' +
+              '</div>' +
+              '<div class="custom-toggle-container">' +
+                '<div class="custom-toggle-switch" data-checked="' + (card.active ? 'true' : 'false') + '">' +
+                  '<input id="edit-active" type="checkbox" checked="' + (card.active ? 'true' : 'false') + '" />' +
+                  '<div class="custom-toggle-track"></div>' +
+                  '<div class="custom-toggle-thumb"></div>' +
+                '</div>' +
+                '<label class="custom-toggle-label">' +
+                  '<p>Active</p>' +
+                '</label>' +
+              '</div>' +
+              '<div class="easybot-form-group">' +
+                '<label>Profile Image (Optional)</label>' +
+                '<div class="image-upload-section d-flex flex-col gap-1">' +
+                  '<div class="d-flex gap-1" style="padding-block: 10px;">' +
+                    '<div class="current-image">' +
+                    '<img id="edit-image-preview" src="' + (card.image_url || '') + '" alt="Current image" style="width: 80px; height: 80px; object-fit: cover; border: 2px solid #e0e0e0; display: none;">' +
+                    '<div id="edit-image-placeholder" class="image-placeholder" style="width: 80px; height: 80px; border: 2px dashed #ccc; display: flex; align-items: center; justify-content: center; background: #f9f9f9;">' +
+                      '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">' +
+                        '<path d="M14.828 14.828a4 4 0 0 1-5.656 0M9 10h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2z"/>' +
+                      '</svg>' +
+                    '</div>' +
+                  '</div>' +
+                  '<div style="display: flex; align-items: center;">' +
+                      '<button class="prompt-btn-secondary d-flex items-center gap-1" id="edit-choose-image" type="button">' +
+                        '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 8px;">' +
+                          '<path d="M14.828 14.828a4 4 0 0 1-5.656 0M9 10h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2z"/>' +
+                        '</svg>' +
+                        'Choose from Unsplash' +
+                      '</button>' +
+                    '</div>' +
+                  '</div>' +
+                  '<div class="image-actions d-flex gap-1" style="display: flex; flex-direction: column; gap: 8px;">' +
+                    '<div style="display: flex; align-items: center; gap: 8px;">' +
+                      '<div class="easybot-input-wrapper" style="width: 100%;">' +
+                        '<input type="url" class="easybot-input" id="edit-image-url" placeholder="Enter JPG/PNG URL (95x95px - 1000px max)" value="' + (card.image_url || '') + '">' +
+                      '</div>' +
+                      '<button data-v-7dee89f7="" type="button" class="v-btn v-theme--CustomGPT text-primary v-btn--density-default v-btn--size-default v-btn--variant-outlined" style="text-transform: none;" id="edit-load-url" style="width: 122px !important"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span><span class="v-btn__content" data-no-activator=""> Load URL </span></button>' +
+                    '</div>' +
+                  '</div>' +
+                '</div>' +
+              '</div>' +
+            '</div>' +
+            '<div class="prompt-modal-footer">' +
+              '<button type="button" class="v-btn v-theme--CustomGPT bg-primary v-btn--density-default v-btn--size-default v-btn--variant-flat" style="text-transform: none" id="edit-submit">' +
+                '<span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>'+
+                '<span class="v-btn__content" data-no-activator=""> Save Changes </span>' +
+              '</button>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+
+        document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+        console.log("EditPromptModal inserted in body=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
+
+        const modal = document.querySelector('.prompt-modal-overlay');
+        const closeBtn = modal.querySelector('.prompt-modal-close');
+        const submitBtn = modal.querySelector('#edit-submit');
+        const titleInput = modal.querySelector('#edit-title');
+        const promptTextarea = modal.querySelector('#edit-prompt');
+        const activeCheckbox = modal.querySelector('#edit-active');
+        const chooseImageBtn = modal.querySelector('#edit-choose-image');
+        const loadUrlBtn = modal.querySelector('#edit-load-url');
+        const imageUrlInput = modal.querySelector('#edit-image-url');
+
+        // Initialize active checkbox state
+        const activeToggleContainer = activeCheckbox.closest('.custom-toggle-switch');
+        const isActive = card.active || false;
+
+        activeToggleContainer.setAttribute('data-checked', isActive ? 'true' : 'false');
+        activeCheckbox.checked = isActive;
+
+        // Active checkbox event handling
+        activeCheckbox.addEventListener('change', () => {
+          const toggleContainer = activeCheckbox.parentNode;
+          toggleContainer.setAttribute('data-checked', activeCheckbox.checked ? 'true' : 'false');
+        });
+
+        // Make track and label clickable to toggle checkbox
+        const track = activeToggleContainer.querySelector('.custom-toggle-track');
+        const label = activeToggleContainer.parentElement.querySelector('.custom-toggle-label');
+
+        const toggleCheckbox = () => {
+          activeCheckbox.checked = !activeCheckbox.checked;
+          activeCheckbox.dispatchEvent(new Event('change'));
+        };
+
+        if (track) {
+          track.addEventListener('click', toggleCheckbox);
+        }
+
+        if (label) {
+          label.addEventListener('click', toggleCheckbox);
+        }
+
+        // Close modal on overlay click
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) modal.remove();
+        });
+
+        // Close button
+        closeBtn.addEventListener('click', () => modal.remove());
+
+        // Escape key to close
+        const escHandler = (e) => {
+          if (e.key === 'Escape') {
+            modal.remove();
+            document.removeEventListener('keydown', escHandler);
+          }
+        };
+        document.addEventListener('keydown', escHandler);
+
+        // Choose image button
+        chooseImageBtn.addEventListener('click', () => {
+          showImageSelectionModal((imageUrl) => {
+            const preview = modal.querySelector('#edit-image-preview');
+            const placeholder = modal.querySelector('#edit-image-placeholder');
+            preview.src = imageUrl;
+            preview.style.display = 'block';
+            placeholder.style.display = 'none';
+            // Clear URL input when using Unsplash
+            imageUrlInput.value = '';
+          });
+        });
+
+        // Load URL button
+        loadUrlBtn.addEventListener('click', async () => {
+          const imageUrl = imageUrlInput.value.trim();
+          if (!imageUrl) {
+            alert('Please enter an image URL');
+            return;
+          }
+
+          // Validate URL format
+          if (!isValidImageUrl(imageUrl)) {
+            alert('Please enter a valid JPG or PNG image URL');
+            return;
+          }
+
+          // Test image loading and dimensions
+          const isValid = await validateImageDimensions(imageUrl);
+          if (!isValid) {
+            alert('Image must be between 95x95px and 1000px in both dimensions');
+            return;
+          }
+
+          // Set the image
+          const preview = modal.querySelector('#edit-image-preview');
+          const placeholder = modal.querySelector('#edit-image-placeholder');
+          preview.src = imageUrl;
+          preview.style.display = 'block';
+          placeholder.style.display = 'none';
+        });
+
+        // Form validation
+        const validateForm = () => {
+          let isValid = true;
+
+          // Validate title
+          const title = titleInput.value.trim();
+          const titleError = modal.querySelector('#edit-title-error');
+          if (!title) {
+            titleError.textContent = 'Title is required';
+            titleError.classList.add('visible');
+            isValid = false;
+          } else {
+            titleError.textContent = '';
+            titleError.classList.remove('visible');
+          }
+
+          // Validate prompt
+          const prompt = promptTextarea.value.trim();
+          const promptError = modal.querySelector('#edit-prompt-error');
+          if (!prompt) {
+            promptError.textContent = 'Prompt content is required';
+            promptError.classList.add('visible');
+            isValid = false;
+          } else {
+            promptError.textContent = '';
+            promptError.classList.remove('visible');
+          }
+
+          return isValid;
+        };
+
+        // Submit button
+        submitBtn.addEventListener('click', async () => {
+          if (!validateForm()) return;
+
+          const title = titleInput.value.trim();
+          const prompt = promptTextarea.value.trim();
+          const active = activeCheckbox.checked;
+          const imageUrl = modal.querySelector('#edit-image-preview').src || null;
+
+          // Disable button and show loading
+          submitBtn.disabled = true;
+          const originalText = submitBtn.textContent;
+          submitBtn.textContent = 'Saving...';
+
+          try {
+            const updates = {
+              title: title,
+              prompt: prompt,
+              active: active,
+              image_url: imageUrl
+            };
+            // Note: sort_order cannot be updated via this modal - it's managed automatically
+
+            const result = await window.electronAPI.updatePromptCard(card.id, updates);
+
+            if (result.success) {
+              submitBtn.textContent = 'Saved!';
+              submitBtn.style.backgroundColor = '#4CAF50';
+
+              // Refresh the prompt cards list
+              if (typeof loadPromptCards === 'function') {
+                loadPromptCards();
+              }
+
+              // Close modal after success
+              setTimeout(() => {
+                modal.remove();
+              }, 1500);
+            } else {
+              throw new Error(result.error || 'Failed to update prompt card');
+            }
+          } catch (error) {
+            console.error('[Prompt] Failed to update prompt card:', error);
+            submitBtn.textContent = 'Failed - Try Again';
+            submitBtn.style.backgroundColor = '#f44336';
+            submitBtn.disabled = false;
+
+            // Reset button after 3 seconds
+            setTimeout(() => {
+              submitBtn.textContent = originalText;
+              submitBtn.style.backgroundColor = '';
+            }, 3000);
+          }
+        });
+      };
+
+      // Modal for deleting prompt card
+      const showDeletePromptModal = (card) => {
+        // Remove existing modal if any
+        const existingModal = document.querySelector('.prompt-modal-overlay');
+        if (existingModal) existingModal.remove();
+
+        const modalHTML = '<div class="prompt-modal-overlay">' +
+          '<div class="prompt-modal">' +
+            '<div class="prompt-modal-header">' +
+              '<h2>Delete Prompt Card</h2>' +
+              '<button class="prompt-modal-close" type="button">&times;</button>' +
+            '</div>' +
+            '<div class="prompt-modal-body">' +
+              '<div class="delete-confirmation">' +
+                '<h3 style="text-align: center; margin-bottom: 8px; color: #333;">Are you sure?</h3>' +
+                '<p style="text-align: center; color: #666; margin-bottom: 16px;">' +
+                  'This action cannot be undone. This will permanently delete the prompt card ' +
+                '</p>' +
+              '</div>' +
+            '</div>' +
+            '<div class="prompt-modal-footer">' +
+              '<button class="prompt-btn-secondary" id="delete-cancel">Cancel</button>' +
+              '<button class="prompt-btn-danger" id="delete-confirm">Delete Prompt Card</button>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+
+        document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+        const modal = document.querySelector('.prompt-modal-overlay');
+        const closeBtn = modal.querySelector('.prompt-modal-close');
+        const cancelBtn = modal.querySelector('#delete-cancel');
+        const confirmBtn = modal.querySelector('#delete-confirm');
+
+        // Close modal functions
+        const closeModal = () => modal.remove();
+
+        // Close modal on overlay click
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) closeModal();
+        });
+
+        // Close button
+        closeBtn.addEventListener('click', closeModal);
+
+        // Cancel button
+        cancelBtn.addEventListener('click', closeModal);
+
+        // Escape key to close
+        const escHandler = (e) => {
+          if (e.key === 'Escape') {
+            closeModal();
+            document.removeEventListener('keydown', escHandler);
+          }
+        };
+        document.addEventListener('keydown', escHandler);
+
+        // Confirm delete button
+        confirmBtn.addEventListener('click', async () => {
+          // Disable button and show loading
+          confirmBtn.disabled = true;
+          const originalText = confirmBtn.textContent;
+          confirmBtn.textContent = 'Deleting...';
+
+          try {
+            const result = await window.electronAPI.deletePromptCard(card.id);
+
+            if (result.success) {
+              confirmBtn.textContent = 'Deleted!';
+              confirmBtn.style.backgroundColor = '#4CAF50';
+
+              // Refresh the prompt cards list
+              if (typeof loadPromptCards === 'function') {
+                loadPromptCards();
+              }
+
+              // Close modal after success
+              setTimeout(() => {
+                modal.remove();
+              }, 1500);
+            } else {
+              throw new Error(result.error || 'Failed to delete prompt card');
+            }
+          } catch (error) {
+            console.error('[Prompt] Failed to delete prompt card:', error);
+            confirmBtn.textContent = 'Failed - Try Again';
+            confirmBtn.style.backgroundColor = '#f44336';
+            confirmBtn.disabled = false;
+
+            // Reset button after 3 seconds
+            setTimeout(() => {
+              confirmBtn.textContent = originalText;
+              confirmBtn.style.backgroundColor = '';
+            }, 3000);
+          }
+        });
+      };
+
+      // Modal for selecting images from Unsplash
+      const showImageSelectionModal = (onImageSelected) => {
+        // Remove existing modal if any
+        const existingModal = document.querySelector('.image-modal-overlay');
+        if (existingModal) existingModal.remove();
+
+        const modalHTML = '<div class="image-modal-overlay">' +
+          '<div class="image-modal">' +
+            '<div class="image-modal-header">' +
+              '<h2>Select Image from Unsplash</h2>' +
+              '<button class="image-modal-close" type="button">&times;</button>' +
+            '</div>' +
+            '<div class="image-modal-body">' +
+              '<div class="image-search-section" style="margin-bottom: 16px;">' +
+                '<div style="display: flex; gap: 8px;">' +
+                  '<input type="text" class="image-search-input" id="image-search-input" placeholder="Search for images..." style="flex: 1; padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px;">' +
+                  '<button class="image-search-btn" id="image-search-btn" style="padding: 8px 16px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">Search</button>' +
+                '</div>' +
+              '</div>' +
+              '<div class="images-loading" id="images-loading" style="text-align: center; padding: 20px; display: none;">' +
+                '<div style="display: inline-block; width: 20px; height: 20px; border: 3px solid #f3f3f3; border-top: 3px solid #3498db; border-radius: 50%; animation: spin 1s linear infinite;"></div>' +
+                '<p style="margin-top: 10px; color: #666;">Loading images...</p>' +
+              '</div>' +
+              '<div class="images-grid" id="images-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 12px; max-height: 400px; overflow-y: auto;">' +
+                '<!-- Images will be loaded here -->' +
+              '</div>' +
+            '</div>' +
+            '<div class="image-modal-footer">' +
+              '<button class="image-btn-secondary" id="image-cancel">Cancel</button>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+
+        document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+        const modal = document.querySelector('.image-modal-overlay');
+        const closeBtn = modal.querySelector('.image-modal-close');
+        const cancelBtn = modal.querySelector('#image-cancel');
+        const searchInput = modal.querySelector('#image-search-input');
+        const searchBtn = modal.querySelector('#image-search-btn');
+        const imagesGrid = modal.querySelector('#images-grid');
+        const loadingDiv = modal.querySelector('#images-loading');
+
+        // Close modal functions
+        const closeModal = () => modal.remove();
+
+        // Close modal on overlay click
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) closeModal();
+        });
+
+        // Close button
+        closeBtn.addEventListener('click', closeModal);
+
+        // Cancel button
+        cancelBtn.addEventListener('click', closeModal);
+
+        // Escape key to close
+        const escHandler = (e) => {
+          if (e.key === 'Escape') {
+            closeModal();
+            document.removeEventListener('keydown', escHandler);
+          }
+        };
+        document.addEventListener('keydown', escHandler);
+
+        // Load initial random images
+        loadRandomImages();
+
+        // Search functionality
+        const performSearch = async () => {
+          const query = searchInput.value.trim();
+          if (query) {
+            await searchImages(query);
+          } else {
+            await loadRandomImages();
+          }
+        };
+
+        searchBtn.addEventListener('click', performSearch);
+        searchInput.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') {
+            performSearch();
+          }
+        });
+
+        // Load random images
+        async function loadRandomImages() {
+          loadingDiv.style.display = 'block';
+          imagesGrid.innerHTML = '';
+
+          try {
+            const result = await window.electronAPI.getRandomUnsplashImages({ count: 20 });
+            if (result.success && result.data) {
+              displayImages(result.data);
+            } else {
+              imagesGrid.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 20px; color: #666;">Failed to load images</div>';
+            }
+          } catch (error) {
+            console.error('[Image Selection] Error loading random images:', error);
+            imagesGrid.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 20px; color: #666;">Error loading images</div>';
+          } finally {
+            loadingDiv.style.display = 'none';
+          }
+        }
+
+        // Search images
+        async function searchImages(query) {
+          loadingDiv.style.display = 'block';
+          imagesGrid.innerHTML = '';
+
+          try {
+            const result = await window.electronAPI.searchUnsplashImages({ query, page: 1, perPage: 20 });
+            if (result.success && result.data && result.data.results) {
+              displayImages(result.data.results);
+            } else {
+              imagesGrid.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 20px; color: #666;">No images found</div>';
+            }
+          } catch (error) {
+            console.error('[Image Selection] Error searching images:', error);
+            imagesGrid.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 20px; color: #666;">Error searching images</div>';
+          } finally {
+            loadingDiv.style.display = 'none';
+          }
+        }
+
+        // Display images in grid
+        function displayImages(images) {
+          imagesGrid.innerHTML = '';
+
+          images.forEach(image => {
+            const imageDiv = document.createElement('div');
+            imageDiv.className = 'image-item';
+            imageDiv.style.cssText = 'cursor: pointer; border-radius: 8px; overflow: hidden; aspect-ratio: 1; background: #f5f5f5; border: 2px solid transparent; transition: border-color 0.2s;';
+            imageDiv.setAttribute('data-url', image.urls.small);
+
+            imageDiv.innerHTML = '<img src="' + image.urls.thumb + '" alt="' + (image.alt_description || 'Unsplash image') + '" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy">';
+
+            // Hover effects
+            imageDiv.addEventListener('mouseenter', () => {
+              imageDiv.style.borderColor = '#007bff';
+            });
+
+            imageDiv.addEventListener('mouseleave', () => {
+              imageDiv.style.borderColor = 'transparent';
+            });
+
+            // Selection
+            imageDiv.addEventListener('click', () => {
+              if (typeof onImageSelected === 'function') {
+                onImageSelected(image.urls.small);
+              }
+              closeModal();
+            });
+
+            imagesGrid.appendChild(imageDiv);
+          });
+        }
+      };
+
       // Show custom SharePoint modal
       const showSharepointModal = () => {
         // Remove existing modal if any
@@ -1330,6 +2516,10 @@ const customizations = {
     return location.hostname === 'app.customgpt.ai' && location.pathname.includes('/login');
   }
 
+  function isOnProjectRoute() {
+    return location.hostname === 'app.customgpt.ai' && location.pathname.includes('/projects/');
+  }
+
   async function hideLoginPage() {
     console.log('DOMContentLoaded......................)', isLoginPage());
     if (!isLoginPage()) once = false;
@@ -1342,6 +2532,301 @@ const customizations = {
       redirectToOkta();
     }, 2000);
   }
+
+      // Global functions for prompt cards management
+
+      // Validate if URL is a JPG or PNG image
+      function isValidImageUrl(url) {
+        try {
+          const urlObj = new URL(url);
+          const pathname = urlObj.pathname.toLowerCase();
+          return pathname.endsWith('.jpg') || pathname.endsWith('.jpeg') || pathname.endsWith('.png');
+        } catch {
+          return false;
+        }
+      }
+
+      // Validate image dimensions (95x95px min, 1000px max)
+      async function validateImageDimensions(url) {
+        return new Promise((resolve) => {
+          const img = new Image();
+          img.onload = () => {
+            const { naturalWidth, naturalHeight } = img;
+            // Check if dimensions are between 95x95 and 1000x1000
+            const isValid = naturalWidth >= 95 && naturalHeight >= 95 &&
+                           naturalWidth <= 1000 && naturalHeight <= 1000;
+            resolve(isValid);
+          };
+          img.onerror = () => resolve(false);
+          img.src = url;
+        });
+      }
+
+      async function loadPromptCards(page = 1) {
+        const loadingState = document.getElementById('loading-state');
+        const loadingStateContainer = document.getElementById('loading-state-container');
+        const promptCardsList = document.getElementById('prompt-cards-list');
+        const emptyState = document.getElementById('empty-state');
+
+        // Show loading state and hide other content
+        loadingState.style.display = 'flex';
+        loadingStateContainer.style.display = 'grid';
+        promptCardsList.style.display = 'none !important';
+        emptyState.style.display = 'none !important';
+        loadingState.classList.remove('hide-loader');
+        loadingStateContainer.classList.remove('hide-loader');
+
+        try {
+          console.log('[Chat Interface] Loading page:', page, 'with limit:', pageSize);
+          const projectId = window.location.pathname.split('/')[2];
+          const result = await getPromptCards({ page, project_id: projectId });
+          console.log('[Chat Interface] API result:', result);
+
+          // hide loading state
+          loadingState.style.display = 'none !important';
+          loadingState.classList.add('hide-loader');
+          loadingStateContainer.classList.add('hide-loader');
+
+          if (result.success && result.data && result.data.length > 0) {
+            currentPage = page;
+            console.log('[Chat Interface] Rendering cards for page', page, ':', result.data);
+            renderPromptCards(result.data);
+            renderPagination(result.pagination);
+            promptCardsList.style.display = 'block';
+          } else {
+            console.log('[Chat Interface] No data or error, showing empty state');
+            emptyState.style.display = 'block';
+          }
+        } catch (error) {
+          console.error('[Chat Interface] Error loading prompt cards:', error);
+          // show error state and hide loading state
+          loadingState.style.display = 'none !important';
+          loadingState.classList.add('hide-loader');
+          emptyState.style.display = 'block';
+          loadingStateContainer.classList.add('hide-loader');
+        }
+      }
+
+      // Global variables for drag and drop and pagination
+      let draggedItem = null;
+      let currentPage = 1;
+      const pageSize = 10;
+
+      // Wrapper function to ensure getPromptCards always includes page and limit
+      function getPromptCards(options = {}) {
+        const { page = currentPage, limit = pageSize } = options;
+        const projectId = window.location.pathname.split('/')[2];
+        return window.electronAPI.getPromptCards({ page, limit, project_id: projectId });
+      }
+
+      // Function to render pagination controls
+      function renderPagination(pagination) {
+        const paginationContainer = document.getElementById('pagination-container');
+        if (!paginationContainer) return;
+
+        const { page, totalPages, hasNext, hasPrev, total } = pagination;
+
+        // Hide pagination if only one page
+        if (totalPages <= 1) {
+          paginationContainer.style.display = 'none';
+          return;
+        }
+
+        paginationContainer.style.display = 'block';
+
+        let paginationHTML = '<div class="pagination-controls d-flex align-center justify-center gap-2 my-4">';
+
+        // Previous button
+        if (hasPrev) {
+          paginationHTML += '<button class="v-btn v-btn--elevated v-theme--CustomGPT text-primary v-btn--density-default v-btn--size-default v-btn--variant-elevated pagination-btn" data-page="' + (page - 1) + '"><span class="v-btn__overlay"></span><span class="v-btn__content">&laquo; Previous</span></button>';
+        } else {
+          paginationHTML += '<button class="v-btn v-btn--flat v-theme--CustomGPT v-btn--density-default v-btn--size-default v-btn--variant-text pagination-btn" disabled><span class="v-btn__overlay"></span><span class="v-btn__content">&laquo; Previous</span></button>';
+        }
+
+        // Page info
+        paginationHTML += '<span class="pagination-info text-body-2 mx-4">Page ' + page + ' of ' + totalPages + ' (' + total + ' total)</span>';
+
+        // Next button
+        if (hasNext) {
+          paginationHTML += '<button class="v-btn v-btn--elevated v-theme--CustomGPT text-primary v-btn--density-default v-btn--size-default v-btn--variant-elevated pagination-btn" data-page="' + (page + 1) + '"><span class="v-btn__overlay"></span><span class="v-btn__content">Next &raquo;</span></button>';
+        } else {
+          paginationHTML += '<button class="v-btn v-btn--flat v-theme--CustomGPT v-btn--density-default v-btn--size-default v-btn--variant-text pagination-btn" disabled><span class="v-btn__overlay"></span><span class="v-btn__content">Next &raquo;</span></button>';
+        }
+
+        paginationHTML += '</div>';
+
+        paginationContainer.innerHTML = paginationHTML;
+
+        // Add event listeners to pagination buttons
+        const paginationButtons = paginationContainer.querySelectorAll('.pagination-btn:not([disabled])');
+        console.log('[Chat Interface] Adding pagination event listeners to', paginationButtons.length, 'buttons');
+        paginationButtons.forEach(btn => {
+          // Remove any existing click listeners to avoid duplicates
+          btn.removeEventListener('click', handlePaginationClick);
+          btn.addEventListener('click', handlePaginationClick);
+        });
+      }
+
+      // Pagination click handler
+      function handlePaginationClick(e) {
+        const targetPage = parseInt(e.currentTarget.getAttribute('data-page'));
+        console.log('[Chat Interface] Pagination button clicked, navigating to page:', targetPage);
+        if (targetPage) {
+          loadPromptCards(targetPage);
+        }
+      }
+
+      // Function to render prompt cards
+      function renderPromptCards(cards) {
+        const promptCardsList = document.getElementById('prompt-cards-list');
+        console.log('[Chat Interface] Clearing prompt cards list and rendering', cards.length, 'cards');
+        promptCardsList.innerHTML = '';
+
+        cards.forEach(card => {
+          console.log('[Chat Interface] Rendering card:', card.id, card.title);
+          const cardElement = createPromptCardElement(card);
+          promptCardsList.appendChild(cardElement);
+        });
+
+        console.log('[Chat Interface] Cards rendered, list now has', promptCardsList.children.length, 'children');
+
+        // Add drag and drop functionality
+        setupDragAndDrop();
+      }
+
+      // Function to setup drag and drop functionality
+      function setupDragAndDrop() {
+        const list = document.getElementById('prompt-cards-list');
+
+        // Remove existing event listeners to avoid duplicates
+        list.removeEventListener('dragstart', handleDragStart);
+        list.removeEventListener('dragend', handleDragEnd);
+        list.removeEventListener('dragover', handleDragOver);
+
+        // Add event listeners
+        list.addEventListener('dragstart', handleDragStart);
+        list.addEventListener('dragend', handleDragEnd);
+        list.addEventListener('dragover', handleDragOver);
+      }
+
+      // Drag event handlers
+      function handleDragStart(e) {
+        draggedItem = e.target;
+        e.target.classList.add('dragging');
+      }
+
+      async function handleDragEnd(e) {
+        e.target.classList.remove('dragging');
+
+        // Update sort orders after drag operation completes
+        await updateSortOrdersAfterDrag();
+
+        draggedItem = null;
+      }
+
+      function handleDragOver(e) {
+        e.preventDefault(); // Allow drop
+        const list = document.getElementById('prompt-cards-list');
+        const afterElement = getDragAfterElement(list, e.clientY);
+        if (afterElement == null) {
+          list.appendChild(draggedItem);
+        } else {
+          list.insertBefore(draggedItem, afterElement);
+        }
+      }
+
+      // Function to update sort orders after drag operation
+      async function updateSortOrdersAfterDrag() {
+        try {
+          const list = document.getElementById('prompt-cards-list');
+          const cards = list.querySelectorAll('li.prompt-card');
+
+          // Calculate base sort order for current page (page 1 = 1-10, page 2 = 11-20, etc.)
+          const baseSortOrder = (currentPage - 1) * pageSize + 1;
+
+          console.log('[Chat Interface] Updating sort orders after drag - page:', currentPage, 'baseSortOrder:', baseSortOrder);
+
+          // Update sort order for each card in the new visual order
+          const updatePromises = Array.from(cards).map(async (cardElement, index) => {
+            const cardId = cardElement.getAttribute('data-card-id');
+            const newSortOrder = baseSortOrder + index;
+
+            console.log('[Chat Interface] Updating card', cardId, 'to sort_order:', newSortOrder);
+
+            try {
+              const result = await window.electronAPI.updatePromptCard(cardId, { sort_order: newSortOrder });
+              if (!result.success) {
+                console.error('[Chat Interface] Failed to update sort order for card', cardId, ':', result.error);
+              }
+            } catch (error) {
+              console.error('[Chat Interface] Error updating sort order for card', cardId, ':', error);
+            }
+          });
+
+          // Wait for all updates to complete
+          await Promise.all(updatePromises);
+          console.log('[Chat Interface] Sort order updates completed');
+
+        } catch (error) {
+          console.error('[Chat Interface] Error updating sort orders after drag:', error);
+        }
+      }
+
+      // Helper function to get the element to insert before during drag
+      function getDragAfterElement(container, y) {
+        const draggableElements = [
+          ...container.querySelectorAll('li:not(.dragging)'),
+        ];
+
+        return draggableElements.reduce(
+          (closest, child) => {
+            const box = child.getBoundingClientRect();
+            const offset = y - box.top - box.height / 2;
+            if (offset < 0 && offset > closest.offset) {
+              return { offset: offset, element: child };
+            } else {
+              return closest;
+            }
+          },
+          { offset: Number.NEGATIVE_INFINITY }
+        ).element;
+      }
+
+      // Function to create a prompt card element
+      function createPromptCardElement(card) {
+        const cardDiv = document.createElement('li');
+        cardDiv.className = 'prompt-card';
+        cardDiv.setAttribute('data-card-id', card.id);
+        cardDiv.setAttribute('draggable', 'true');
+
+        cardDiv.innerHTML =
+          '<div class="v-card__header d-flex align-center p-3">' +
+            '<div class="d-flex align-center flex-grow-1">' +
+              '<img src="' + (card.image_url || '/default-avatar.png') + '" alt="Profile" class="card-avatar mr-3" style="width: 48px; height: 48px; object-fit: cover;">' +
+              '<div class="flex-grow-1">' +
+                '<div class="v-card__title prompt-card-title">' + (card.title || 'Untitled') + '</div>' +
+                '<div class="v-card__subtitle prompt-card-subtitle">' +
+                  '<p class="text-body-1 mb-0">' + (card.prompt || 'No prompt content') + '</p>' +
+                '</div>' +
+              '</div>' +
+            '</div>' +
+            '<div class="v-card__actions">' +
+              '<span class="active-status ' + (card.active ? 'text-success' : 'text-error') + '">' +
+                (card.active ? 'Active' : 'Inactive') +
+              '</span>' +
+              '<button class="v-btn v-btn--icon v-theme--CustomGPT v-btn--density-default v-btn--size-small v-btn--variant-text card-menu-btn" data-card-id="' + card.id + '">' +
+                '<span class="v-btn__overlay"></span>' +
+                '<span class="v-btn__content">' +
+                  '<svg class="v-icon notranslate v-theme--CustomGPT v-icon--size-default" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-hidden="true">' +
+                    '<path d="M12,16A2,2 0 0,1 14,18A2,2 0 0,1 12,20A2,2 0 0,1 10,18A2,2 0 0,1 12,16M12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12A2,2 0 0,1 12,10M12,4A2,2 0 0,1 14,6A2,2 0 0,1 12,8A2,2 0 0,1 10,6A2,2 0 0,1 12,4Z"></path>' +
+                  '</svg>' +
+                '</span>' +
+              '</button>' +
+            '</div>' +
+          '</div>';
+
+        return cardDiv;
+      }
 
       // Customize sidebar menu
       const customizeSidebar = () => {
@@ -1531,6 +3016,646 @@ const customizations = {
             processedElements.add(p);
           }
         });
+        
+        // 9. Adding "Chat interface" to the sidebar (only once)
+        if (!document.querySelector('.sideitem-paragraph[chat-interface-added]') && isOnProjectRoute()) {
+          const chatInterfaceParagraphs = document.querySelectorAll('p.sideitem-paragraph');
+          chatInterfaceParagraphs.forEach(p => {
+            if ((p.textContent.trim() === 'Build' || p.textContent.trim() === 'Knowledge base') && !p.hasAttribute('chat-interface-added')) {
+              const el = document.createElement('a');
+              el.classList.add('link', 'cursor-pointer', 'w-full');
+
+              el.innerHTML = '<button data-v-08981316="" data-v-961eb836="" type="button" class="v-btn v-btn--block v-btn--slim v-theme--CustomGPT text-dark v-btn--density-default v-btn--size-default v-btn--variant-text btn-sidebar justify-start overflow-hidden ps-0.5 chat-interface-btn" style="text-transform: none;"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span><span class="v-btn__prepend"><svg data-v-7fa85f8e="" data-v-08981316="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" width="1em" height="1em" viewBox="0 0 24 24" tag="i" class="iconify iconify--tabler v-icon notranslate v-theme--CustomGPT v-icon--size-default text-dark change-path-stroke ms-8 transition-all duration-300"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M6 21h6m-3 0V3L3 9h18M9 3l10 6"></path><path d="M17 9v4a2 2 0 1 1-2 2"></path></g></svg></span><span class="v-btn__content" data-no-activator=""><p data-v-08981316="" class="font-normal text-dark sideitem-paragraph ms-2 font-semibold">Chat Interface</p></span><span class="v-btn__append"></span><!----></button>';
+
+              p.parentNode.parentNode.parentNode.insertAdjacentElement('afterend', el);
+              p.setAttribute('chat-interface-added', 'true');
+
+              // Add click handler for Chat Interface
+              el.addEventListener('click', (e) => {
+                try {
+                  e.preventDefault();
+                  e.stopPropagation();
+
+                  // Hide the content element
+                  const contentElement = document.querySelector('.v-container.v-locale--is-ltr.py-0.flex.flex-col.gap-4.container-no-announcement-bar > div.content.relative.max-h-full');
+                  if (contentElement) {
+                    contentElement.style.display = 'none';
+                  }
+
+                  // Add new HTML content to the container
+                  const container = document.querySelector('.v-container.v-locale--is-ltr.py-0.flex.flex-col.gap-4.container-no-announcement-bar');
+                  if (container) {
+                    // Clear existing content and add new HTML
+                    container.innerHTML =
+                      '<div class="chat-interface-content">' +
+                        '<div class="d-flex justify-space-between align-center mb-4">' +
+                          '<h2 class="text-h4 mb-0">Chat Interface</h2>' +
+                          '<button type="button" class="v-btn v-theme--CustomGPT bg-primary v-btn--density-default v-btn--size-default v-btn--variant-flat add-prompt-btn" style="text-transform: none">' +
+                            '<span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>'+
+                            '<span class="v-btn__content" data-no-activator=""> Add New Prompt </span>' +
+                          '</button>' +
+                        '</div>' +
+                        '<div class="prompt-cards-container">' +
+                          '<div class="loading-state-container" id="loading-state-container">' +
+                            '<div class="loading-state" id="loading-state">' +
+                              '<div class="v-progress-circular v-theme--CustomGPT v-progress-circular--indeterminate v-progress-circular--visible" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: 40px; height: 40px;">' +
+                                '<svg class="v-progress-circular__svg" viewBox="21.904761904761905 21.904761904761905 43.80952380952381 43.80952380952381">' +
+                                  '<circle class="v-progress-circular__circle" cx="43.80952380952381" cy="43.80952380952381" r="20" fill="transparent" stroke="currentColor" stroke-width="3.8095238095238093" stroke-linecap="round"></circle>' +
+                                '</svg>' +
+                              '</div>' +
+                              '<span class="ml-3">Loading prompt cards...</span>' +
+                            '</div>' +
+                          '</div>' +
+                          '<ul class="prompt-cards-list bg-white rounded-card v-card--variant-elevated shadow-card my-4" id="prompt-cards-list" style="display: none;">' +
+                            '<!-- Prompt cards will be inserted here -->' +
+                          '</ul>' +
+                          '<div class="empty-state text-center py-8" id="empty-state" style="display: none;">' +
+                            '<svg class="v-icon notranslate v-theme--CustomGPT v-icon--size-large mb-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-hidden="true">' +
+                              '<path d="M9,7H11V9H9V7M9,11H11V17H9V11M5,4.5C5,3.12 6.12,2 7.5,2H16.5C17.88,2 19,3.12 19,4.5V19.5C19,20.88 17.88,22 16.5,22H7.5C6.12,22 5,20.88 5,19.5V4.5M7.5,4A.5.5 0 0,0 7,4.5V19.5A.5.5 0 0,0 7.5,20H16.5A.5.5 0 0,0 17,19.5V4.5A.5.5 0 0,0 16.5,4H7.5Z"></path>' +
+                            '</svg>' +
+                            '<h3 class="text-h6 mb-2">No prompt cards yet</h3>' +
+                            '<p class="text-body-2 mb-4">Create your first prompt card to get started with the chat interface.</p>' +
+                            '<button class="v-btn v-btn--elevated v-theme--CustomGPT text-primary v-btn--density-default v-btn--size-default v-btn--variant-elevated">' +
+                              '<span class="v-btn__overlay"></span>' +
+                              '<span class="v-btn__content">Create First Prompt</span>' +
+                            '</button>' +
+                          '</div>' +
+                          '<div class="pagination-container" id="pagination-container" style="display: none;"></div>' +
+                        '</div>' +
+                      '</div>'
+
+                      '<!-- Edit Prompt Dialog -->' +
+                      '<div class="v-overlay v-overlay--active v-theme--CustomGPT v-locale--is-ltr v-overlay--scroll-blocked edit-dialog-overlay" id="edit-dialog-overlay" style="display: none; z-index: 2000;">' +
+                        '<div class="v-overlay__scrim" style="opacity: 0.32;"></div>' +
+                        '<div class="v-overlay__content">' +
+                          '<div class="v-card v-theme--CustomGPT v-card--density-default rounded-card v-card--variant-elevated shadow-card" style="max-width: 600px; width: 100%;">' +
+                            '<div class="v-card__header">' +
+                              '<div class="v-card__title">Edit Prompt Card</div>' +
+                              '<div class="v-card__close">' +
+                                '<button class="v-btn v-btn--icon v-theme--CustomGPT v-btn--density-default v-btn--size-small v-btn--variant-text close-edit-dialog">' +
+                                  '<span class="v-btn__overlay"></span>' +
+                                  '<span class="v-btn__content">' +
+                                    '<svg class="v-icon notranslate v-theme--CustomGPT v-icon--size-default" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-hidden="true">' +
+                                      '<path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"></path>' +
+                                    '</svg>' +
+                                  '</span>' +
+                                '</button>' +
+                              '</div>' +
+                            '</div>' +
+                            '<div class="v-card__text">' +
+                              '<div class="mb-4">' +
+                                '<label class="v-label v-field-label text-body-2 mb-2 d-block">Profile Image</label>' +
+                                '<div class="d-flex align-center">' +
+                                  '<div class="profile-image-container mr-4" style="position: relative; display: inline-block;">' +
+                                    '<img id="edit-profile-image" src="" alt="Profile" class="profile-image" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid #e0e0e0;">' +
+                                    '<button class="edit-image-btn v-btn v-btn--icon v-theme--CustomGPT v-btn--density-default v-btn--size-small v-btn--variant-elevated" style="position: absolute; bottom: 0; right: 0;">' +
+                                      '<span class="v-btn__overlay"></span>' +
+                                      '<span class="v-btn__content">' +
+                                        '<svg class="v-icon notranslate v-theme--CustomGPT v-icon--size-default" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-hidden="true">' +
+                                          '<path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z"></path>' +
+                                        '</svg>' +
+                                      '</span>' +
+                                    '</button>' +
+                                  '</div>' +
+                                '</div>' +
+                              '</div>' +
+                              '<div class="mb-4">' +
+                                '<label class="v-label v-field-label text-body-2 mb-2 d-block">Title</label>' +
+                                '<div class="v-field v-field--appended v-field--center-affix v-field--dirty v-field--variant-outlined v-theme--CustomGPT">' +
+                                  '<div class="v-field__overlay"></div>' +
+                                  '<div class="v-field__control">' +
+                                    '<input id="edit-title" type="text" class="v-field__input" placeholder="Enter prompt title">' +
+                                  '</div>' +
+                                '</div>' +
+                              '</div>' +
+                              '<div class="mb-4">' +
+                                '<label class="v-label v-field-label text-body-2 mb-2 d-block">Prompt</label>' +
+                                '<div class="v-field v-field--appended v-field--center-affix v-field--dirty v-field--variant-outlined v-theme--CustomGPT">' +
+                                  '<div class="v-field__overlay"></div>' +
+                                  '<div class="v-field__control">' +
+                                    '<textarea id="edit-prompt" class="v-field__input" rows="4" placeholder="Enter your prompt content"></textarea>' +
+                                  '</div>' +
+                                '</div>' +
+                              '</div>' +
+                            '</div>' +
+                            '<div class="v-card__actions">' +
+                              '<button class="v-btn v-btn--flat v-theme--CustomGPT v-btn--density-default v-btn--size-default v-btn--variant-text cancel-edit-btn">' +
+                                '<span class="v-btn__overlay"></span>' +
+                                '<span class="v-btn__content">Cancel</span>' +
+                              '</button>' +
+                              '<button class="v-btn v-btn--elevated v-theme--CustomGPT text-primary v-btn--density-default v-btn--size-default v-btn--variant-elevated save-edit-btn">' +
+                                '<span class="v-btn__overlay"></span>' +
+                                '<span class="v-btn__content">Save Changes</span>' +
+                              '</button>' +
+                            '</div>' +
+                          '</div>' +
+                        '</div>' +
+                      '</div>'
+
+                      '<!-- Delete Confirmation Dialog -->' +
+                      '<div class="v-overlay v-overlay--active v-theme--CustomGPT v-locale--is-ltr v-overlay--scroll-blocked delete-dialog-overlay" id="delete-dialog-overlay" style="display: none; z-index: 2000;">' +
+                        '<div class="v-overlay__scrim" style="opacity: 0.32;"></div>' +
+                        '<div class="v-overlay__content">' +
+                          '<div class="v-card v-theme--CustomGPT v-card--density-default rounded-card v-card--variant-elevated shadow-card" style="max-width: 400px; width: 100%;">' +
+                            '<div class="v-card__header">' +
+                              '<div class="v-card__title">Delete Prompt Card</div>' +
+                            '</div>' +
+                            '<div class="v-card__text">' +
+                              '<p>Are you sure you want to delete this prompt card? This action cannot be undone.</p>' +
+                            '</div>' +
+                            '<div class="v-card__actions">' +
+                              '<button class="v-btn v-btn--flat v-theme--CustomGPT v-btn--density-default v-btn--size-default v-btn--variant-text cancel-delete-btn">' +
+                                '<span class="v-btn__overlay"></span>' +
+                                '<span class="v-btn__content">Cancel</span>' +
+                              '</button>' +
+                              '<button class="v-btn v-btn--elevated v-theme--CustomGPT error v-btn--density-default v-btn--size-default v-btn--variant-elevated confirm-delete-btn">' +
+                                '<span class="v-btn__overlay"></span>' +
+                                '<span class="v-btn__content">Delete</span>' +
+                              '</button>' +
+                            '</div>' +
+                          '</div>' +
+                        '</div>' +
+                      '</div>'
+
+                      '<!-- Unsplash Image Selector Dialog -->' +
+                      '<div class="v-overlay v-overlay--active v-theme--CustomGPT v-locale--is-ltr v-overlay--scroll-blocked image-dialog-overlay" id="image-dialog-overlay" style="display: none; z-index: 2000;">' +
+                        '<div class="v-overlay__scrim" style="opacity: 0.32;"></div>' +
+                        '<div class="v-overlay__content">' +
+                          '<div class="v-card v-theme--CustomGPT v-card--density-default rounded-card v-card--variant-elevated shadow-card" style="max-width: 800px; width: 100%; max-height: 80vh;">' +
+                            '<div class="v-card__header">' +
+                              '<div class="v-card__title">Select Image</div>' +
+                              '<div class="v-card__close">' +
+                                '<button class="v-btn v-btn--icon v-theme--CustomGPT v-btn--density-default v-btn--size-small v-btn--variant-text close-image-dialog">' +
+                                  '<span class="v-btn__overlay"></span>' +
+                                  '<span class="v-btn__content">' +
+                                    '<svg class="v-icon notranslate v-theme--CustomGPT v-icon--size-default" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-hidden="true">' +
+                                      '<path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"></path>' +
+                                    '</svg>' +
+                                  '</span>' +
+                                '</button>' +
+                              '</div>' +
+                            '</div>' +
+                            '<div class="v-card__text">' +
+                              '<div class="mb-4">' +
+                                '<div class="v-field v-field--appended v-field--center-affix v-field--variant-outlined v-theme--CustomGPT">' +
+                                  '<div class="v-field__overlay"></div>' +
+                                  '<div class="v-field__control">' +
+                                    '<input id="image-search" type="text" class="v-field__input" placeholder="Search for images...">' +
+                                    '<div class="v-field__append-inner">' +
+                                      '<button class="v-btn v-btn--icon v-theme--CustomGPT v-btn--density-default v-btn--size-default v-btn--variant-text search-images-btn">' +
+                                        '<span class="v-btn__overlay"></span>' +
+                                        '<span class="v-btn__content">' +
+                                          '<svg class="v-icon notranslate v-theme--CustomGPT v-icon--size-default" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-hidden="true">' +
+                                            '<path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"></path>' +
+                                          '</svg>' +
+                                        '</span>' +
+                                      '</button>' +
+                                    '</div>' +
+                                  '</div>' +
+                                '</div>' +
+                              '</div>' +
+                              '<div class="images-grid" id="images-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 12px; max-height: 400px; overflow-y: auto;">' +
+                                '<!-- Images will be loaded here -->' +
+                              '</div>' +
+                            '</div>' +
+                            '<div class="v-card__actions">' +
+                              '<button class="v-btn v-btn--flat v-theme--CustomGPT v-btn--density-default v-btn--size-default v-btn--variant-text cancel-image-btn">' +
+                                '<span class="v-btn__overlay"></span>' +
+                                '<span class="v-btn__content">Cancel</span>' +
+                              '</button>' +
+                            '</div>' +
+                          '</div>' +
+                        '</div>' +
+                      '</div>';
+
+                    // Initialize the chat interface
+                    initializeChatInterface();
+
+                    // Function to initialize chat interface
+                    function initializeChatInterface() {
+                      loadPromptCards();
+
+                      // Add event listeners
+                      setupChatInterfaceEventListeners();
+                    }
+
+
+                    // Function to setup event listeners
+                    function setupChatInterfaceEventListeners() {
+                      // Add new prompt button
+                      const addBtn = document.querySelector('.add-prompt-btn');
+                      if (addBtn) {
+                        addBtn.addEventListener('click', () => {
+                          showCreatePromptModal();
+                        });
+                      }
+
+                      // Empty state create button
+                      const emptyCreateBtn = document.querySelector('#empty-state .v-btn');
+                      if (emptyCreateBtn) {
+                        emptyCreateBtn.addEventListener('click', () => {
+                          showEditDialog(null);
+                        });
+                      }
+
+                      // Delegate event listeners for dynamically created elements
+                      document.addEventListener('click', (e) => {
+                        // Card menu button
+                        if (e.target.closest('.card-menu-btn')) {
+                          const cardId = e.target.closest('.card-menu-btn').getAttribute('data-card-id');
+                          showCardMenu(cardId, e.target.closest('.card-menu-btn'));
+                        }
+
+                        // Edit dialog buttons
+                        if (e.target.closest('.close-edit-dialog') || e.target.closest('.cancel-edit-btn')) {
+                          hideEditDialog();
+                        }
+                        if (e.target.closest('.save-edit-btn')) {
+                          savePromptCard();
+                        }
+                        if (e.target.closest('.edit-image-btn')) {
+                          showImageDialog();
+                        }
+
+                        // Delete dialog buttons
+                        if (e.target.closest('.cancel-delete-btn')) {
+                          hideDeleteDialog();
+                        }
+                        if (e.target.closest('.confirm-delete-btn')) {
+                          confirmDeletePromptCard();
+                        }
+
+                        // Image dialog buttons
+                        if (e.target.closest('.close-image-dialog') || e.target.closest('.cancel-image-btn')) {
+                          hideImageDialog();
+                        }
+                        if (e.target.closest('.search-images-btn')) {
+                          searchUnsplashImages();
+                        }
+                      });
+
+                      // Handle image selection
+                      document.addEventListener('click', (e) => {
+                        if (e.target.closest('.unsplash-image')) {
+                          const imageUrl = e.target.closest('.unsplash-image').getAttribute('data-url');
+                          selectUnsplashImage(imageUrl);
+                        }
+                      });
+
+                      // Handle enter key in search input
+                      document.addEventListener('keypress', (e) => {
+                        if (e.target.id === 'image-search' && e.key === 'Enter') {
+                          searchUnsplashImages();
+                        }
+                      });
+                    }
+
+                    // Function to show card menu
+                    function showCardMenu(cardId, buttonElement) {
+                      // Remove any existing menus
+                      document.querySelectorAll('.card-menu-dropdown').forEach(menu => menu.remove());
+
+                      const menuDiv = document.createElement('div');
+                      menuDiv.className = 'card-menu-dropdown v-menu__content v-theme--CustomGPT v-overlay__content';
+                      menuDiv.style.cssText = 'position: absolute; z-index: 1000; background: white; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 120px;';
+
+                      menuDiv.innerHTML =
+                        '<div class="v-list v-theme--CustomGPT">' +
+                          '<div class="v-list-item v-list-item--density-default v-theme--CustomGPT edit-card-item" id="edit-card-item" data-card-id="' + cardId + '">' +
+                            '<div class="v-list-item__prepend">' +
+                              '<svg class="v-icon notranslate v-theme--CustomGPT v-icon--size-small" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-hidden="true">' +
+                                '<path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z"></path>' +
+                              '</svg>' +
+                            '</div>' +
+                            '<div class="v-list-item__content">' +
+                              '<div class="v-list-item-title cursor-pointer">Edit</div>' +
+                            '</div>' +
+                          '</div>' +
+                          '<div class="v-list-item v-list-item--density-default v-theme--CustomGPT delete-card-item" id="delete-card-item" data-card-id="' + cardId + '">' +
+                            '<div class="v-list-item__prepend">' +
+                              '<svg class="v-icon notranslate v-theme--CustomGPT v-icon--size-small" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-hidden="true">' +
+                                '<path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"></path>' +
+                              '</svg>' +
+                            '</div>' +
+                            '<div class="v-list-item__content">' +
+                              '<div class="v-list-item-title cursor-pointer">Delete</div>' +
+                            '</div>' +
+                          '</div>' +
+                        '</div>';
+
+                      // Position the menu
+                      const rect = buttonElement.getBoundingClientRect();
+                      menuDiv.style.top = (rect.bottom + 4) + 'px';
+                      menuDiv.style.left = (rect.left - 80) + 'px';
+
+                      document.body.appendChild(menuDiv);
+
+                      // Add click handlers for menu items
+                      document.getElementById('edit-card-item').addEventListener('click', async () => {
+                        const loadingState = document.getElementById('loading-state');
+                        const loadingStateContainer = document.getElementById('loading-state-container');
+                        const promptCardsList = document.getElementById('prompt-cards-list');
+                        const emptyState = document.getElementById('empty-state');
+
+                        // Show loading state
+                        loadingState.style.display = 'flex';
+                        loadingStateContainer.style.display = 'grid';
+                        promptCardsList.style.display = 'none !important';
+                        emptyState.style.display = 'none !important';
+                        loadingState.classList.remove('hide-loader');
+                        loadingStateContainer.classList.remove('hide-loader');
+
+                        try {
+                          const projectId = window.location.pathname.split('/')[2];
+                          const result = await getPromptCards({ page: currentPage, limit: pageSize, project_id: projectId });
+
+                          // Hide loading state
+                          loadingState.style.display = 'none !important';
+                          loadingState.classList.add('hide-loader');
+                          loadingStateContainer.classList.add('hide-loader');
+
+                          if (result.success) {
+                            const card = result.data.find(c => c.id === cardId);
+                            if (card) {
+                              showEditPromptModal(card);
+                            }
+                          }
+                        } catch (error) {
+                          console.error('[Chat Interface] Error loading card for edit:', error);
+                          // Hide loading state on error
+                          loadingState.style.display = 'none !important';
+                          loadingState.classList.add('hide-loader');
+                          loadingStateContainer.classList.add('hide-loader');
+                        }
+                        menuDiv.remove();
+                      });
+
+                      document.getElementById('delete-card-item').addEventListener('click', async () => {
+                        const loadingState = document.getElementById('loading-state');
+                        const loadingStateContainer = document.getElementById('loading-state-container');
+                        const promptCardsList = document.getElementById('prompt-cards-list');
+                        const emptyState = document.getElementById('empty-state');
+
+                        // Show loading state
+                        loadingState.style.display = 'flex';
+                        loadingStateContainer.style.display = 'grid';
+                        promptCardsList.style.display = 'none !important';
+                        emptyState.style.display = 'none !important';
+                        loadingState.classList.remove('hide-loader');
+                        loadingStateContainer.classList.remove('hide-loader');
+
+                        // Get card data for deletion confirmation
+                        try {
+                          const projectId = window.location.pathname.split('/')[2];
+                          const result = await getPromptCards({ page: currentPage, limit: pageSize, project_id: projectId });
+
+                          // Hide loading state
+                          loadingState.style.display = 'none !important';
+                          loadingState.classList.add('hide-loader');
+                          loadingStateContainer.classList.add('hide-loader');
+
+                          if (result.success) {
+                            const card = result.data.find(c => c.id === cardId);
+                            if (card) {
+                              showDeletePromptModal(card);
+                            }
+                          }
+                        } catch (error) {
+                          console.error('[Chat Interface] Error loading card for delete:', error);
+                          // Hide loading state on error
+                          loadingState.style.display = 'none !important';
+                          loadingState.classList.add('hide-loader');
+                          loadingStateContainer.classList.add('hide-loader');
+                        }
+                        menuDiv.remove();
+                      });
+
+                      // Close menu when clicking outside
+                      setTimeout(() => {
+                        document.addEventListener('click', function closeMenu(e) {
+                          if (!menuDiv.contains(e.target) && !buttonElement.contains(e.target)) {
+                            menuDiv.remove();
+                            document.removeEventListener('click', closeMenu);
+                          }
+                        });
+                      }, 0);
+                    }
+
+                    // Function to show edit dialog
+                    async function showEditDialog(cardId) {
+                      const dialog = document.getElementById('edit-dialog-overlay');
+                      const titleInput = document.getElementById('edit-title');
+                      const promptTextarea = document.getElementById('edit-prompt');
+                      const profileImage = document.getElementById('edit-profile-image');
+
+                      // Reset form
+                      titleInput.value = '';
+                      promptTextarea.value = '';
+                      profileImage.src = '';
+
+                      if (cardId) {
+                        // Edit existing card
+                        try {
+                          const projectId = window.location.pathname.split('/')[2];
+                          const result = await getPromptCards({ page: currentPage, limit: pageSize, project_id: projectId });
+                          if (result.success) {
+                            const card = result.data.find(c => c.id === cardId);
+                            if (card) {
+                              titleInput.value = card.title || '';
+                              promptTextarea.value = card.prompt || '';
+                              profileImage.src = card.image_url || '';
+                              dialog.setAttribute('data-card-id', cardId);
+                            }
+                          }
+                        } catch (error) {
+                          console.error('[Chat Interface] Error loading card for edit:', error);
+                        }
+                      } else {
+                        // New card
+                        dialog.removeAttribute('data-card-id');
+                      }
+
+                      dialog.style.display = 'block';
+                    }
+
+                    // Function to hide edit dialog
+                    function hideEditDialog() {
+                      const dialog = document.getElementById('edit-dialog-overlay');
+                      dialog.style.display = 'none';
+                    }
+
+                    // Function to save prompt card
+                    async function savePromptCard() {
+                      const dialog = document.getElementById('edit-dialog-overlay');
+                      const cardId = dialog.getAttribute('data-card-id');
+                      const titleInput = document.getElementById('edit-title');
+                      const promptTextarea = document.getElementById('edit-prompt');
+                      const profileImage = document.getElementById('edit-profile-image');
+
+                      const cardData = {
+                        title: titleInput.value.trim(),
+                        prompt: promptTextarea.value.trim(),
+                        image_url: profileImage.src || null,
+                        active: true
+                        // sort_order is auto-assigned by the API
+                      };
+
+                      try {
+                        let result;
+                        if (cardId) {
+                          // Update existing
+                          result = await window.electronAPI.updatePromptCard(cardId, cardData);
+                        } else {
+                          // Create new - extract project ID from URL
+                          const pathname = window.location.pathname;
+                          const projectIdMatch = pathname.match(/\\/projects\\/(\\d+)/);
+                          const projectId = projectIdMatch ? projectIdMatch[1] : 'unknown';
+
+                          cardData.project_id = projectId;
+                          result = await window.electronAPI.createPromptCard(cardData);
+                        }
+
+                        if (result.success) {
+                          hideEditDialog();
+                          // Refresh the prompt cards list
+                          if (typeof loadPromptCards === 'function') {
+                            loadPromptCards();
+                          }
+                        } else {
+                          console.error('[Chat Interface] Error saving prompt card:', result.error);
+                          alert('Error saving prompt card: ' + result.error);
+                        }
+                      } catch (error) {
+                        console.error('[Chat Interface] Error saving prompt card:', error);
+                        alert('Error saving prompt card: ' + error.message);
+                      }
+                    }
+
+                    // Function to show delete dialog
+                    function showDeleteDialog(cardId) {
+                      const dialog = document.getElementById('delete-dialog-overlay');
+                      dialog.setAttribute('data-card-id', cardId);
+                      dialog.style.display = 'block';
+                    }
+
+                    // Function to hide delete dialog
+                    function hideDeleteDialog() {
+                      const dialog = document.getElementById('delete-dialog-overlay');
+                      dialog.style.display = 'none';
+                    }
+
+                    // Function to confirm delete
+                    async function confirmDeletePromptCard() {
+                      const dialog = document.getElementById('delete-dialog-overlay');
+                      const cardId = dialog.getAttribute('data-card-id');
+
+                      try {
+                        const result = await window.electronAPI.deletePromptCard(cardId);
+                        if (result.success) {
+                          hideDeleteDialog();
+                          // Refresh the prompt cards list
+                          if (typeof loadPromptCards === 'function') {
+                            loadPromptCards();
+                          }
+                        } else {
+                          console.error('[Chat Interface] Error deleting prompt card:', result.error);
+                          alert('Error deleting prompt card: ' + result.error);
+                        }
+                      } catch (error) {
+                        console.error('[Chat Interface] Error deleting prompt card:', error);
+                        alert('Error deleting prompt card: ' + error.message);
+                      }
+                    }
+
+                    // Function to show image dialog
+                    async function showImageDialog() {
+                      const dialog = document.getElementById('image-dialog-overlay');
+                      const imagesGrid = document.getElementById('images-grid');
+
+                      // Load random images initially
+                      imagesGrid.innerHTML = '<div class="d-flex justify-center py-4"><div class="v-progress-circular v-theme--CustomGPT v-progress-circular--indeterminate v-progress-circular--visible" style="width: 32px; height: 32px;"></div></div>';
+
+                      try {
+                        const result = await window.electronAPI.getRandomUnsplashImages({ count: 20 });
+                        if (result.success) {
+                          renderUnsplashImages(result.data);
+                        } else {
+                          imagesGrid.innerHTML = '<div class="text-center py-4 text-error">Failed to load images</div>';
+                        }
+                      } catch (error) {
+                        console.error('[Chat Interface] Error loading random images:', error);
+                        imagesGrid.innerHTML = '<div class="text-center py-4 text-error">Error loading images</div>';
+                      }
+
+                      dialog.style.display = 'block';
+                    }
+
+                    // Function to hide image dialog
+                    function hideImageDialog() {
+                      const dialog = document.getElementById('image-dialog-overlay');
+                      dialog.style.display = 'none';
+                    }
+
+                    // Function to search Unsplash images
+                    async function searchUnsplashImages() {
+                      const searchInput = document.getElementById('image-search');
+                      const query = searchInput.value.trim();
+                      const imagesGrid = document.getElementById('images-grid');
+
+                      if (!query) {
+                        showImageDialog(); // Load random images
+                        return;
+                      }
+
+                      imagesGrid.innerHTML = '<div class="d-flex justify-center py-4"><div class="v-progress-circular v-theme--CustomGPT v-progress-circular--indeterminate v-progress-circular--visible" style="width: 32px; height: 32px;"></div></div>';
+
+                      try {
+                        const result = await window.electronAPI.searchUnsplashImages({ query, page: 1, perPage: 20 });
+                        if (result.success && result.data.results) {
+                          renderUnsplashImages(result.data.results);
+                        } else {
+                          imagesGrid.innerHTML = '<div class="text-center py-4 text-error">No images found</div>';
+                        }
+                      } catch (error) {
+                        console.error('[Chat Interface] Error searching images:', error);
+                        imagesGrid.innerHTML = '<div class="text-center py-4 text-error">Error searching images</div>';
+                      }
+                    }
+
+                    // Function to render Unsplash images
+                    function renderUnsplashImages(images) {
+                      const imagesGrid = document.getElementById('images-grid');
+                      imagesGrid.innerHTML = '';
+
+                      images.forEach(image => {
+                        const imageDiv = document.createElement('div');
+                        imageDiv.className = 'unsplash-image';
+                        imageDiv.setAttribute('data-url', image.urls.small);
+                        imageDiv.style.cssText = 'cursor: pointer; border-radius: 8px; overflow: hidden; aspect-ratio: 1; background: #f5f5f5;';
+
+                        imageDiv.innerHTML = '<img src="' + image.urls.thumb + '" alt="' + (image.alt_description || 'Unsplash image') + '" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy">';
+
+                        imagesGrid.appendChild(imageDiv);
+                      });
+                    }
+
+                    // Function to select Unsplash image
+                    function selectUnsplashImage(imageUrl) {
+                      const profileImage = document.getElementById('edit-profile-image');
+                      profileImage.src = imageUrl;
+                      hideImageDialog();
+                    }
+                  }
+
+                  // Manage active state for sidebar buttons
+                  manageSidebarActiveState('chat-interface');
+                } catch (error) {
+                  console.log('[EasyBot] Error handling Chat Interface click:', error.message);
+                }
+              });
+            }
+          });
+        }
       };
       
       // Throttle function to prevent excessive calls
@@ -1592,6 +3717,7 @@ const customizations = {
       hideCopilot();
       hideLogoLink();
       customizeSidebar();
+      restoreSidebarState();
       hideProfileTabsOnProfileRoute();
       hidePersonalizeRouteElements();
       hideAskRouteElements();
@@ -1616,12 +3742,170 @@ const customizations = {
         hideOverflowRoundedElement();
       }, 2000);
       
+      // Function to manage sidebar active states
+      function manageSidebarActiveState(activeType) {
+        try {
+          if(!isOnProjectRoute()) return;
+          // Save to localStorage
+          localStorage.setItem('easybot-last-sidebar-click', activeType);
+
+          // Remove bg-primary-100 from all sidebar buttons
+          const allButtons = document.querySelectorAll('.btn-sidebar');
+          allButtons.forEach(btn => {
+            btn.classList.remove('bg-primary-100');
+          });
+
+          // Add bg-primary-100 to the active button
+          if (activeType === 'chat-interface') {
+            const chatInterfaceBtn = document.querySelector('.chat-interface-btn');
+            if (chatInterfaceBtn) {
+              chatInterfaceBtn.classList.add('bg-primary-100');
+            }
+          }
+          // For other buttons, the CustomGPT app will handle it naturally
+        } catch (error) {
+          console.log('[EasyBot] Error managing sidebar active state:', error.message);
+        }
+      }
+
+      // Function to restore sidebar state from localStorage
+      function restoreSidebarState() {
+        try {
+          if(!isOnProjectRoute()) return;
+          const lastClicked = localStorage.getItem('easybot-last-sidebar-click');
+          if (lastClicked === 'chat-interface') {
+            // Show chat interface UI
+            const contentElement = document.querySelector('.v-container.v-locale--is-ltr.py-0.flex.flex-col.gap-4.container-no-announcement-bar > div.content.relative.max-h-full');
+            if (contentElement) {
+              contentElement.style.display = 'none';
+            }
+
+            const container = document.querySelector('.v-container.v-locale--is-ltr.py-0.flex.flex-col.gap-4.container-no-announcement-bar');
+            if (container) {
+              container.innerHTML =
+                '<div class="chat-interface-content" style="padding: 20px;"><h2>Chat Interface</h2><p>This is the chat interface content.</p>'+
+
+                    '<!-- Custom Card HTML -->' +
+                    '<div class="v-card v-theme--CustomGPT v-card--density-comfortable rounded-card v-card--variant-elevated shadow-card my-4 mb-8">' +
+                  '<div class="v-card__loader">' +
+                    '<div class="v-progress-linear v-theme--CustomGPT v-locale--is-ltr" role="progressbar" aria-hidden="true" aria-valuemin="0" aria-valuemax="100" style="top: 0px; height: 0px; --v-progress-linear-height: 2px">' +
+                      '<div class="v-progress-linear__background"></div>' +
+                      '<div class="v-progress-linear__buffer" style="width: 0%"></div>' +
+                      '<div class="v-progress-linear__indeterminate">' +
+                        '<div class="v-progress-linear__indeterminate long"></div>' +
+                        '<div class="v-progress-linear__indeterminate short"></div>' +
+                      '</div>' +
+                    '</div>' +
+                  '</div>' +
+                  '<div class="v-card-text">Add your custom HTML content here</div>' +
+                  '<span class="v-card__underlay"></span>' +
+                '</div>';
+                    '</div>';
+            }
+
+            // Set active state
+            manageSidebarActiveState('chat-interface');
+          }
+        } catch (error) {
+          console.log('[EasyBot] Error restoring sidebar state:', error.message);
+        }
+      }
+
+      // Add click handlers to other sidebar links to manage active state
+      function setupSidebarClickHandlers() {
+        if(!isOnProjectRoute()) return;
+        // Build/Sources link
+        const buildLink = document.querySelector('a[href*="build/sources"]');
+        if (buildLink && !buildLink.dataset.sidebarHandlerAdded) {
+          buildLink.dataset.sidebarHandlerAdded = 'true';
+          buildLink.addEventListener('click', () => {
+            // Save to localStorage
+            localStorage.setItem('easybot-last-sidebar-click', 'build-sources');
+            manageSidebarActiveState('build-sources');
+
+            // show the content element
+            const contentElement = document.querySelector('.v-container.v-locale--is-ltr.py-0.flex.flex-col.gap-4.container-no-announcement-bar > div.content.relative.max-h-full');
+            if (contentElement) {
+              contentElement.style.display = 'flex !important';
+            }
+
+            // Hide the HTML content container
+            const container = document.querySelector('.v-container.v-locale--is-ltr.py-0.flex.flex-col.gap-4.container-no-announcement-bar');
+            if (container) {
+              container.style.display = 'none !important';
+            }
+            
+            // Remove bg-primary-100 from chat interface
+            const chatInterfaceBtn = document.querySelector('.chat-interface-btn');
+            if (chatInterfaceBtn) {
+              chatInterfaceBtn.classList.remove('bg-primary-100');
+            }
+          });
+        }
+
+        // Analyze link
+        const analyzeLink = document.querySelector('a[href*="analyze"]');
+        if (analyzeLink && !analyzeLink.dataset.sidebarHandlerAdded) {
+          analyzeLink.dataset.sidebarHandlerAdded = 'true';
+          analyzeLink.addEventListener('click', () => {
+            // Save to localStorage
+            localStorage.setItem('easybot-last-sidebar-click', 'analyze');
+            manageSidebarActiveState('analyze');
+            // show the content element
+            const contentElement = document.querySelector('.v-container.v-locale--is-ltr.py-0.flex.flex-col.gap-4.container-no-announcement-bar > div.content.relative.max-h-full');
+            if (contentElement) {
+              contentElement.style.display = 'flex !important';
+            }
+
+            // Hide the HTML content container
+            const container = document.querySelector('.v-container.v-locale--is-ltr.py-0.flex.flex-col.gap-4.container-no-announcement-bar');
+            if (container) {
+              container.style.display = 'none !important';
+            }
+            // Remove bg-primary-100 from chat interface
+            const chatInterfaceBtn = document.querySelector('.chat-interface-btn');
+            if (chatInterfaceBtn) {
+              chatInterfaceBtn.classList.remove('bg-primary-100');
+            }
+          });
+        }
+
+        // Ask link
+        const askLink = document.querySelector('a[href*="ask"]');
+        if (askLink && !askLink.dataset.sidebarHandlerAdded) {
+          askLink.dataset.sidebarHandlerAdded = 'true';
+          askLink.addEventListener('click', () => {
+            // Save to localStorage
+            localStorage.setItem('easybot-last-sidebar-click', 'ask');
+            manageSidebarActiveState('ask');
+            // show the content element
+            const contentElement = document.querySelector('.v-container.v-locale--is-ltr.py-0.flex.flex-col.gap-4.container-no-announcement-bar > div.content.relative.max-h-full');
+            if (contentElement) {
+              contentElement.style.display = 'flex !important';
+            }
+
+            // Hide the HTML content container
+            const container = document.querySelector('.v-container.v-locale--is-ltr.py-0.flex.flex-col.gap-4.container-no-announcement-bar');
+            if (container) {
+              container.style.display = 'none !important';
+            }
+            // Remove bg-primary-100 from chat interface
+            const chatInterfaceBtn = document.querySelector('.chat-interface-btn');
+            if (chatInterfaceBtn) {
+              chatInterfaceBtn.classList.remove('bg-primary-100');
+            }
+          });
+        }
+      }
+      
       // Wait for body to be ready before observing
       if (document.body) {
         observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['src'] });
+        setupSidebarClickHandlers();
       } else {
         document.addEventListener('DOMContentLoaded', () => {
           observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['src'] });
+          setupSidebarClickHandlers();
         });
       }
       

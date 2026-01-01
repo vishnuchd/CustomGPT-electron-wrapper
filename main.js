@@ -2,6 +2,7 @@
 require('dotenv').config();
 
 const { app, BrowserWindow, ipcMain, session, Menu } = require("electron");
+const { createClient } = require('@supabase/supabase-js');
 const path = require('path');
 const customizations = require('./customizations');
 
@@ -10,6 +11,16 @@ const iconPath = path.join(__dirname, 'EasyBotLogo.png');
 const packageJson = require('./package.json');
 const appId = packageJson.appId || 'com.easybot.chat';
 const CUSTOMGPT_PARTITION = 'persist:customgpt';
+
+// Initialize Supabase client
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_SECRET_KEY;
+
+if (!supabaseUrl || !supabaseKey) {
+  console.error('SUPABASE_URL and SUPABASE_SECRET_KEY must be set in environment variables');
+}
+
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 // Set app icon early for better cross-platform support
 if (process.platform === 'win32') {
@@ -217,6 +228,188 @@ ipcMain.handle('reload-customizations', () => {
   }
 });
 
+// ============ Supabase CRUD Operations ============
+
+// Get all prompt cards
+ipcMain.handle('supabase-get-prompt-cards', async (event, options = {}) => {
+  try {
+    const { page = 1, limit = 10, project_id } = options;
+    const offset = (page - 1) * limit;
+
+    console.log('[API] Getting prompt cards - page:', page, 'limit:', limit, 'offset:', offset, 'project_id:', project_id);
+
+    // If project_id is provided, find the actual project database ID
+    let projectDatabaseId = null;
+    if (project_id) {
+      const { data: projectData, error: projectError } = await supabase
+        .from('projects')
+        .select('id')
+        .eq('customgpt_project_id', project_id)
+        .single();
+
+      if (projectError || !projectData) {
+        console.error('Project not found for customgpt_project_id:', project_id, projectError);
+        return { success: false, error: 'Project not found. Please ensure the project exists.' };
+      }
+      projectDatabaseId = projectData.id;
+    }
+
+    // First get total count (filtered by project if provided)
+    let countQuery = supabase.from('prompt_cards').select('*', { count: 'exact', head: true });
+    if (projectDatabaseId) {
+      countQuery = countQuery.eq('project_id', projectDatabaseId);
+    }
+    const { count, error: countError } = await countQuery;
+
+    if (countError) {
+      console.error('Error counting prompt cards:', countError);
+      return { success: false, error: countError.message };
+    }
+
+    console.log('[API] Total count:', count);
+
+    // Then get paginated data (filtered by project if provided)
+    let dataQuery = supabase
+      .from('prompt_cards')
+      .select('*')
+      .order('sort_order', { ascending: true })
+      .order('id', { ascending: true }) // Secondary sort by id for consistency
+      .range(offset, offset + limit - 1);
+
+    if (projectDatabaseId) {
+      dataQuery = dataQuery.eq('project_id', projectDatabaseId);
+    }
+
+    const { data, error } = await dataQuery;
+
+    if (error) {
+      console.error('Error fetching prompt cards:', error);
+      return { success: false, error: error.message };
+    }
+
+    const totalPages = Math.ceil(count / limit);
+    console.log('[API] Returning data:', data, 'pagination:', {
+      page,
+      limit,
+      total: count,
+      totalPages,
+      hasNext: page < totalPages,
+      hasPrev: page > 1
+    });
+
+    return {
+      success: true,
+      data,
+      pagination: {
+        page,
+        limit,
+        total: count,
+        totalPages,
+        hasNext: page < totalPages,
+        hasPrev: page > 1
+      }
+    };
+  } catch (error) {
+    console.error('Error in supabase-get-prompt-cards:', error);
+    return { success: false, error: error.message };
+  }
+});
+
+// Create a new prompt card
+ipcMain.handle('supabase-create-prompt-card', async (event, promptCardData) => {
+  try {
+    // First, find the project by customgpt_project_id
+    const { data: projectData, error: projectError } = await supabase
+      .from('projects')
+      .select('id')
+      .eq('customgpt_project_id', promptCardData.project_id)
+      .single();
+
+    if (projectError || !projectData) {
+      console.error('Project not found for customgpt_project_id:', promptCardData.project_id, projectError);
+      return { success: false, error: 'Project not found. Please ensure the project exists.' };
+    }
+
+    // Find the highest sort_order for this project to assign the next available number
+    const { data: maxSortOrderData, error: sortOrderError } = await supabase
+      .from('prompt_cards')
+      .select('sort_order')
+      .eq('project_id', projectData.id)
+      .order('sort_order', { ascending: false })
+      .limit(1);
+
+    let nextSortOrder = 1; // Default to 1 if no records exist
+    if (!sortOrderError && maxSortOrderData && maxSortOrderData.length > 0) {
+      nextSortOrder = maxSortOrderData[0].sort_order + 1;
+    }
+
+    // Use the actual project ID from the database and auto-assign sort order
+    const cardData = {
+      ...promptCardData,
+      project_id: projectData.id,
+      sort_order: nextSortOrder
+    };
+
+    const { data, error } = await supabase
+      .from('prompt_cards')
+      .insert([cardData])
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Error creating prompt card:', error);
+      return { success: false, error: error.message };
+    }
+
+    return { success: true, data };
+  } catch (error) {
+    console.error('Error in supabase-create-prompt-card:', error);
+    return { success: false, error: error.message };
+  }
+});
+
+// Update a prompt card
+ipcMain.handle('supabase-update-prompt-card', async (event, { id, updates }) => {
+  try {
+    const { data, error } = await supabase
+      .from('prompt_cards')
+      .update(updates)
+      .eq('id', id)
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Error updating prompt card:', error);
+      return { success: false, error: error.message };
+    }
+
+    return { success: true, data };
+  } catch (error) {
+    console.error('Error in supabase-update-prompt-card:', error);
+    return { success: false, error: error.message };
+  }
+});
+
+// Delete a prompt card
+ipcMain.handle('supabase-delete-prompt-card', async (event, id) => {
+  try {
+    const { error } = await supabase
+      .from('prompt_cards')
+      .delete()
+      .eq('id', id);
+
+    if (error) {
+      console.error('Error deleting prompt card:', error);
+      return { success: false, error: error.message };
+    }
+
+    return { success: true };
+  } catch (error) {
+    console.error('Error in supabase-delete-prompt-card:', error);
+    return { success: false, error: error.message };
+  }
+});
+
 // ============ SendGrid Email Implementation ============
 
 // Handle sending Website request email
@@ -389,6 +582,71 @@ ipcMain.handle('send-sharepoint-email', async (event, { projectId }) => {
     }
   } catch (error) {
     console.error('[SendGrid] Error sending email:', error);
+    return { success: false, error: error.message };
+  }
+});
+
+// ============ Unsplash API Integration ============
+
+// Search Unsplash images
+ipcMain.handle('unsplash-search-images', async (event, { query, page = 1, perPage = 20 }) => {
+  try {
+    const accessKey = process.env.UNSPLASH_ACCESS_KEY;
+
+    if (!accessKey) {
+      console.error('[Unsplash] Access key not found in environment variables');
+      return { success: false, error: 'Unsplash access key not configured' };
+    }
+
+    const url = `https://api.unsplash.com/search/photos?query=${encodeURIComponent(query)}&page=${page}&per_page=${perPage}&client_id=${accessKey}`;
+
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      console.error('[Unsplash] API request failed:', response.status, response.statusText);
+      return { success: false, error: `Unsplash API error: ${response.status}` };
+    }
+
+    const data = await response.json();
+
+    return {
+      success: true,
+      data: {
+        results: data.results,
+        total: data.total,
+        total_pages: data.total_pages
+      }
+    };
+  } catch (error) {
+    console.error('[Unsplash] Error searching images:', error);
+    return { success: false, error: error.message };
+  }
+});
+
+// Get random Unsplash images
+ipcMain.handle('unsplash-random-images', async (event, { count = 20 }) => {
+  try {
+    const accessKey = process.env.UNSPLASH_ACCESS_KEY;
+
+    if (!accessKey) {
+      console.error('[Unsplash] Access key not found in environment variables');
+      return { success: false, error: 'Unsplash access key not configured' };
+    }
+
+    const url = `https://api.unsplash.com/photos/random?count=${count}&client_id=${accessKey}`;
+
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      console.error('[Unsplash] API request failed:', response.status, response.statusText);
+      return { success: false, error: `Unsplash API error: ${response.status}` };
+    }
+
+    const data = await response.json();
+
+    return { success: true, data };
+  } catch (error) {
+    console.error('[Unsplash] Error getting random images:', error);
     return { success: false, error: error.message };
   }
 });
