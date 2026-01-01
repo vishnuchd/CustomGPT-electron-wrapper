@@ -9,8 +9,18 @@
     "build": "electron-builder",
     "build:unsigned": "electron-builder",
     "build:signed": "electron-builder && powershell -ExecutionPolicy Bypass -File scripts/sign-windows.ps1 -SkipBuild",
+    "build:mac": "electron-builder --mac",
+    "build:mas": "electron-builder --mac mas",
+    "build:mac:unsigned": "CSC_IDENTITY_AUTO_DISCOVERY=false electron-builder --mac --dir --publish=never",
+    "build:mac:signed": "npm run build:mac:unsigned && bash scripts/sign-mac.sh",
+    "build:mac:package": "npm run build:mac:signed && electron-builder --mac dmg --publish=never",
+    "build:mac:dist": "CSC_IDENTITY_AUTO_DISCOVERY=false electron-builder --mac --dir --publish=never && bash scripts/sign-mac.sh && electron-builder --mac dmg --publish=never",
+    "build:mas:signed": "electron-builder --mac mas --publish=never && bash scripts/sign-mas.sh",
+    "build:mas:dist": "npm run build:mas:signed && npm run notarize",
     "sign": "powershell -ExecutionPolicy Bypass -File scripts/sign-windows.ps1 -SkipBuild",
-    "sign:verbose": "powershell -ExecutionPolicy Bypass -File scripts/sign-windows.ps1 -SkipBuild -Verbose"
+    "sign:verbose": "powershell -ExecutionPolicy Bypass -File scripts/sign-windows.ps1 -SkipBuild -Verbose",
+    "notarize": "bash scripts/notarize.sh",
+    "prepare-mac": "bash scripts/prepare-mac.sh"
   },
   "keywords": [
     "electron",
@@ -33,13 +43,34 @@
     },
     "mac": {
       "target": [
-        "dmg",
-        "zip"
+        {
+          "target": "dmg",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        },
+        {
+          "target": "mas",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
       ],
-      "icon": "EasyBotLogo.png",
-      "artifactName": "${productName}-${version}.${ext}",
-      "sign": null,
-      "identity": null
+      "icon": "build/icon.icns",
+      "artifactName": "${productName}-${version}-${arch}.${ext}",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "build/entitlements.mac.plist",
+      "entitlementsInherit": "build/entitlements.mac.plist",
+      "provisioningProfile": "build/embedded.provisionprofile"
+    },
+    "mas": {
+      "entitlements": "build/entitlements.mas.plist",
+      "entitlementsInherit": "build/entitlements.mas.inherit.plist",
+      "provisioningProfile": "build/embedded.provisionprofile",
+      "hardenedRuntime": false
     },
     "win": {
       "target": [
