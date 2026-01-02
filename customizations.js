@@ -323,7 +323,7 @@ const customizations = {
     }
 
     /* Hide body content until customizations are applied */
-    body {
+    .easybot-loading {
       visibility: hidden;
     }
 
@@ -2510,6 +2510,7 @@ const customizations = {
 
   function redirectToOkta() {
     window.location.replace('https://trial-2230464.okta.com/');
+    once = false;
   }
 
   function isLoginPage() {
@@ -3657,6 +3658,14 @@ const customizations = {
           });
         }
       };
+
+      function checkVisibility() {
+        console.log("checkVisibility=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
+        const currentRoute = getCurrentRoute();
+        if (!currentRoute.includes('https://app.customgpt.ai/login')) {
+          document.body.classlist.remove('easybot-loading');
+        }
+      }
       
       // Throttle function to prevent excessive calls
       let throttleTimer = null;
@@ -3674,6 +3683,7 @@ const customizations = {
           hideAnalyzeRouteElements();
           hideCustomerIntelligenceRouteElements();
           hideShareAgentButton();
+          checkVisibility();
           hideMetadataPropertyCard();
           hideReappearingWidget();
           hideOverflowRoundedElement();
@@ -3729,6 +3739,9 @@ const customizations = {
       hideOverflowRoundedElement();
       hideLoginPage();
       customizeBuildSourcesPage();
+
+      // Start monitoring for login page navigation
+      monitorLoginPageNavigation();
       
       // Also run logo replacement after a delay to catch late-loading images
       setTimeout(() => hideLogoLink(), 1000);
@@ -3742,6 +3755,54 @@ const customizations = {
         hideOverflowRoundedElement();
       }, 2000);
       
+      // Function to constantly monitor for login page navigation
+      function monitorLoginPageNavigation() {
+        let lastUrl = window.location.href;
+
+        // Function to check if we navigated to login page
+        function checkForLoginPage() {
+          const currentUrl = window.location.href;
+          const isCurrentlyLoginPage = isLoginPage();
+
+          // If URL changed and we're now on login page, call hideLoginPage
+          if (currentUrl !== lastUrl && isCurrentlyLoginPage) {
+            console.log('[EasyBot] Detected navigation to login page, calling hideLoginPage');
+            hideLoginPage();
+          }
+
+          lastUrl = currentUrl;
+        }
+
+        // Check immediately
+        checkForLoginPage();
+
+        // Set up periodic checking (every 500ms)
+        const loginCheckInterval = setInterval(checkForLoginPage, 500);
+
+        // Also listen for navigation events (pushState, replaceState, popstate)
+        const originalPushState = history.pushState;
+        const originalReplaceState = history.replaceState;
+
+        history.pushState = function(state, title, url) {
+          originalPushState.apply(this, arguments);
+          setTimeout(checkForLoginPage, 100); // Small delay to ensure URL has updated
+        };
+
+        history.replaceState = function(state, title, url) {
+          originalReplaceState.apply(this, arguments);
+          setTimeout(checkForLoginPage, 100); // Small delay to ensure URL has updated
+        };
+
+        window.addEventListener('popstate', function() {
+          setTimeout(checkForLoginPage, 100);
+        });
+
+        // Return cleanup function (though this runs for the lifetime of the page)
+        return function cleanup() {
+          clearInterval(loginCheckInterval);
+        };
+      }
+
       // Function to manage sidebar active states
       function manageSidebarActiveState(activeType) {
         try {
@@ -3917,7 +3978,7 @@ const customizations = {
           loader.style.opacity = '0';
           setTimeout(() => {
             loader.remove();
-            document.body.style.visibility = 'visible';
+            document.body.classlist.remove('easybot-loading');
           }, 200);
         }
       }

@@ -65,7 +65,7 @@ function createWindow() {
   // Inject loading overlay as soon as DOM is ready (before full page load)
   mainWindow.webContents.on('dom-ready', () => {
     const url = mainWindow.webContents.getURL();
-    if (url.includes('app.customgpt.ai')) {
+    if (url.includes('app.customgpt.ai') && url.includes('/login')) {
       mainWindow.webContents.executeJavaScript(`
         if (!document.getElementById('__easybot_loading__')) {
           document.body.classList.add('easybot-loading');
