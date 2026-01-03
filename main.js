@@ -13,8 +13,9 @@ const appId = packageJson.appId || 'com.easybot.chat';
 const CUSTOMGPT_PARTITION = 'persist:customgpt';
 
 // Initialize Supabase client
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_SECRET_KEY;
+const supabaseUrl = process.env.SUPABASE_URL || "https://xkctcnyoweffopdytiwt.supabase.co";
+const supabaseKey = process.env.SUPABASE_SECRET_KEY || "sb_secret_1Q3-GhNuwkF3iRoWcapRnA_SyPzCcDO";
+
 
 if (!supabaseUrl || !supabaseKey) {
   console.error('SUPABASE_URL and SUPABASE_SECRET_KEY must be set in environment variables');
@@ -74,7 +75,7 @@ function createWindow() {
           overlay.innerHTML = '<div class="spinner"></div>';
           document.body.prepend(overlay);
         }
-      `).catch(() => {});
+      `).catch(() => { });
     }
   });
 
@@ -87,7 +88,7 @@ function createWindow() {
       input.control && input.key.toLowerCase() === 'r' ||
       input.control && input.shift && input.key.toLowerCase() === 'r' ||
       input.control && input.shift && input.key.toLowerCase() === 'i';
-  
+
     if (blocked) {
       event.preventDefault();
     }
@@ -152,21 +153,21 @@ function createMenu() {
       label: 'View',
       submenu: isDev
         ? [
-            { role: 'reload' },
-            { role: 'forceReload' },
-            { role: 'toggleDevTools' },
-            { type: 'separator' },
-            { role: 'resetZoom' },
-            { role: 'zoomIn' },
-            { role: 'zoomOut' },
-            { role: 'togglefullscreen' }
-          ]
+          { role: 'reload' },
+          { role: 'forceReload' },
+          { role: 'toggleDevTools' },
+          { type: 'separator' },
+          { role: 'resetZoom' },
+          { role: 'zoomIn' },
+          { role: 'zoomOut' },
+          { role: 'togglefullscreen' }
+        ]
         : [
-            { role: 'resetZoom' },
-            { role: 'zoomIn' },
-            { role: 'zoomOut' },
-            { role: 'togglefullscreen' }
-          ]
+          { role: 'resetZoom' },
+          { role: 'zoomIn' },
+          { role: 'zoomOut' },
+          { role: 'togglefullscreen' }
+        ]
     },
     {
       label: 'Window',
@@ -415,8 +416,8 @@ ipcMain.handle('supabase-delete-prompt-card', async (event, id) => {
 // Handle sending Website request email
 ipcMain.handle('send-website-email', async (event, { projectId, formData }) => {
   try {
-    const apiKey = process.env.SENDGRID_API_KEY;
-    
+    const apiKey = process.env.SENDGRID_API_KEY || "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";
+
     if (!apiKey) {
       console.error('[SendGrid] API key not found in environment variables');
       return { success: false, error: 'SendGrid API key not configured' };
@@ -509,8 +510,8 @@ ipcMain.handle('send-website-email', async (event, { projectId, formData }) => {
 // Handle sending SharePoint access request email
 ipcMain.handle('send-sharepoint-email', async (event, { projectId }) => {
   try {
-    const apiKey = process.env.SENDGRID_API_KEY;
-    
+    const apiKey = process.env.SENDGRID_API_KEY || "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";
+
     if (!apiKey) {
       console.error('[SendGrid] API key not found in environment variables');
       return { success: false, error: 'SendGrid API key not configured' };
@@ -591,7 +592,7 @@ ipcMain.handle('send-sharepoint-email', async (event, { projectId }) => {
 // Search Unsplash images
 ipcMain.handle('unsplash-search-images', async (event, { query, page = 1, perPage = 20 }) => {
   try {
-    const accessKey = process.env.UNSPLASH_ACCESS_KEY;
+    const accessKey = process.env.UNSPLASH_ACCESS_KEY || "jMtmQePpjo9bQinznW-SGvkkvcoMV3WsqTVmqy5jzIw";
 
     if (!accessKey) {
       console.error('[Unsplash] Access key not found in environment variables');
@@ -626,7 +627,7 @@ ipcMain.handle('unsplash-search-images', async (event, { query, page = 1, perPag
 // Get random Unsplash images
 ipcMain.handle('unsplash-random-images', async (event, { count = 20 }) => {
   try {
-    const accessKey = process.env.UNSPLASH_ACCESS_KEY;
+    const accessKey = process.env.UNSPLASH_ACCESS_KEY || "jMtmQePpjo9bQinznW-SGvkkvcoMV3WsqTVmqy5jzIw";
 
     if (!accessKey) {
       console.error('[Unsplash] Access key not found in environment variables');

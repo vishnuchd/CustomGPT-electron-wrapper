@@ -1,6 +1,11 @@
-# EasyBotChat macOS App Store Preparation
+# EasyBotChat macOS Distribution
 
-This guide walks you through preparing EasyBotChat for distribution on the Mac App Store.
+This guide walks you through preparing EasyBotChat for distribution on the Mac App Store or as a standalone macOS application.
+
+## Distribution Options
+
+- **Mac App Store**: Follow the App Store preparation steps below
+- **Standalone App**: Follow the Outside App Store distribution steps
 
 ## Prerequisites
 
@@ -21,6 +26,65 @@ brew install imagemagick
 # Install electron-builder globally
 npm install -g electron-builder
 ```
+
+## Outside App Store Distribution
+
+For distributing EasyBotChat outside the Mac App Store, use the automated signing and notarization script.
+
+### Prerequisites for Standalone Distribution
+
+- Apple Developer ID Application certificate
+- App-specific password for notarization
+
+### Automated Build, Sign & Notarize
+
+**Option 1: Environment Variables (Recommended)**
+```bash
+export APPLE_ID="your-apple-id@email.com"
+export APPLE_APP_PASSWORD="abcd-efgh-ijkl-mnop"  # From appleid.apple.com
+npm run build:mac:signed:notarized
+```
+
+**Option 2: Credentials File (Recommended for local development)**
+```bash
+cp credentials.example.sh credentials.sh
+# Edit credentials.sh with your actual credentials
+source credentials.sh
+npm run build:mac:signed:notarized
+```
+
+**Option 3: Direct in Script (NOT Recommended)**
+Edit `scripts/sign-and-notarize.sh` and uncomment/modify these lines:
+```bash
+export APPLE_ID="your-apple-id@email.com"
+export APPLE_APP_PASSWORD="abcd-efgh-ijkl-mnop"
+```
+
+⚠️ **Security Warning**: Never commit credentials to version control!
+   Always add credential files to .gitignore
+
+   This script will:
+   - Build the unsigned app
+   - Sign with your Developer ID certificate
+   - Notarize with Apple
+   - Create signed and notarized DMG files
+
+### Manual Signing (if needed)
+
+If the automated script fails, you can sign manually:
+
+```bash
+# Build unsigned
+npm run build:mac:unsigned
+
+# Sign manually (replace with your certificate hash)
+codesign --sign "YOUR_CERT_HASH" --entitlements build/entitlements.mac.plist dist/mac/EasyBotChat.app
+
+# Create DMG
+npm run build:mac:package
+```
+
+## Mac App Store Distribution
 
 ## Quick Start
 
@@ -50,6 +114,80 @@ npm install -g electron-builder
    npm run build:mas:signed
    npm run notarize
    ```
+
+## Testing Your Builds
+
+### Development Testing (Non-Sandboxed)
+For development and testing, use the regular macOS build:
+
+```bash
+# Build signable development version
+npm run build:mac:signed
+
+# Test the app
+open dist/mac/EasyBotChat.app
+```
+
+### MAS Testing (Sandboxed)
+MAS builds are sandboxed and cannot be opened directly:
+
+```bash
+# Build MAS version (cannot be opened directly)
+npm run build:mas:hybrid
+
+# Install for testing (requires admin privileges)
+sudo installer -pkg dist/mas-arm64/EasyBotChat.pkg -target /
+```
+
+## MAS Build Options
+
+You have two approaches for building MAS (Mac App Store) packages:
+
+### Option 1: Electron-Builder + Hybrid (Recommended)
+**Best of both worlds** - Electron-builder builds the app, custom script signs and packages for MAS:
+
+```bash
+# Build, sign, and package MAS app
+npm run build:mas:hybrid
+```
+
+**Benefits:**
+- Electron-builder handles the build process
+- Custom script provides proper MAS signing with installer certificate
+- Full certificate chain included
+- Best signing quality for App Store submission
+
+**Note:** MAS-signed apps cannot be opened directly due to sandbox restrictions. Use `npm run build:mac:signed` for testing.
+
+### Option 2: Electron-Builder Only
+Electron-builder handles MAS app signing automatically:
+
+```bash
+# Build signed MAS app only (no pkg)
+npm run build:mas:electron-builder
+
+# Or use the distribution-ready version
+npm run build:mas:dist
+```
+
+**Benefits:**
+- No manual signing steps required
+- Handles entitlements automatically
+- Integrated with your build pipeline
+
+### Option 3: Custom Script (Legacy)
+Use the comprehensive custom script for full manual control:
+
+```bash
+# Complete MAS build with custom script
+npm run build:mas:complete
+```
+
+**Benefits:**
+- More detailed logging and error handling
+- Manual control over each signing step
+- Additional verification steps
+- Easier debugging of signing issues
 
 ## Apple Developer Setup
 
