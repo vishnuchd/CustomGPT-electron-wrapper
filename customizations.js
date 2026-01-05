@@ -3663,7 +3663,7 @@ const customizations = {
         console.log("checkVisibility=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
         const currentRoute = getCurrentRoute();
         if (!currentRoute.includes('https://app.customgpt.ai/login')) {
-          document.body.classlist.remove('easybot-loading');
+          document.body.classList.remove('easybot-loading');
         }
       }
       
@@ -3978,7 +3978,7 @@ const customizations = {
           loader.style.opacity = '0';
           setTimeout(() => {
             loader.remove();
-            document.body.classlist.remove('easybot-loading');
+            document.body.classList.remove('easybot-loading');
           }, 200);
         }
       }
