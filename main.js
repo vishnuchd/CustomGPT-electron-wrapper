@@ -67,10 +67,10 @@ function createWindow() {
     }
   });
 
-  // Inject loading overlay as soon as DOM is ready (before full page load)
+  // Inject loading overlay as soon as DOM is ready (before full page load) on all pages
   mainWindow.webContents.on('dom-ready', () => {
     const url = mainWindow.webContents.getURL();
-    if (url.includes('app.customgpt.ai') && url.includes('/login')) {
+    if (url.includes('app.customgpt.ai')) {
       mainWindow.webContents.executeJavaScript(`
         if (!document.getElementById('__easybot_loading__')) {
           document.body.classList.add('easybot-loading');
@@ -132,6 +132,20 @@ function injectCustomUI() {
   if (customizations.js.trim()) {
     mainWindow.webContents
       .executeJavaScript(customizations.js)
+      .then(() => {
+        // After JS injection, call createOverlay and remove it after 500ms
+        mainWindow.webContents.executeJavaScript(`
+          if (typeof createOverlay === 'function') {
+            createOverlay();
+            setTimeout(() => {
+              const overlay = document.getElementById('__sso_overlay__');
+              if (overlay) {
+                overlay.remove();
+              }
+            }, 1000);
+          }
+        `).catch((err) => console.error("Overlay creation/removal error:", err));
+      })
       .catch((err) => console.error("UI injection error:", err));
   }
 }
