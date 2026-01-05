@@ -9,6 +9,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   sendSharepointEmail: (data) => ipcRenderer.invoke('send-sharepoint-email', data),
   fullLogout: () => ipcRenderer.invoke('full-logout'),
   // Supabase CRUD operations
+  getBotName: (projectId) => ipcRenderer.invoke('supabase-get-bot-name', projectId),
   getPromptCards: (options) => ipcRenderer.invoke('supabase-get-prompt-cards', options),
   createPromptCard: (data) => ipcRenderer.invoke('supabase-create-prompt-card', data),
   updatePromptCard: (id, updates) => ipcRenderer.invoke('supabase-update-prompt-card', { id, updates }),

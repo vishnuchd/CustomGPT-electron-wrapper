@@ -753,11 +753,7 @@ const customizations = {
       font-weight: 400!important;
       line-height: 0.8!important;
       height: 26px!important;
-    }
-
-    .chat-interface-page-title-botname {
-      font-size: 1.5rem!important;
-    }
+    } 
 
   `,
 
@@ -2616,6 +2612,26 @@ const customizations = {
         try {
           console.log('[Chat Interface] Loading page:', page, 'with limit:', pageSize);
           const projectId = window.location.pathname.split('/')[2];
+
+          // Load bot name
+          try {
+            const botNameResult = await window.electronAPI.getBotName(projectId);
+            const botNameSpan = document.getElementById('chat-interface-page-title-botname');
+            if (botNameSpan) {
+              if (botNameResult.success && botNameResult.data && botNameResult.data.name) {
+                botNameSpan.textContent = botNameResult.data.name;
+              } else {
+                botNameSpan.textContent = '';
+              }
+            }
+          } catch (error) {
+            console.warn('[Chat Interface] Error loading bot name:', error);
+            const botNameSpan = document.getElementById('chat-interface-page-title-botname');
+            if (botNameSpan) {
+              botNameSpan.textContent = '';
+            }
+          }
+
           const result = await getPromptCards({ page, project_id: projectId });
           console.log('[Chat Interface] API result:', result);
 
@@ -3062,7 +3078,7 @@ const customizations = {
               const el = document.createElement('a');
               el.classList.add('link', 'cursor-pointer', 'w-full');
 
-              el.innerHTML = '<button data-v-08981316="" data-v-961eb836="" type="button" class="v-btn v-btn--block v-btn--slim v-theme--CustomGPT text-dark v-btn--density-default v-btn--size-default v-btn--variant-text btn-sidebar justify-start overflow-hidden ps-0.5 chat-interface-btn" style="text-transform: none;"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span><span class="v-btn__prepend"><svg data-v-7fa85f8e="" data-v-08981316="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" width="1em" height="1em" viewBox="0 0 24 24" tag="i" class="iconify iconify--tabler v-icon notranslate v-theme--CustomGPT v-icon--size-default text-dark change-path-stroke ms-8 transition-all duration-300"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M6 21h6m-3 0V3L3 9h18M9 3l10 6"></path><path d="M17 9v4a2 2 0 1 1-2 2"></path></g></svg></span><span class="v-btn__content" data-no-activator=""><p data-v-08981316="" class="font-normal text-dark sideitem-paragraph ms-2 font-semibold">Chat Interface</p></span><span class="v-btn__append"></span><!----></button>';
+              el.innerHTML = '<button data-v-08981316="" data-v-961eb836="" type="button" class="v-btn v-btn--block v-btn--slim v-theme--CustomGPT text-dark v-btn--density-default v-btn--size-default v-btn--variant-text btn-sidebar justify-start overflow-hidden ps-0.5 chat-interface-btn" style="text-transform: none;"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span><span class="v-btn__prepend"><svg data-v-7fa85f8e="" data-v-f3c05095="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" width="1em" height="1em" viewBox="0 0 24 24" tag="i" class="iconify iconify--tabler v-icon notranslate v-theme--CustomGPT v-icon--size-default text-primary change-path-stroke ms-8 transition-all duration-300"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M19.5 12.572L12 20l-7.5-7.428A5 5 0 1 1 12 6.006a5 5 0 1 1 7.5 6.572"></path><path d="M12 6L8.707 9.293a1 1 0 0 0 0 1.414l.543.543c.69.69 1.81.69 2.5 0l1-1a3.18 3.18 0 0 1 4.5 0l2.25 2.25m-7 3l2 2M15 13l2 2"></path></g></svg></span><span class="v-btn__content" data-no-activator=""><p data-v-08981316="" class="font-normal text-dark sideitem-paragraph ms-2 font-semibold">Chat Interface</p></span><span class="v-btn__append"></span><!----></button>';
 
               p.parentNode.parentNode.parentNode.insertAdjacentElement('afterend', el);
               p.setAttribute('chat-interface-added', 'true');
@@ -3085,8 +3101,8 @@ const customizations = {
                     // Clear existing content and add new HTML
                     container.innerHTML =
                       '<div class="chat-interface-content">' +
-                        '<div class="d-flex justify-space-between align-center mb-4">' +
-                          '<h2 class="text-h4 mb-0">Chat Interface</h2>' +
+                        '<div class="d-flex justify-space-between align-end mb-4">' +
+                          '<h2 class="chat-interface-page-title"><span>Chat Interface</span> <span>•</span> <span class="chat-interface-page-title-botname" id="chat-interface-page-title-botname"></span></h2>' +
                           '<button type="button" class="v-btn v-theme--CustomGPT bg-primary v-btn--density-default v-btn--size-default v-btn--variant-flat add-prompt-btn" style="text-transform: none">' +
                             '<span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>'+
                             '<span class="v-btn__content" data-no-activator=""> Add New Prompt </span>' +
