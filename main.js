@@ -216,6 +216,11 @@ app.whenReady().then(() => {
   });
 });
 
+// Clear session data when app is closing
+app.on('before-quit', async () => {
+  await clearWebviewSession();
+});
+
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();

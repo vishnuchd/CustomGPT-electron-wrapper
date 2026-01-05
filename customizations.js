@@ -604,7 +604,7 @@ const customizations = {
     }
 
     .prompt-card-title {
-      font-size: 18px !important;
+      font-size: 16px !important;
     }
 
     .prompt-card-subtitle {
@@ -734,6 +734,29 @@ const customizations = {
       background-color: white;
       transform: translateX(14px);
       margin-top: 1px !important;
+    }
+
+    .data-cell.truncate > div.flex.items-center.justify-between.gap-2 > a.link.cursor-pointer.text-body {
+      display: none !important;
+    }
+
+    button.v-btn.v-btn--icon.v-theme--CustomGPT.text-primary.v-btn--density-compact.rounded-md.v-btn--size-large.v-btn--variant-text {
+      display: none !important;
+    }
+
+    .prompt-cards-list {
+      border-radius: 6px;
+    }
+
+    .chat-interface-page-title {
+      font-size: 2.125rem!important;
+      font-weight: 400!important;
+      line-height: 0.8!important;
+      height: 26px!important;
+    }
+
+    .chat-interface-page-title-botname {
+      font-size: 1.5rem!important;
     }
 
   `,
@@ -985,6 +1008,8 @@ const customizations = {
           processedElements.add(fifthTab);
         }
 
+        if(pathname.endsWith('/explore')) return;
+
         // Hide all buttons that contain "export" text (case insensitive)
         const allButtons = document.querySelectorAll('button');
         allButtons.forEach(btn => {
@@ -994,6 +1019,17 @@ const customizations = {
             btn.style.setProperty('display', 'none', 'important');
             processedElements.add(btn);
           }
+        });
+
+        const overlays = document.querySelectorAll('.v-overlay__content');
+        overlays.forEach(overlay => {
+          if (overlay && !processedElements.has(overlay)) {
+            const buttons = overlay.querySelectorAll("button");
+            if(!buttons || !buttons.length) return;
+            buttons.forEach(btn => {
+              btn.style.setProperty('display', 'block', 'important');
+            });
+          }  
         });
       };
 
@@ -1002,16 +1038,16 @@ const customizations = {
         const { pathname } = window.location;
         if (!pathname.includes('/projects/') || !pathname.endsWith('/explore')) return;
 
-        // Hide all buttons that contain "export" text (case insensitive)
-        const allButtons = document.querySelectorAll('button');
-        allButtons.forEach(btn => {
-          if (processedElements.has(btn)) return;
-          const innerText = btn.innerText || btn.textContent || '';
-          if (innerText.toLowerCase().includes('export')) {
-            btn.style.setProperty('display', 'none', 'important');
-            processedElements.add(btn);
-          }
-        });
+        // Hide Export Queries button on /projects/{projectid}/explore page
+        // const allButtons = document.querySelectorAll('button');
+        // allButtons.forEach(btn => {
+        //   if (processedElements.has(btn)) return;
+        //   const innerText = btn.innerText || btn.textContent || '';
+        //   if (innerText.toLowerCase().includes('export')) {
+        //     btn.style.setProperty('display', 'none', 'important');
+        //     processedElements.add(btn);
+        //   }
+        // });
       };
 
       // On any /projects/ route, hide specific button elements
@@ -2807,7 +2843,7 @@ const customizations = {
               '<div class="flex-grow-1">' +
                 '<div class="v-card__title prompt-card-title">' + (card.title || 'Untitled') + '</div>' +
                 '<div class="v-card__subtitle prompt-card-subtitle">' +
-                  '<p class="text-body-1 mb-0">' + (card.prompt || 'No prompt content') + '</p>' +
+                  '<p class="text-body-2 mb-0">' + (card.prompt || 'No prompt content') + '</p>' +
                 '</div>' +
               '</div>' +
             '</div>' +
@@ -3076,10 +3112,6 @@ const customizations = {
                             '</svg>' +
                             '<h3 class="text-h6 mb-2">No prompt cards yet</h3>' +
                             '<p class="text-body-2 mb-4">Create your first prompt card to get started with the chat interface.</p>' +
-                            '<button class="v-btn v-btn--elevated v-theme--CustomGPT text-primary v-btn--density-default v-btn--size-default v-btn--variant-elevated">' +
-                              '<span class="v-btn__overlay"></span>' +
-                              '<span class="v-btn__content">Create First Prompt</span>' +
-                            '</button>' +
                           '</div>' +
                           '<div class="pagination-container" id="pagination-container" style="display: none;"></div>' +
                         '</div>' +
