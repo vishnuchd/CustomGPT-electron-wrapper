@@ -687,6 +687,29 @@ async function clearWebviewSession() {
   });
 }
 
+// Get bot name by project ID
+ipcMain.handle('supabase-get-bot-name', async (event, projectId) => {
+  try {
+    console.log('[API] Getting bot name for project:', projectId);
+
+    const { data, error } = await supabase
+      .from('projects')
+      .select('*')
+      .eq('customgpt_project_id', projectId)
+      .single();
+
+    if (error) {
+      console.error('Error fetching bot name:', error);
+      return { success: false, error: error.message };
+    }
+
+    return { success: true, data };
+  } catch (error) {
+    console.error('Error in supabase-get-bot-name:', error);
+    return { success: false, error: error.message };
+  }
+});
+
 ipcMain.handle('full-logout', async () => {
   await clearWebviewSession();
 });
