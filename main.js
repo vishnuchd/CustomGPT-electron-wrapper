@@ -33,6 +33,7 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1400,
     height: 900,
+    title: 'EasyBotChat',
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: false,
@@ -56,6 +57,9 @@ function createWindow() {
   mainWindow.webContents.on('did-start-loading', () => {
     const url = mainWindow.webContents.getURL();
     if (url.includes('app.customgpt.ai')) {
+      // Set title immediately when loading starts
+      mainWindow.setTitle('EasyBotChat');
+
       // Inject CSS early, even before page fully loads
       if (customizations.css.trim()) {
         mainWindow.webContents.insertCSS(customizations.css);
@@ -96,6 +100,14 @@ function createWindow() {
 
   mainWindow.webContents.on("did-navigate", () => {
     handlePageLoad();
+  });
+
+  // Prevent title changes from the web page
+  mainWindow.webContents.on('page-title-updated', (event) => {
+    // Prevent the default title update
+    event.preventDefault();
+    // Force our custom title
+    mainWindow.setTitle('EasyBotChat');
   });
 
   mainWindow.on('closed', () => {
