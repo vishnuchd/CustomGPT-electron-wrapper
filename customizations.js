@@ -749,11 +749,9 @@ const customizations = {
     }
 
     .chat-interface-page-title {
-      font-size: 2.125rem!important;
-      font-weight: 400!important;
       line-height: 0.8!important;
       height: 26px!important;
-    } 
+    }
 
   `,
 
@@ -3104,7 +3102,7 @@ const customizations = {
                     container.innerHTML =
                       '<div class="chat-interface-content">' +
                         '<div class="d-flex justify-space-between align-end mb-4">' +
-                          '<h2 class="chat-interface-page-title"><span>Chat Interface</span> <span>•</span> <span class="chat-interface-page-title-botname" id="chat-interface-page-title-botname"></span></h2>' +
+                          '<h2 class="text-heading page-title chat-interface-page-title"><span>Chat Interface</span> <span>•</span> <span class="chat-interface-page-title-botname" id="chat-interface-page-title-botname"></span></h2>' +
                           '<button type="button" class="v-btn v-theme--CustomGPT bg-primary v-btn--density-default v-btn--size-default v-btn--variant-flat add-prompt-btn" style="text-transform: none">' +
                             '<span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>'+
                             '<span class="v-btn__content" data-no-activator=""> Add New Prompt </span>' +
