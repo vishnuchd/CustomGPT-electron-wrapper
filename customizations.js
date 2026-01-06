@@ -4,6 +4,16 @@
 const customizations = {
   // CSS customizations
   css: `
+    /* Hide body content until customizations are loaded to prevent flash */
+    body:not(.easybot-loaded) {
+      visibility: hidden !important;
+    }
+
+    /* Keep loader visible even when body is hidden */
+    body:not(.easybot-loaded) > #__easybot_loading__ {
+      visibility: visible !important;
+    }
+
     /* Hide Dashboard button - will be handled by JavaScript */
     /* Hide Notifications button - will be handled by JavaScript */
     
@@ -3088,6 +3098,7 @@ const customizations = {
                 try {
                   e.preventDefault();
                   e.stopPropagation();
+                  showLoader();
 
                   // Hide the content element
                   const contentElement = document.querySelector('.v-container.v-locale--is-ltr.py-0.flex.flex-col.gap-4.container-no-announcement-bar > div.content.relative.max-h-full');
@@ -3279,6 +3290,9 @@ const customizations = {
 
                     // Initialize the chat interface
                     initializeChatInterface();
+                    
+                    // Artificial delay to allow render, matching route change behavior
+                    setTimeout(hideLoader, 750);
 
                     // Function to initialize chat interface
                     function initializeChatInterface() {
@@ -4018,21 +4032,67 @@ const customizations = {
         });
       }
       
-      // Remove initial loading overlay once customizations are ready
-      function hideInitialLoader() {
+      // Reusable loader management
+      function showLoader() {
+        document.body.classList.remove('easybot-loaded');
+        
+        let loader = document.getElementById('__easybot_loading__');
+        if (!loader) {
+           loader = document.createElement('div');
+           loader.id = '__easybot_loading__';
+           loader.innerHTML = '<div class="spinner"></div>';
+           loader.style.opacity = '1';
+           loader.style.transition = 'none';
+           document.body.prepend(loader);
+        } else {
+            loader.style.display = 'flex'; // Ensure it's not hidden by display
+            loader.style.opacity = '1';
+        }
+      }
+
+      function hideLoader() {
+        document.body.classList.add('easybot-loaded');
         const loader = document.getElementById('__easybot_loading__');
         if (loader) {
           loader.style.transition = 'opacity 0.2s ease';
           loader.style.opacity = '0';
           setTimeout(() => {
-            loader.remove();
-            document.body.classList.remove('easybot-loading');
+            if (loader.parentNode) loader.remove();
+            document.body.classList.remove('easybot-loading'); // Legacy clean up
           }, 200);
         }
       }
-      
+
+      // Route change handling
+      function handleRouteChange() {
+        showLoader();
+        // Artificial delay to allow render
+        setTimeout(hideLoader, 750);
+      }
+
+      // Patch history for SPA navigation
+      const originalPushState = history.pushState;
+      history.pushState = function() {
+        originalPushState.apply(this, arguments);
+        handleRouteChange();
+      };
+
+      const originalReplaceState = history.replaceState;
+      history.replaceState = function() {
+        originalReplaceState.apply(this, arguments);
+        handleRouteChange();
+      };
+
+      window.addEventListener('popstate', handleRouteChange);
+
+      // Remove initial loading overlay once customizations are ready
+      function hideInitialLoader() {
+        hideLoader();
+      }
+
       // Hide loader after a short delay to ensure DOM updates are applied
-      setTimeout(hideInitialLoader, 100);
+      // Use logic similar to route change for consistency
+      setTimeout(hideLoader, 500);
     
     })();
   `

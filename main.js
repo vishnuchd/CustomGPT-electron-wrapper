@@ -231,8 +231,18 @@ app.whenReady().then(() => {
 });
 
 // Clear session data when app is closing
-app.on('before-quit', async () => {
+let isQuitting = false;
+app.on('before-quit', async (e) => {
+  if (!isQuitting) {
+    e.preventDefault();
+    try {
   await clearWebviewSession();
+    } catch (err) {
+      console.error('Failed to clear session:', err);
+    }
+    isQuitting = true;
+    app.quit();
+  }
 });
 
 app.on('window-all-closed', () => {
@@ -686,43 +696,8 @@ ipcMain.handle('unsplash-random-images', async (event, { count = 20 }) => {
 
 async function clearWebviewSession() {
   const s = session.fromPartition('persist:customgpt');
-
-  await s.cookies.remove('https://trial-2230464.okta.com', 'sid');
-  await s.cookies.remove('https://trial-2230464.okta.com', 'JSESSIONID');
-
-  await s.clearStorageData({
-    origin: 'https://trial-2230464.okta.com',
-    storages: ['cookies', 'localstorage', 'sessionstorage'],
-  });
-
-  await s.clearStorageData({
-    origin: 'https://app.customgpt.ai',
-    storages: ['cookies', 'localstorage', 'sessionstorage'],
-  });
+  await s.clearStorageData();
 }
-
-// Get bot name by project ID
-ipcMain.handle('supabase-get-bot-name', async (event, projectId) => {
-  try {
-    console.log('[API] Getting bot name for project:', projectId);
-
-    const { data, error } = await supabase
-      .from('projects')
-      .select('*')
-      .eq('customgpt_project_id', projectId)
-      .single();
-
-    if (error) {
-      console.error('Error fetching bot name:', error);
-      return { success: false, error: error.message };
-    }
-
-    return { success: true, data };
-  } catch (error) {
-    console.error('Error in supabase-get-bot-name:', error);
-    return { success: false, error: error.message };
-  }
-});
 
 ipcMain.handle('full-logout', async () => {
   await clearWebviewSession();
