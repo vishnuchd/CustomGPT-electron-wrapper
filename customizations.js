@@ -1023,6 +1023,8 @@ const customizations = {
             const buttons = overlay.querySelectorAll("button");
             if(!buttons || !buttons.length) return;
             buttons.forEach(btn => {
+              const textel = btn.querySelector("span.v-btn__content");
+              if(textel.trim().lowercase() !== "export") return;
               btn.style.setProperty('display', 'block', 'important');
             });
           }  
