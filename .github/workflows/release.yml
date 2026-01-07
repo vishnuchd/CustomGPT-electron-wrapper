@@ -24,7 +24,63 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install dependencies
+      # Disable Windows Defender to prevent file locking issues
+      - name: Disable Windows Defender
+        if: matrix.os == 'windows-latest'
+        shell: pwsh
+        run: |
+          Set-MpPreference -DisableRealtimeMonitoring $true -ErrorAction SilentlyContinue
+          Add-MpPreference -ExclusionPath "${{ github.workspace }}" -ErrorAction SilentlyContinue
+          Write-Host "Windows Defender exclusions added"
+
+      # Use npm ci with clean install and retry logic for Windows
+      - name: Install dependencies (Windows)
+        if: matrix.os == 'windows-latest'
+        shell: pwsh
+        run: |
+          # Clean install with retries
+          $maxRetries = 3
+          $retryCount = 0
+          $success = $false
+          
+          while (-not $success -and $retryCount -lt $maxRetries) {
+            try {
+              Write-Host "Installation attempt $($retryCount + 1) of $maxRetries"
+              
+              # Remove node_modules if it exists
+              if (Test-Path "node_modules") {
+                Write-Host "Removing existing node_modules..."
+                Remove-Item -Recurse -Force "node_modules" -ErrorAction SilentlyContinue
+                Start-Sleep -Seconds 2
+              }
+              
+              # Clean npm cache
+              npm cache clean --force
+              
+              # Install with ci for clean install
+              npm ci --prefer-offline --no-audit
+              
+              $success = $true
+              Write-Host "Installation successful!"
+            }
+            catch {
+              $retryCount++
+              Write-Host "Installation failed: $_"
+              if ($retryCount -lt $maxRetries) {
+                $waitTime = [math]::Pow(2, $retryCount)
+                Write-Host "Waiting $waitTime seconds before retry..."
+                Start-Sleep -Seconds $waitTime
+              }
+            }
+          }
+          
+          if (-not $success) {
+            Write-Error "Failed to install dependencies after $maxRetries attempts"
+            exit 1
+          }
+
+      - name: Install dependencies (macOS/Linux)
+        if: matrix.os != 'windows-latest'
         run: npm i
 
       # ==========================================
