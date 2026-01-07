@@ -996,7 +996,7 @@ const customizations = {
       const hideAnalyzeRouteElements = () => {
         const { pathname } = window.location;
         const pathEnds = ['/analyze', '/explore', '/outgoing-traffic'];
-        if (!pathname.includes('/projects/') || !pathEnds.some(end => pathname.endsWith(end))) return;
+        if (!pathname.includes('/projects/') || !pathEnds.some(end => pathname.split('?')[0].endsWith(end))) return;
 
         // Hide 4th and 5th tabs
         const fourthTab = document.querySelector('.tabs-parent.mt-6.flex.flex-nowrap.overflow-x-hidden.underlined > div:nth-child(4)');
@@ -1032,7 +1032,7 @@ const customizations = {
             if(!buttons || !buttons.length) return;
             buttons.forEach(btn => {
               const textel = btn.querySelector("span.v-btn__content");
-              if(textel.trim().lowercase() !== "export") return;
+              if(textel?.innerText?.trim().toLowerCase() !== "export") return;
               btn.style.setProperty('display', 'block', 'important');
             });
           }  
