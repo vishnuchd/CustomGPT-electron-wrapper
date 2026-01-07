@@ -33,42 +33,61 @@ jobs:
           Add-MpPreference -ExclusionPath "${{ github.workspace }}" -ErrorAction SilentlyContinue
           Write-Host "Windows Defender exclusions added"
 
-      # Use npm ci with clean install and retry logic for Windows
+      # Use npm install with retry logic for Windows
       - name: Install dependencies (Windows)
         if: matrix.os == 'windows-latest'
         shell: pwsh
         run: |
-          # Clean install with retries
+          # Clean install with retries and proper exit code handling
           $maxRetries = 3
           $retryCount = 0
           $success = $false
           
+          # Set error action preference to continue so we can check exit codes
+          $ErrorActionPreference = "Continue"
+          
           while (-not $success -and $retryCount -lt $maxRetries) {
-            try {
-              Write-Host "Installation attempt $($retryCount + 1) of $maxRetries"
-              
-              # Remove node_modules if it exists
-              if (Test-Path "node_modules") {
-                Write-Host "Removing existing node_modules..."
-                Remove-Item -Recurse -Force "node_modules" -ErrorAction SilentlyContinue
-                Start-Sleep -Seconds 2
-              }
-              
-              # Clean npm cache
-              npm cache clean --force
-              
-              # Install with ci for clean install
-              npm ci --prefer-offline --no-audit
-              
-              $success = $true
-              Write-Host "Installation successful!"
+            $retryCount++
+            Write-Host "========================================" -ForegroundColor Cyan
+            Write-Host "Installation attempt $retryCount of $maxRetries" -ForegroundColor Cyan
+            Write-Host "========================================" -ForegroundColor Cyan
+            
+            # Remove node_modules if it exists
+            if (Test-Path "node_modules") {
+              Write-Host "Removing existing node_modules..." -ForegroundColor Yellow
+              Remove-Item -Recurse -Force "node_modules" -ErrorAction SilentlyContinue
+              # Wait longer to ensure file handles are released
+              Start-Sleep -Seconds 5
             }
-            catch {
-              $retryCount++
-              Write-Host "Installation failed: $_"
+            
+            # Remove package-lock.json to avoid strict version conflicts
+            if (Test-Path "package-lock.json") {
+              Write-Host "Removing package-lock.json for clean install..." -ForegroundColor Yellow
+              Remove-Item -Force "package-lock.json" -ErrorAction SilentlyContinue
+            }
+            
+            # Clean npm cache
+            Write-Host "Cleaning npm cache..." -ForegroundColor Yellow
+            npm cache clean --force 2>&1 | Out-Host
+            
+            # Install dependencies with npm install (more forgiving than npm ci)
+            Write-Host "Running npm install..." -ForegroundColor Green
+            npm install --prefer-offline --no-audit --loglevel verbose 2>&1 | Out-Host
+            
+            # Check exit code
+            if ($LASTEXITCODE -eq 0) {
+              $success = $true
+              Write-Host "========================================" -ForegroundColor Green
+              Write-Host "Installation successful!" -ForegroundColor Green
+              Write-Host "========================================" -ForegroundColor Green
+            } else {
+              Write-Host "========================================" -ForegroundColor Red
+              Write-Host "Installation failed with exit code: $LASTEXITCODE" -ForegroundColor Red
+              Write-Host "========================================" -ForegroundColor Red
+              
               if ($retryCount -lt $maxRetries) {
-                $waitTime = [math]::Pow(2, $retryCount)
-                Write-Host "Waiting $waitTime seconds before retry..."
+                $waitTime = [math]::Pow(2, $retryCount) * 2
+                Write-Host "Waiting $waitTime seconds before retry..." -ForegroundColor Yellow
                 Start-Sleep -Seconds $waitTime
               }
             }
