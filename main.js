@@ -2,9 +2,14 @@
 require('dotenv').config();
 
 const { app, BrowserWindow, ipcMain, session, Menu } = require("electron");
-const { createClient } = require('@supabase/supabase-js');
 const path = require('path');
 const customizations = require('./customizations');
+const { autoUpdater } = require("electron-updater");
+const log = require("electron-log");
+
+// Configure logging
+log.transports.file.level = "info";
+autoUpdater.logger = log;
 
 let mainWindow;
 const iconPath = path.join(__dirname, 'EasyBotLogo.png');
@@ -221,6 +226,8 @@ app.whenReady().then(() => {
 
   createMenu();
 
+  setupAutoUpdater();
+
   createWindow();
 
   app.on('activate', () => {
@@ -248,25 +255,6 @@ app.on('before-quit', async (e) => {
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
-  }
-});
-
-// IPC handlers for communication between main and renderer
-ipcMain.handle('inject-css', (event, css) => {
-  if (mainWindow) {
-    mainWindow.webContents.insertCSS(css);
-  }
-});
-
-ipcMain.handle('execute-js', (event, code) => {
-  if (mainWindow) {
-    return mainWindow.webContents.executeJavaScript(code);
-  }
-});
-
-ipcMain.handle('reload-customizations', () => {
-  if (mainWindow) {
-    injectCustomUI();
   }
 });
 
@@ -726,3 +714,32 @@ async function clearWebviewSession() {
 ipcMain.handle('full-logout', async () => {
   await clearWebviewSession();
 });
+
+function setupAutoUpdater() {
+  log.info('App starting...');
+
+  autoUpdater.on('checking-for-update', () => {
+    log.info('Checking for update...');
+  });
+  autoUpdater.on('update-available', (info) => {
+    log.info('Update available.');
+  });
+  autoUpdater.on('update-not-available', (info) => {
+    log.info('Update not available.');
+  });
+  autoUpdater.on('error', (err) => {
+    log.info('Error in auto-updater. ' + err);
+  });
+  autoUpdater.on('download-progress', (progressObj) => {
+    let log_message = "Download speed: " + progressObj.bytesPerSecond;
+    log_message = log_message + ' - Downloaded ' + progressObj.percent + '%';
+    log_message = log_message + ' (' + progressObj.transferred + "/" + progressObj.total + ')';
+    log.info(log_message);
+  });
+  autoUpdater.on('update-downloaded', (info) => {
+    log.info('Update downloaded');
+  });
+
+  // Check for updates and notify user
+  autoUpdater.checkForUpdatesAndNotify();
+}
