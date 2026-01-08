@@ -6,6 +6,7 @@ const path = require('path');
 const customizations = require('./customizations');
 const { autoUpdater } = require("electron-updater");
 const log = require("electron-log");
+const { createClient } = require('@supabase/supabase-js');
 
 // Configure logging
 log.transports.file.level = "info";
