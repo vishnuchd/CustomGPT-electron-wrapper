@@ -1,6 +1,6 @@
 {
   "name": "EasyBotChat",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "Secure application for accessing EasyBotChat",
   "repository": {
     "type": "git",
@@ -28,7 +28,7 @@
     "electron",
     "customgpt"
   ],
-  "author": "EasyBotChat Inc.",
+  "author": "EasyBotChat Inc. <support@easybot.chat>",
   "license": "MIT",
   "appId": "com.easybot.chat",
   "build": {
