@@ -104,10 +104,7 @@
         "deb"
       ],
       "icon": "EasyBotLogo.png",
-      "artifactName": "${productName}-${version}.${ext}",
-      "publish": [
-        "github"
-      ]
+      "artifactName": "${productName}-${version}.${ext}"
     },
     "appx": {
       "applicationId": "EasyBotChat",
