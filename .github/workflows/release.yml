@@ -34,6 +34,12 @@ jobs:
           Add-MpPreference -ExclusionPath "${{ github.workspace }}" -ErrorAction SilentlyContinue
           Write-Host "Windows Defender exclusions added"
 
+      - name: Clean node_modules (Windows)
+        if: matrix.os == 'windows-latest'
+        shell: cmd
+        run: |
+          if exist node_modules rmdir /s /q node_modules
+
       # Use npm install with retry logic for Windows
       - name: Install dependencies (Windows)
         if: matrix.os == 'windows-latest'
