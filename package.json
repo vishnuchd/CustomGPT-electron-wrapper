@@ -1,6 +1,6 @@
 {
   "name": "EasyBotChat",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "description": "Secure application for accessing EasyBotChat",
   "repository": {
     "type": "git",
@@ -11,7 +11,7 @@
     "start": "electron .",
     "dev": "electron . --dev",
     "build": "electron-builder",
-    "build:unsigned": "electron-builder",
+    "build:publish": "electron-builder --publish always",
     "build:signed": "electron-builder && powershell -ExecutionPolicy Bypass -File scripts/sign-windows.ps1 -SkipBuild",
     "build:mac": "electron-builder --mac",
     "build:mac:unsigned": "CSC_IDENTITY_AUTO_DISCOVERY=false electron-builder --mac --publish=never",

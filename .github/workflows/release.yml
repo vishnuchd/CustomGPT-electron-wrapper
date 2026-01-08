@@ -82,7 +82,7 @@ jobs:
           SSL_COM_TOTP_SECRET: ${{ secrets.SSL_COM_TOTP_SECRET }}
           # Tell hook where CST is (in the workspace)
           CODE_SIGN_TOOL_PATH: ${{ github.workspace }}\CodeSignTool
-        run: npm run build -- --publish always
+        run: npm run build:publish
 
       - name: Build and Publish (macOS)
         if: matrix.os == 'macos-latest'
