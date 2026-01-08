@@ -17,8 +17,6 @@ jobs:
 
     env:
       CI: true
-      ELECTRON_CACHE: ${{ github.workspace }}\.cache\electron
-      ELECTRON_BUILDER_CACHE: ${{ github.workspace }}\.cache\electron-builder
       SSL_COM_USERNAME: ${{ secrets.SSL_COM_USERNAME }}
 
     steps:
