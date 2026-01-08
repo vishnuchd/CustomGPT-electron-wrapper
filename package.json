@@ -1,6 +1,6 @@
 {
   "name": "EasyBotChat",
-  "version": "1.2.6",
+  "version": "1.0.9",
   "description": "Secure application for accessing EasyBotChat",
   "repository": {
     "type": "git",
@@ -37,7 +37,7 @@
       {
         "provider": "github",
         "owner": "vishnuchd",
-        "repo": "CustomGPT-electron-wrapper"
+        "repo": "customGPT-electron-release"
       }
     ],
     "productName": "EasyBotChat",
