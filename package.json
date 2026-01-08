@@ -37,7 +37,8 @@
       {
         "provider": "github",
         "owner": "vishnuchd",
-        "repo": "customGPT-electron-release"
+        "repo": "customGPT-electron-release",
+        "releaseType": "release"
       }
     ],
     "productName": "EasyBotChat",
