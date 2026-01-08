@@ -60,7 +60,7 @@ jobs:
       # WINDOWS SIGNING
       # =========================
       - name: Setup Java (CodeSignTool)
-        if: matrix.os == 'windows-latest' && env.SSL_COM_USERNAME != ''
+        if: matrix.os == 'windows-latest' && env.SSL_COM_USERNAME && env.SSL_COM_USERNAME != ''
         uses: actions/setup-java@v3
         with:
           distribution: temurin
@@ -69,13 +69,16 @@ jobs:
           SSL_COM_USERNAME: ${{ secrets.SSL_COM_USERNAME }}
 
       - name: Download SSL.com CodeSignTool
-        if: matrix.os == 'windows-latest' && env.SSL_COM_USERNAME != ''
-        shell: pwsh
+        if: matrix.os == 'windows-latest' && env.SSL_COM_USERNAME && env.SSL_COM_USERNAME != ''
+        shell: cmd
         run: |
-          Write-Host "Downloading CodeSignTool..."
-          Invoke-WebRequest -Uri "https://www.ssl.com/download/codesigntool-for-windows/" -OutFile "CodeSignTool.zip"
-          Expand-Archive -Path "CodeSignTool.zip" -DestinationPath "CodeSignTool"
-          Write-Host "CodeSignTool installed to $(Get-Location)/CodeSignTool"
+          echo Downloading CodeSignTool...
+          curl -L --retry 5 --retry-delay 5 ^
+            https://www.ssl.com/download/codesigntool-for-windows/ ^
+            -o CodeSignTool.zip
+
+          tar -xf CodeSignTool.zip -C CodeSignTool
+
 
       # =========================
       # BUILD & PUBLISH
