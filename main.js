@@ -719,6 +719,12 @@ ipcMain.handle('full-logout', async () => {
 function setupAutoUpdater() {
   log.info('App starting...');
 
+  autoUpdater.setFeedURL({
+    provider: 'github',
+    owner: 'vishnuchd',
+    repo: 'customGPT-electron-release'
+  });
+
   autoUpdater.on('checking-for-update', () => {
     log.info('Checking for update...');
   });
