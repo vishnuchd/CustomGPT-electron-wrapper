@@ -106,7 +106,8 @@
       "artifactName": "${productName}-Setup-${version}.${ext}"
     },
     "msi": {
-      "artifactName": "${productName}-${version}.${ext}"
+      "artifactName": "${productName}-${version}.${ext}",
+      "warningsAsErrors": false
     },
     "portable": {
       "artifactName": "${productName}-Portable-${version}.${ext}"
