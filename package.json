@@ -1,6 +1,6 @@
 {
   "name": "EasyBotChat",
-  "version": "1.1.1",
+  "version": "1.1.0",
   "description": "Secure application for accessing EasyBotChat",
   "repository": {
     "type": "git",
@@ -12,7 +12,7 @@
     "dev": "electron . --dev",
     "build": "electron-builder",
     "build:publish": "electron-builder --publish always",
-    "build:signed": "electron-builder && powershell -ExecutionPolicy Bypass -File scripts/sign-windows.ps1 -SkipBuild",
+    "build:signed": "electron-builder && powershell -ExecutionPolicy Bypass -File scripts/sign-windows.ps1 -SkipBuild && node scripts/regenerate-latest-yml.js",
     "build:mac": "electron-builder --mac",
     "build:mac:publish": "electron-builder --mac --publish always",
     "build:mac:unsigned": "CSC_IDENTITY_AUTO_DISCOVERY=false electron-builder --mac --publish=never",
@@ -135,6 +135,7 @@
   "devDependencies": {
     "electron": "^28.0.0",
     "electron-builder": "^24.6.4",
-    "electron-reload": "^2.0.0-alpha.1"
+    "electron-reload": "^2.0.0-alpha.1",
+    "js-yaml": "^4.1.1"
   }
 }
