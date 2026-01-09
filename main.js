@@ -728,25 +728,61 @@ function setupAutoUpdater() {
   autoUpdater.on('checking-for-update', () => {
     log.info('Checking for update...');
   });
+
   autoUpdater.on('update-available', (info) => {
     log.info('Update available.');
+
+    // Show dialog asking user if they want to update
+    dialog.showMessageBox(mainWindow, {
+      type: 'info',
+      title: 'Update Available',
+      message: 'A new version is available. Would you like to download and install it?',
+      buttons: ['Yes', 'No'],
+      defaultId: 0,
+      cancelId: 1
+    }).then((result) => {
+      if (result.response === 0) {
+        // User clicked Yes, download the update
+        log.info('User accepted update, downloading...');
+        autoUpdater.downloadUpdate();
+      } else {
+        log.info('User declined update.');
+      }
+    });
   });
+
   autoUpdater.on('update-not-available', (info) => {
     log.info('Update not available.');
   });
+
   autoUpdater.on('error', (err) => {
     log.info('Error in auto-updater. ' + err);
   });
+
   autoUpdater.on('download-progress', (progressObj) => {
     let log_message = "Download speed: " + progressObj.bytesPerSecond;
     log_message = log_message + ' - Downloaded ' + progressObj.percent + '%';
     log_message = log_message + ' (' + progressObj.transferred + "/" + progressObj.total + ')';
     log.info(log_message);
   });
+
   autoUpdater.on('update-downloaded', (info) => {
     log.info('Update downloaded');
+
+    // Show dialog informing user that restart is needed
+    dialog.showMessageBox(mainWindow, {
+      type: 'info',
+      title: 'Update Ready',
+      message: 'The update has been downloaded. The application needs to restart to apply the update.',
+      buttons: ['Restart Now'],
+      defaultId: 0
+    }).then(() => {
+      // User clicked Restart Now
+      log.info('User confirmed restart, installing update...');
+      autoUpdater.quitAndInstall();
+    });
   });
 
-  // Check for updates and notify user
-  autoUpdater.checkForUpdatesAndNotify();
+  // Check for updates (but don't auto-download)
+  autoUpdater.checkForUpdates();
 }
