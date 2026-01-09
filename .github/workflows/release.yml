@@ -5,7 +5,32 @@ on:
       - 'v*'
 
 jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      release_created: ${{ steps.create.outputs.created }}
+    steps:
+      - name: Create Release
+        id: create
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+        run: |
+          if gh release view ${{ github.ref_name }} --repo vishnuchd/customGPT-electron-release > /dev/null 2>&1; then
+            echo "Release already exists"
+            echo "created=false" >> $GITHUB_OUTPUT
+          else
+            gh release create ${{ github.ref_name }} \
+              --repo vishnuchd/customGPT-electron-release \
+              --title "${{ github.ref_name }}" \
+              --generate-notes \
+              --draft
+            echo "created=true" >> $GITHUB_OUTPUT
+          fi
+
   release:
+    needs: create-release
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -76,22 +101,15 @@ jobs:
           VERSION: ${{ steps.get_version.outputs.version }}
         run: npm run download:windows
 
-      - name: Create Release (if not exists)
-        if: matrix.os == 'windows-latest'
-        env:
-          GH_TOKEN: ${{ secrets.RELEASE_TOKEN }}
-        run: |
-          gh release create ${{ github.ref_name }} --repo vishnuchd/customGPT-electron-release --title "${{ github.ref_name }}" --generate-notes || echo "Release already exists"
-
       - name: Upload Windows Assets to Release
         if: matrix.os == 'windows-latest'
-        shell: cmd
+        shell: bash
         env:
           GH_TOKEN: ${{ secrets.RELEASE_TOKEN }}
         run: |
           gh release upload ${{ github.ref_name }} dist/*.exe dist/*.msi dist/*.blockmap dist/*.yml --repo vishnuchd/customGPT-electron-release --clobber
 
-      - name: Build and Publish (macOS)
+      - name: Build and Upload (macOS)
         if: matrix.os == 'macos-latest'
         env:
           GH_TOKEN: ${{ secrets.RELEASE_TOKEN }}
@@ -102,8 +120,20 @@ jobs:
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
         run: npm run build:mac:publish
 
-      - name: Build and Publish (Linux)
+      - name: Build and Upload (Linux)
         if: matrix.os == 'ubuntu-latest'
         env:
           GH_TOKEN: ${{ secrets.RELEASE_TOKEN }}
         run: npm run build:publish
+
+  publish-release:
+    needs: release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Publish Release
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+        run: |
+          gh release edit ${{ github.ref_name }} --repo vishnuchd/customGPT-electron-release --draft=false
