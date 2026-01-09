@@ -32,8 +32,8 @@ function regenerateLatestYml() {
   const productName = packageJson.build.productName;
   const latestYmlPath = path.join(distDir, 'latest.yml');
 
-  // Find the main installer (NSIS .exe)
-  const installerFileName = `${productName}-${version}.exe`;
+  // Find the main installer (NSIS .exe with "Setup" in name)
+  const installerFileName = `${productName}-Setup-${version}.exe`;
   const installerPath = path.join(distDir, installerFileName);
   const blockMapPath = `${installerPath}.blockmap`;
 
@@ -97,6 +97,7 @@ function regenerateLatestYml() {
   console.log(`   Size: ${(verification.size / (1024 * 1024)).toFixed(2)} MB\n`);
 
   console.log('✅ latest.yml is now in sync with signed installer!\n');
+  console.log('💡 Run verification: npm run verify:latest-yml\n');
 }
 
 try {

@@ -52,7 +52,9 @@ async function main() {
     return artifactExtensions.some(ext => file.endsWith(ext)) &&
       // Avoid uploading builder-debug.yml or other temp files if unnecessary
       !file.includes('builder-debug') &&
-      !file.includes('builder-effective');
+      !file.includes('builder-effective') &&
+      // Don't upload win-unpacked folder files
+      !file.includes('win-unpacked');
   });
 
   if (artifacts.length === 0) {

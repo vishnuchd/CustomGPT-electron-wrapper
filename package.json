@@ -12,7 +12,6 @@
     "dev": "electron . --dev",
     "build": "electron-builder",
     "build:publish": "electron-builder --publish always",
-    "build:signed": "electron-builder && powershell -ExecutionPolicy Bypass -File scripts/sign-windows.ps1 -SkipBuild && node scripts/regenerate-latest-yml.js",
     "build:mac": "electron-builder --mac",
     "build:mac:publish": "electron-builder --mac --publish always",
     "build:mac:unsigned": "CSC_IDENTITY_AUTO_DISCOVERY=false electron-builder --mac --publish=never",
@@ -25,7 +24,7 @@
     "prepare-mac": "bash scripts/prepare-mac.sh",
     "upload:windows": "node scripts/upload-to-supabase.js",
     "download:windows": "node scripts/download-from-supabase.js",
-    "build:win:upload": "npm run build:signed && node scripts/upload-to-supabase.js"
+    "build:win:upload": "npm run build && node scripts/upload-to-supabase.js"
   },
   "keywords": [
     "electron",
@@ -98,9 +97,19 @@
         }
       ],
       "icon": "EasyBotLogo.png",
-      "artifactName": "${productName}-${version}.${ext}",
       "sign": "./scripts/sign-hook-windows.js",
       "certificateSubjectName": "EasyBotChat Inc."
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "artifactName": "${productName}-Setup-${version}.${ext}"
+    },
+    "msi": {
+      "artifactName": "${productName}-${version}.${ext}"
+    },
+    "portable": {
+      "artifactName": "${productName}-Portable-${version}.${ext}"
     },
     "linux": {
       "target": [
@@ -120,10 +129,6 @@
         "en-US"
       ],
       "makeappxArgs": []
-    },
-    "nsis": {
-      "oneClick": false,
-      "allowToChangeInstallationDirectory": true
     }
   },
   "dependencies": {
