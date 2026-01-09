@@ -56,42 +56,40 @@ jobs:
         run: npm ci
 
       # =========================
-      # WINDOWS SIGNING
+      # WINDOWS RELEASE (Download from Staging)
       # =========================
-      - name: Setup Java (CodeSignTool)
-        if: matrix.os == 'windows-latest' && env.SSL_COM_USERNAME && env.SSL_COM_USERNAME != ''
-        uses: actions/setup-java@v3
-        with:
-          distribution: temurin
-          java-version: '17'
-        env:
-          SSL_COM_USERNAME: ${{ secrets.SSL_COM_USERNAME }}
-
-      - name: Download SSL.com CodeSignTool
-        if: matrix.os == 'windows-latest' && env.SSL_COM_USERNAME && env.SSL_COM_USERNAME != ''
-        shell: cmd
+      - name: Extract version from tag
+        if: matrix.os == 'windows-latest'
+        id: get_version
+        shell: bash
         run: |
-          echo Downloading CodeSignTool...
-          curl -L --retry 5 --retry-delay 5 ^
-            https://www.ssl.com/download/codesigntool-for-windows/ ^
-            -o CodeSignTool.zip
+          VERSION=${GITHUB_REF#refs/tags/v}
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Extracted version: $VERSION"
 
-          tar -xf CodeSignTool.zip -C CodeSignTool
+      - name: Download Windows Artifacts
+        if: matrix.os == 'windows-latest'
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+          SUPABASE_BUCKET_NAME: ${{ secrets.SUPABASE_BUCKET_NAME }}
+          VERSION: ${{ steps.get_version.outputs.version }}
+        run: npm run download:windows
 
+      - name: Create Release (if not exists)
+        if: matrix.os == 'windows-latest'
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+        run: |
+          gh release create ${{ github.ref_name }} --title "${{ github.ref_name }}" --generate-notes || echo "Release already exists"
 
-      # =========================
-      # BUILD & PUBLISH
-      # =========================
-      - name: Build and Publish (Windows)
+      - name: Upload Windows Assets to Release
         if: matrix.os == 'windows-latest'
         shell: cmd
         env:
           GH_TOKEN: ${{ secrets.RELEASE_TOKEN }}
-          SSL_COM_USERNAME: ${{ secrets.SSL_COM_USERNAME }}
-          SSL_COM_PASSWORD: ${{ secrets.SSL_COM_PASSWORD }}
-          SSL_COM_TOTP_SECRET: ${{ secrets.SSL_COM_TOTP_SECRET }}
-          CODE_SIGN_TOOL_PATH: ${{ github.workspace }}\CodeSignTool
-        run: npm run build:publish
+        run: |
+          gh release upload ${{ github.ref_name }} dist/*.exe dist/*.msi dist/*.blockmap dist/*.yml --clobber
 
       - name: Build and Publish (macOS)
         if: matrix.os == 'macos-latest'

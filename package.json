@@ -22,7 +22,10 @@
     "sign": "powershell -ExecutionPolicy Bypass -File scripts/sign-windows.ps1 -SkipBuild",
     "sign:verbose": "powershell -ExecutionPolicy Bypass -File scripts/sign-windows.ps1 -SkipBuild -Verbose",
     "check-notarization": "bash scripts/check-notarization-status.sh",
-    "prepare-mac": "bash scripts/prepare-mac.sh"
+    "prepare-mac": "bash scripts/prepare-mac.sh",
+    "upload:windows": "node scripts/upload-to-supabase.js",
+    "download:windows": "node scripts/download-from-supabase.js",
+    "build:win:upload": "npm run build:signed && node scripts/upload-to-supabase.js"
   },
   "keywords": [
     "electron",
@@ -124,7 +127,7 @@
     }
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.89.0",
+    "@supabase/supabase-js": "^2.90.1",
     "dotenv": "^16.3.1",
     "electron-log": "^5.4.3",
     "electron-updater": "^6.7.3"
