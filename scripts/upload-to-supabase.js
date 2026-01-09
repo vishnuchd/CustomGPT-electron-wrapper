@@ -23,8 +23,8 @@ async function uploadFile(filePath, destinationPath) {
   const { data, error } = await supabase.storage
     .from(BUCKET_NAME)
     .upload(destinationPath, fileContent, {
-      upsert: true,
-      contentType: 'application/octet-stream' // Adjust if needed
+      upsert: false, // Do not set it true
+      contentType: 'application/octet-stream'
     });
 
   if (error) {
