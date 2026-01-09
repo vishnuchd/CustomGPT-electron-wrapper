@@ -1,7 +1,7 @@
 // Load environment variables from .env file
 require('dotenv').config();
 
-const { app, BrowserWindow, ipcMain, session, Menu } = require("electron");
+const { app, BrowserWindow, ipcMain, session, Menu, dialog } = require("electron");
 const path = require('path');
 const customizations = require('./customizations');
 const { autoUpdater } = require("electron-updater");
